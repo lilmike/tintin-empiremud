@@ -1,0 +1,365 @@
+#action {^Obvious exits:$}
+{
+#if {"$playerSummoner" != ""}
+{
+follow $playerSummoner;
+#variable {playerSummoner} {}
+}
+}
+{9}
+
+#action {^You circle %w.$}
+{
+#variable {lastDirection} {%1}
+}
+{9}
+
+#macro {\eK} {enter portal}
+#alias {^{noauto|auto}{claim|sneak}$}
+{
+#if {"%0" == "auto{claim|sneak}"}
+{
+#showme {Auto %2 enabled.};
+#variable {auto%2} {true}
+};
+#else
+{
+#showme {Auto %2 disabled.};
+#unvariable {auto%2}
+}
+}
+{9}
+
+#alias {^{nos|s}ail{m|mo|mod|mode}$}
+{
+#if {"%0" == "sail{m|mo|mod|mode}"}
+{
+#variable {sailmode} {true};
+#showme {Sail mode enabled.}
+};
+#else
+{
+#variable {sailmode} {false};
+#showme {Sail mode disabled.}
+}
+}
+{9}
+
+#alias {^{noquick|quick}nav$}
+{
+#if {"%0" == "quicknav"}
+{
+#variable {quicknav} {true};
+#showme {You will only see the exits in the same direction you are traveling.}
+};
+#else
+{
+#unvariable {quicknav};
+#showme {Exit information will be displayed normally.}
+}
+}
+{9}
+
+#alias {^{l|lo|loo|look} all$}
+{
+#forall {north;south;east;west;northwest;northeast;southwest;southeast}{#showme {&0};look &0}
+}
+{9}
+
+#alias {^nofind$}
+{
+#variable {findTerrain} {false};
+#showme {You will no longer look for any kind of terrain.}
+}
+{9}
+
+#alias {^{fin|find} %2}
+{
+#format {findTerrain} {%n} {%2};
+#variable {findTerrainDirection} {FALSE};
+#showme {You will now keep an eye out for ${findTerrain}s.}
+}
+{9}
+
+#alias {^{fin|find} {d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west} %3}
+{
+#format {findTerrain} {%n} {%3};
+#variable {findTerrainDirection} {%2};
+#showme {You will now keep an eye out for ${findTerrain}s $findTerrainDirection from you.}
+}
+{8}
+
+#alias {^{sca|scan}%s%w$}
+{
+#switch {"%3"}
+{
+#case {"{d|do|dow|down}"} {#echo {$Down}};
+#case {"{e|ea|eas|east}"} {#echo {$East}};
+#case {"{n|no|nor|nort|north}"} {#echo {$North}};
+#case {"{ne|northe|northea|northeas|northeast}"} {#echo {$Northeast}};
+#case {"{nw|northw|northwe|northwes|northwest}"} {#echo {$Northwest}};
+#case {"{s|so|sou|sout|south}"} {#echo {$South}};
+#case {"{se|southe|southea|southeas|southeast}"} {#echo {$Southeast}};
+#case {"{sw|southw|southwe|southwes|southwest}"} {#echo {$Southwest}};
+#case {"{u|up}"} {#echo {$Up}};
+#case {"{w|we|wes|west}"} {#echo {$West}}
+}
+}
+{9}
+
+#alias {^{sca|scan}$}
+{
+#echo {$North\n
+$South\n
+$East\n
+$West\n
+$Northwest\n
+$Northeast\n
+$Southwest\n
+$Southeast}
+}
+{9}
+
+#action {^{North|South|East|West|Northwest|Northeast|Southwest|Southeast|Up|Down}: %*}
+{
+#variable {%1} {%0};
+#format {lastDirection} {%n} {$lastDirection};
+#if {"$quicknav" == "true" && "%1" != "$lastDirection"}
+{
+#line {gag};
+};
+#if {"$findTerrain" != "false"}
+{
+#if {"$findTerrainDirection" == "FALSE"}
+{
+#regexp {%0} {{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};synth_play foundTerrainSound}
+};
+#else
+{
+#regexp {%0} {^$findTerrainDirection:{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};synth_play foundTerrainSound}
+}
+}
+#if {"$playerSummoner != ""}
+{
+follow $playerSummoner;
+#variable {playerSummoner} {}
+}
+}
+{9}
+
+#ALIAS {^{d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west}$}
+{
+#switch {"%0"}
+{
+#case {"{d|do|dow}"} {#variable {lastDirection} {Down}};
+#case {"{e|ea|eas}"} {#variable {lastDirection} {East}};
+#case {"{n|no|nor|nort}"} {#variable {lastDirection} {North}};
+#case {"{ne|northe|northea|northeas}"} {#variable {lastDirection} {Northeast}};
+#case {"{nw|northw|northwe|northwes}"} {#variable {lastDirection} {Northwest}};
+#case {"{s|so|sou|sout}"} {#variable {lastDirection} {South}};
+#case {"{se|southe|southea|southeas}"} {#variable {lastDirection} {Southeast}};
+#case {"{sw|southw|southwe|southwes}"} {#variable {lastDirection} {Southwest}};
+#case {"u"} {#variable {lastDirection} {Up}};
+#case {"{w|we|wes}"} {#variable {lastDirection} {West}};
+#default {#variable {lastDirection} {%0}}
+};
+#if {"$sailmode" == "true"}
+{
+sail %0
+};
+#elseif {"$autosneak" == "true"}
+{
+#send {sneak %0}
+}
+#else
+{
+#send {%0}
+};
+#variable {reverse} {@get_reverse{$lastDirection}}
+}
+{9}
+ 
+#alias {^forget %1}
+{
+		#list {rememberedCoordinatesList} {find} {%*%1%*} {listIndex};
+		#if {$listIndex != 0}
+		{
+			#list {rememberedCoordinatesList} {delete} {$listIndex};
+		#showme {Forgot location %2.}
+		}
+}
+{8}
+
+#ACTION {^You are at: %1 (%d, %d)$}
+{
+	#if {"$rememberCoordinates" == "true"}
+	{
+		#format {location} {%l} {%1 (%2, %3)};
+		#list {rememberedCoordinatesList} {find} {%*%2%*} {listIndex};
+		#if {$listIndex == 0}
+		{
+			#list {rememberedCoordinatesList} {add} {$location}
+		};
+		#variable {rememberCoordinates} {false}
+	}
+}
+{8}
+
+#ACTION {%1 \x28%d, %d\x29$}
+{
+	#variable {coordinateX} {%2};
+	#variable {coordinateY} {%3}
+}
+{9}
+
+#ACTION {%1 {are|is} closed.$}
+{
+	#regexp {%1} {{.*} {.*}} {#variable {doorName} {&2}}
+}
+{9}
+
+#ACTION {^Alas, you cannot go that way...$}
+{
+	play move/bump
+}
+{9}
+
+#ALIAS {^{coords|coord|coordi|coordin|coordina|coordinat|coordinate|coordinates|xy}$}
+{
+	#showme {You are at $coordinateX, $coordinateY\.}
+}
+{9}
+
+#ALIAS {^{reme|remem|rememb|remembe|remember}$}
+{
+	#variable {rememberCoordinates} {true};
+	whereami
+}
+{9}
+
+#ALIAS {^{wherei|whereis} %2}
+{
+	#list {rememberedCoordinatesList} {find} {%*%2%*} {listIndex};
+	#if {$listIndex != 0}
+	{
+		#echo {${rememberedCoordinatesList[$listIndex]}}
+	};
+	#else
+	{
+		#showme {Coordinates not found.}
+	}
+}
+{9}
+
+#MACRO {\e,}
+{
+	south
+}
+
+#MACRO {\e.}
+{
+	southeast
+}
+
+#MACRO {\e<}
+{
+	down
+}
+
+#MACRO {\eI}
+{
+	up
+}
+
+#MACRO {\eJ}
+{
+	#if {"$pathLoaded" == "true"}
+	{
+		#path {walk} {backward}
+	};
+	#else
+	{
+		#showme {Path not loaded.}
+	}
+}
+
+#MACRO {\ek}
+{
+	scan
+}
+
+#MACRO {\ei}
+{
+	north
+}
+
+#MACRO {\ej}
+{
+	west
+}
+
+#MACRO {\el}
+{
+	east
+}
+
+#MACRO {\em}
+{
+	southwest
+}
+
+#MACRO {\eo}
+{
+	northeast
+}
+
+#MACRO {\eu}
+{
+	northwest
+}
+
+#VARIABLE         {coordinateX}  {}
+#VARIABLE         {coordinateY}  {}
+#VARIABLE         {listIndex}  {}
+#VARIABLE         {location}  {}
+#VARIABLE         {rememberCoordinates}  {false}
+#variable {Down} {}
+#variable {East} {}
+#variable {North} {}
+#variable {Northeast} {}
+#variable {Northwest} {}
+#variable {reverse} {}
+#variable {South} {}
+#variable {Southeast} {}
+#variable {Southwest} {}
+#variable {Up} {}
+#variable {West} {}
+#variable {findTerrain} {false}
+#variable {findTerrainDirection} {FALSE}
+#PATHDIR          {d}  {u}  {32}
+#PATHDIR          {e}  {w}  {2}
+#PATHDIR          {n}  {s}  {1}
+#PATHDIR          {ne}  {sw}  {3}
+#PATHDIR          {nw}  {se}  {9}
+#PATHDIR          {s}  {n}  {4}
+#PATHDIR          {se}  {nw}  {6}
+#PATHDIR          {sw}  {ne}  {12}
+#PATHDIR          {u}  {d}  {16}
+#PATHDIR          {w}  {e}  {8}
+#function {get_reverse}
+{
+#switch {"$lastDirection"}
+{
+#case {"down"} {#variable {result} {up}};
+#case {"east"} {#variable {result} {west}};
+#case {"north"} {#variable {result} {south}};
+#case {"northeast"} {#variable {result} {southwest}};
+#case {"northwest"} {#variable {result} {southeast}};
+#case {"south"} {#variable {result} {north}};
+#case {"southeast"} {#variable {result} {northwest}};
+#case {"southwest"} {#variable {result} {northeast}};
+#case {"west"} {#variable {result} {east}};
+#case {"up"} {#variable {result} {down}}
+};
+#return {$result}
+}

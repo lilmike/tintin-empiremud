@@ -1,0 +1,134 @@
+#alias {^mis{s|si|sin|sing}$}
+{
+#list {recastList} {size} {recastListSize};
+#if {$recastListSize > 0}
+{
+#showme {Missing spells:};
+#forall {${recastList[]}} {#showme {${recastList[&0]}}}
+};
+#else
+{
+#showme {No spells are missing currently.}
+}
+}
+{9}
+
+#alias {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield}$}
+{
+#if {"%1" == "auto"}
+{
+#variable {%3} {true};
+#showme {%3 will automatically recast.}
+};
+#else
+{
+#unvariable {%3};
+#showme {%3 will no longer automatically recast.}
+}
+}
+{9}
+
+#action {^You feel the gift of foresight!$}
+{
+play magic/foresight;
+Remove_Spell foresight;
+Recast
+}
+{9}
+
+#action {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
+{
+play magic/eartharmor;
+Remove_Spell eartharmor;
+Recast
+}
+{9}
+
+#action {^Sparkling blue wings made of pure mana erupt from your back!$}
+{
+play magic/fly;
+Remove_Spell fly;
+Recast
+}
+{9}
+
+#action {^You feel yourself shielded by your mana!$}
+{
+play magic/manashield;
+Remove_Spell manashield;
+Recast
+}
+{9}
+
+#action {^You concentrate and veins of red mana streak down your skin.$}
+{
+play magic/hasten;
+Remove_Spell hasten;
+Recast
+}
+{9}
+
+#action {^Your foresight ends.$}
+{
+revplay magic/foresight;
+Add_Spell foresight
+}
+{9}
+
+#action {^Your mana shield fades.$}
+{
+revplay magic/manashield;
+Add_Spell manashield
+}
+{9}
+
+#action {^Your plating of earth armor fades.$}
+{
+revplay magic/eartharmor;
+Add_Spell eartharmor
+}
+{9}
+
+#action {^You land quickly as your magical flight wears off.$}
+{
+revplay magic/fly;
+Add_Spell fly
+}
+{9}
+
+#action {^Your haste fades.$}
+{
+revplay magic/hasten;
+Add_Spell hasten
+}
+{9}
+
+#alias {^{Add|Remove}_Spell %2}
+{
+#list {recastList} {find} {%2} {recastListIndex};
+#if {$recastListIndex > 0 && "%1" == "Remove"}
+{
+#list {recastList} {delete} {$recastListIndex}
+};
+#if {"$%2" == "true"}
+{
+#if {$recastListIndex == 0 && "%1" == "Add"}
+{
+#list {recastList} {add} {%2};
+Recast
+}
+}
+}
+{9}
+
+#alias {^Recast$}
+{
+#list {recastList} {size} {recastListSize};
+#if {$recastListSize > 0}
+{
+${recastList[1]}
+}
+}
+{9}
+
+#var {recastList} {}

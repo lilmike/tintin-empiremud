@@ -1,0 +1,378 @@
+#action {^You are too exhausted to follow.$}
+{
+gt Out of movement!
+}
+{9}
+
+#action {^[ %* has switched to %* ]$}
+{
+synth_play switchCharacterSound;
+Add_Channel_Event all %0
+}
+{9}
+
+#ACTION {^Your daily quests and bonus experience have reset!$}
+{
+    play skills/reset;
+Add_Channel_Event all %0
+}
+{9}
+
+#ACTION {^[ %1 has been {demote|promote}d to %* ]$}
+{
+    play miscellaneous/%2;
+Add_Channel_Event all %0
+}
+{9}
+ 
+#ACTION {^[ %1 has been {executed|killed} by %* ]$}
+{
+    play miscellaneous/death;
+Add_Channel_Event all %0
+}
+{9}
+ 
+#ACTION {^[ %1 has died at %* ]$}
+{
+    play miscellaneous/death;
+Add_Channel_Event all %0
+}
+{9}
+ 
+#ACTION {^You improve your {Battle|Empire|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to %d.$}
+{
+    #format {i} {%l} {%1};
+    #replace {i} { } {_};
+    play improve/$i;
+Add_Channel_Event all %0
+}
+{9}
+ 
+#action {^Welcome to your EmpireMUD!%sPrepare to face your destiny!$}
+{
+/join cowsay;
+/join music;
+#variable {busy} {false}
+}
+{9}
+
+#alias {^display_channel %w %d}
+{
+#echo {${%1List[%2]}}
+}
+{9}
+
+#ACTION {%1-EBG31@ %2}
+{
+	#line {gag};
+	#script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
+	#variable {unencryptedMessage} {${unencryptedMessage[1]}};
+	#echo {%1${unencryptedMessage}'};
+	play cryptmsg
+}
+{8}
+
+#ACTION {^You %1, '%2'$}
+{
+		#switch {"%1"}
+		{
+			#case {"say"}
+			{
+				synth_play saySendSound;
+				Add_Channel_Event all %0;
+				Add_Channel_Event say %0
+			};
+			#case {"tell %*"}
+			{
+				synth_play tellSendSound;
+				Add_Channel_Event all %0;
+				Add_Channel_Event tell %0
+			};
+			#case {"tell the party"}
+			{
+				synth_play grouptellSendSound;
+				Add_Channel_Event all %0;
+				Add_Channel_Event party %0
+			};
+			#default
+			{
+				synth_play defaultSendSound;
+				Add_Channel_Event all %0
+			}
+		}
+}
+{8}
+
+#ACTION {^%* {says|tells you|tells the party}, '%3'$}
+{
+		#switch {"%2"}
+		{
+			#case {"says"}
+			{
+				synth_play sayReceiveSound;
+				Add_Channel_Event all %0;
+				Add_Channel_Event say %0
+			};
+			#case {"tells you"}
+			{
+				synth_play tellReceiveSound;
+				Add_Channel_Event all %0;
+				Add_Channel_Event tell %0
+			};
+			#case {"tells the party"}
+			{
+				synth_play grouptellReceiveSound;
+				Add_Channel_Event all %0;
+				Add_Channel_Event party %0
+			}
+			}
+}
+{9}
+
+#ACTION {^[ %1 has entered the game ]$}
+{
+	play miscellaneous/player_enter;
+	Add_Channel_Event all %0
+}
+{9}
+
+#ACTION {^[ %1 has left the game ]$}
+{
+	play miscellaneous/player_leave;
+	Add_Channel_Event all %0
+}
+{9}
+
+#ACTION {^(friend) %S was kille%*}
+{
+	play friend-death
+}
+{9}
+
+#ACTION {^[/%S{]| }%*}
+{
+	synth_play %1ChannelSound;
+				Add_Channel_Event all %0;
+#if {"%1" == "{cowsay|gossip|music|ooc|say|tell}"}
+{
+	Add_Channel_Event %1 %0
+}
+}
+{9}
+
+#ACTION {^[{EMPIRE|gsay|IMMORTAL}%*}
+{
+	synth_play %1ChannelSound;
+				Add_Channel_Event all %0;
+#if {"%1" == "gsay"}
+{
+	Add_Channel_Event party %0
+};
+#else
+{
+	Add_Channel_Event empire %0
+}
+}
+{9}
+
+#ALIAS {^pimptell %S %2}
+{
+	#script {echo -n "tell %1 "; curl -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+}
+{8}
+
+#ALIAS {^Add_Channel_Event {all|cowsay|empire|gossip|music|ooc|say|party|tell} %2}
+{
+	#list {%1List} {insert} {1} {%2};
+	#list {%1List} {size} {i};
+	#if {$i >= 11}
+	{
+		#list {%1List} {delete} {11}
+	};
+	#unvariable {i}
+}
+{9}
+
+#ALIAS {^away %1}
+{
+	#variable {awayMessage} {%1};
+	#showme {Your away message is set to: $awayMessage}
+}
+{9}
+
+#ALIAS {^away$}
+{
+	#variable {awayMessage} {false};
+	#showme {away message cleared.}
+}
+{9}
+
+#ALIAS {^crypt%S %2}
+{
+	#script {encryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh};
+	#variable {encryptedMessage} {${encryptedMessage[1]}};
+	%1 -EBG31@  $encryptedMessage
+}
+{9}
+
+#ALIAS {^pimp%+ %2}
+{
+	#script {echo -n "%1"; curl -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+}
+{9}
+
+#MACRO {\e!}
+{
+	#variable {channelBufferIndex} {0};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e#}
+{
+	#variable {channelBufferIndex} {2};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e*}
+{
+	#variable {channelBufferIndex} {7};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e(}
+{
+	#variable {channelBufferIndex} {8};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e$}
+{
+	#variable {channelBufferIndex} {3};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e-}
+{
+	#if {!&{channelBufferIndex} || $channelBufferIndex <= 0}
+	{
+		#variable {channelBufferIndex} {0}
+	};
+	#else
+	{
+		#math {channelBufferIndex} {$channelBufferIndex - 1}
+	};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e0}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 10
+}
+
+#MACRO {\e1}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 1
+}
+
+#MACRO {\e2}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 2
+}
+
+#MACRO {\e3}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 3
+}
+
+#MACRO {\e4}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 4
+}
+
+#MACRO {\e5}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 5
+}
+
+#MACRO {\e6}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 6
+}
+
+#MACRO {\e7}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 7
+}
+
+#MACRO {\e8}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 8
+}
+
+#MACRO {\e9}
+{
+	display_channel $channelBuffer[$channelBufferIndex] 9
+}
+
+#MACRO {\e=}
+{
+	#if {!&{channelBufferIndex} || $channelBufferIndex >= $totalChannels}
+	{
+		#variable {channelBufferIndex} {$totalChannels}
+	};
+	#else
+	{
+		#math {channelBufferIndex} {$channelBufferIndex + 1}
+	};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e@}
+{
+	#variable {channelBufferIndex} {1};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e&}
+{
+	#variable {channelBufferIndex} {6};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e^}
+{
+	#variable {channelBufferIndex} {5};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e%}
+{
+	#variable {channelBufferIndex} {4};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e[1;3C}
+{
+	#if {!&{channelBufferIndex} || $channelBufferIndex >= $totalChannels}
+	{
+		#variable {channelBufferIndex} {$totalChannels}
+	};
+	#else
+	{
+		#math {channelBufferIndex} {$channelBufferIndex + 1}
+	};
+	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#VARIABLE         {awayMessage}  {false}
+#VARIABLE         {channelBuffer}  {{0}{all}{1}{cowsay}{2}{empire}{3}{gossip}{4}{music}{5}{ooc}{6}{say}{7}{party}{8}{tell}}
+#variable {channelBufferIndex} {0}
+#VARIABLE         {allList}  {}
+#VARIABLE         {cowsayList}  {}
+#VARIABLE         {empireList}  {}
+#VARIABLE         {gossipList}  {}
+#VARIABLE         {musicList}  {}
+#VARIABLE         {oocList}  {}
+#VARIABLE         {sayList}  {}
+#VARIABLE         {tellList}  {}
+#VARIABLE         {totalChannels}  {7}

@@ -1,0 +1,5 @@
+To load a bot, type botload and the name. To remove the bot, type botkill and the name.
+For example, if you have a bot called walker.tin:
+botload walker
+botkill walker
+Bot files must end in a .tin extension.

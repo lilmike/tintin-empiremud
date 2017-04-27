@@ -1,0 +1,78 @@
+#action {^You {begin|call out the chorus of|hum the melody to|sing} the chant of {druids|nature}.$}
+{
+seq_play magic/chant_of_%2
+}
+{9}
+
+#action {^You fire a blinding sunshock from your hand and hit %1 square in the face!$}
+{
+play magic/sunshock
+}
+{9}
+
+#action {^You feel the weight of the world lift from your shoulders!$}
+{
+play magic/ritual_of_burdens
+}
+{9}
+
+#action {^You {whisper your burdens into the air|wrap yourself up and begin chanting}...$}
+{
+play magic/ritual_start
+}
+{9}
+
+#action {^You whip your hand forward and fire a burst of color at %1!$}
+{
+rplay magic/colorburst
+}
+{9}
+
+#action {^You swirl your mana around your body to heal your wounds.$}
+{
+lplay magic/heal_self
+}
+{9}
+ 
+#action {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
+{
+lplay magic/heal_friend
+}
+{9}
+
+#action {^You scorch %* with hotter and hotter fire until it is blackened and dead!$}
+{
+play combat/fatal/fireball
+}
+{9}
+
+#action {^You shoot fire at %1, but {he|it|she} skillfully dodges.$}
+{
+rplay magic/miss_fireball
+}
+{9}
+
+#action {^Your %w cooldown has ended.$}
+{
+revplay magic/%1
+}
+{9}
+
+#action {^You %* with your deadly blast!!$}
+{
+rplay magic/fireball
+}
+{9}
+
+#action {%1 seems to be burning on the inside as magical pain courses through it!$}
+{
+rplay magic/residual_damage
+}
+{9}
+ 
+#action {%1 twitches as magical pain sears through it!$}
+{
+rplay magic/residual_damage
+}
+{9}
+ 

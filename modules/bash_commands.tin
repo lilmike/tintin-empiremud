@@ -1,0 +1,31 @@
+#alias {^fortune %1}
+{
+#regexp {%1} {{.*} {.*}} {#script {echo -n "&1 ";fortune -n 500 -s &2 | tr "[:space:]" " " | sed "s/%u2019/'/g"}} {#script {echo -n "%1 ";fortune -n 500 -s | tr "[:space:]" " "}}
+}
+{9}
+
+#ALIAS {^{da|dat|date}$}
+{
+	#if {!&{zipCode}}
+	{
+		#system {date +'%I:%M%p%n%A, %B %d, %Y'}
+	};
+	#else
+	{
+		#system {date +"%I:%M%p%n%A, %B %d, %Y%n$(elinks --dump "http://mobile.wunderground.com/cgi-bin/findweather/getForecast?brand=mobile_english&query=$zipCode" | grep -Em 2 "Temperature|Conditions" | tr -d "\n")"}
+	}
+}
+{9}
+
+#ALIAS {^{ft|fti|ftim|ftime|flit|flite|flite_|flite_ti|flite_tim|flite_time}$}
+{
+	#system {flite_time $(date +'%H:%M')&}
+}
+{9}
+
+#ALIAS {^{zi|zip|zipc|zipco|zipcod|zipcode}%s%S$}
+{
+	#variable {zipCode} {%3};
+	#showme {Your zipcode is now set to $zipCode\.}
+}
+{9}

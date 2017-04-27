@@ -1,0 +1,124 @@
+#action {^{A|An} {candle|torch} burns out.$}
+{
+play miscellaneous/burnout
+}
+{9}
+
+#action {^{A|An} {candle|torch} begins to flicker and fade.$}
+{
+play miscellaneous/flicker
+}
+{9}
+
+#action {^Roster of %1:$}
+{
+#variable {empireName} {%1}
+}
+{9}
+
+#action {^You awaken, and sit up.$}
+{
+#line {gag};
+stand
+}
+{9}
+
+#alias {^%ddo %2}
+{
+#regexp {%2} {{.*} {.*}} {#loop {1} {%1} {i} {&1 $i\.&2}} {#loop {1} {%1} {i} {$i\.%2}}
+}
+{9}
+
+#ACTION {^[ Return to continue, (q)uit, (r)efresh, (b)ack, or page number (1/2) ]$}
+{
+	#history {insert} {#cr}
+}
+{9}
+
+#ACTION {^Press return to continue...$}
+{
+	#history {insert} {#cr}
+}
+{9}
+
+#ALIAS {rm}
+{
+	remove
+}
+{9}
+
+#ALIAS {^:q!$}
+{
+	#nop {quit without saving};
+	stop_background_music;
+	#send {quit;l};
+	#delay {1.5} {#end}
+}
+{9}
+
+#ALIAS {^:wq$}
+{
+	#nop {Save and quit};
+	quit;
+	l;
+	#delay {1.5} {#end}
+}
+{9}
+
+#ALIAS {^{c|qc}save$}
+{
+	#unvariable {play_%*};
+	#unvariable {encryptedMessage};
+	#unvariable {unencryptedMessage};
+#class {gameData} {write} {$gameDataPath};
+	#if {"%0" == "csave"}
+	{
+		#showme {saving game data for $name\.}
+	}
+}
+{9}
+
+#ALIAS {^{dro|drop|g|ge|get|gi|giv|give|p|pu|put|ret|retr|retri|retrie|retriev|retrieve|sto|stor|store} %2}
+{
+	#variable {item} {%2};
+	#replace {item} {,} {;};
+	#forall {$item} {#send {%1 &0}}
+}
+{9}
+
+#ALIAS {cconf %1}
+{
+	#if {!&{%1}}
+	{
+		#showme {%1 false}
+	};
+	#else
+	{
+		#showme {%1 $%1}
+	}
+}
+{9}
+
+#event {RECEIVED INPUT}
+{
+#list {commandHistory} {add} {%0}
+}
+
+#MACRO {\e }
+{
+	#if {"$bufferLock" == "off"}
+	{
+		#variable {bufferLock} {on}
+	};
+	#else
+	{
+		#variable {bufferLock} {off}
+	};
+	#showme {Buffer lock $bufferLock\.};
+	#buffer {lock}
+}
+
+#VARIABLE         {bufferLock}  {off}
+#VARIABLE         {item}  {}
+#VARIABLE         {msg}  {}
+#variable {commandHistory} {}

@@ -1,0 +1,221 @@
+#alias {^{nom|m}sp$}
+{
+#if {"%0" == "msp"}
+{
+#variable {msp} {true};
+#showme {MSP enabled.}
+};
+#else
+{
+#variable {msp} {false};
+#showme {MSP disabled.}
+}
+}
+{9}
+
+#ACTION {^!!SOUND(%1.wa%2)$}
+{
+	#switch {"%1"}
+	{
+		#case {"misc/player_beep"}
+		{
+			synth_play attention
+		};
+		#default
+		{
+			#if {"%1" != "Off U=http://www.alteraeon.com/soundpack/wav_v1/"}
+			{
+				#system {if [ ! -f "sounds/%1.opus" ] ; then DIR=$(echo "%1.wav" | sed "s/\(.*\\/\)[^\\/]*$/\\1/");FNAME=$(echo "%1.wav" | sed -e "s/.*\\/\([^\\/]*\)$/\\1/" -e "s/\.wav$/.opus/");mkdir -p "sounds/$DIR";sox -qV0 -t wav "http://alteraeon.com/soundpack/wav_v1/%1.wav" - | opusenc --quiet --bitrate 48 "sounds/$DIR/$FNAME";fi};
+				play %1
+			}
+		}
+	}
+}
+{9}
+
+#ACTION {^{silent_MSP|MSP} mode is {already|now} {dis|en}abled.$}
+{
+	#nop {Because one action handles this, we need to check for en or dis. En is enabled, dis is disabled.};
+	#if {"%3" == "en"}
+	{
+		#variable {msp} {true}
+	};
+	#else
+	{
+		#variable {msp} {false}
+	}
+}
+{9}
+
+#ALIAS {^news$}
+{
+	#if {$motdStatus != 200 && $motdStatus != 404}
+	{
+		#script {motd} {curl -I "$MOTDURL"};
+		#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}}
+	};
+	#if {$motdStatus == 200}
+	{
+		#system {play -qV0 "$MOTDURL" gain $volume &> /dev/null &}
+	};
+	#else
+	{
+		#echo {There is no news currently.}
+	}
+}
+{9}
+
+#ALIAS {^synth_play %1}
+{
+	#if {"$msp" == "true" && &{%1}}
+	{
+		#system {play -qV0 $%1 gain $volume&}
+	}
+}
+{9}
+
+#ALIAS {play %1 %2}
+{
+	#if {"$msp" == "true"}
+	{
+		#system {play -qV0 "sounds/%1.opus" "sounds/%2.opus" gain $volume &> /dev/null &}
+	}
+}
+{9}
+
+#ALIAS {play_norandom %S}
+{
+	#if {"$msp" == "true"}
+	{
+		#system {play -qV0 "sounds/%1.opus" gain $volume &> /dev/null &}
+	}
+}
+{9}
+
+#ALIAS {{lplay|rplay|revplay|play} %S}
+{
+	#if {"$msp" == "true"}
+	{
+#if {"%1" == "lplay"}
+{
+#variable {lChannel} {v0.9};
+#variable {rChannel} {v0.4};
+		#system {play -qV0 "$($shuf -n 1 -e sounds/%2*opus)" remix $lChannel $rChannel gain $volume &}
+};
+#elseif {"%1" == "rplay"}
+{
+#variable {lChannel} {v0.4};
+#variable {rChannel} {v0.9};
+		#system {play -qV0 "$($shuf -n 1 -e sounds/%2*opus)" remix $lChannel $rChannel gain $volume &}
+};
+#elseif {"%1" == "revplay"}
+{
+		#system {play -qV0 "$($shuf -n 1 -e sounds/%2*opus)" reverse gain $volume &}
+};
+#else
+{
+		#system {play -qV0 "$($shuf -n 1 -e sounds/%2*opus)" gain $volume &}
+};
+	}
+}
+{9}
+
+#ALIAS {pan_play %S}
+{
+	#if {!&{play_%1} && "$msp" == "true"}
+	{
+		#variable {play_%1} {false};
+		#script {soundFileName} {$shuf -n 1 -e sounds/%1*opus};
+        #math {lChannel} {1d9};
+       #if {$lChannel < 5}
+{
+        #math {rChannel} {1d5+4}
+};
+#else
+{
+        #math {rChannel} {1d9}
+};
+		#variable {soundFileName} {${soundFileName[1]}};
+		#system {play -qV0 "$soundFileName" gain $volume remix v0.$lChannel v0.$rChannel &> /dev/null &};
+		#script {i} {soxi "$soundFileName" | grep Duration | cut -d ':' -f2- | cut -d '=' -f1 | tr -d "[:space:]"};
+		#variable {i} {${i[1]}};
+		#delay {$i}  {#unvariable {play_%1}}
+	}
+}
+{9}
+
+#ALIAS {seq_{play|play_norandom} %S}
+{
+	#if {!&{play_%1} && "$msp" == "true"}
+	{
+		#variable {play_%1} {false};
+#if {"%1" == "play"}
+{
+		#script {soundFileName} {$shuf -n 1 -e sounds/%2*opus};
+		#variable {soundFileName} {${soundFileName[1]}};
+};
+#else
+{
+#variable {soundFileName} {sounds/%2.opus}
+};
+		#system {play -qV0 "$soundFileName" gain $volume &> /dev/null &};
+		#script {i} {soxi "$soundFileName" | grep Duration | cut -d ':' -f2- | cut -d '=' -f1 | tr -d "[:space:]"};
+		#variable {i} {${i[1]}};
+		#delay {$i}  {#unvariable {play_%1}}
+	}
+}
+{9}
+
+#EVENT {IAC WILL MSP}
+{
+	#send {\xFF\xFD\x5A\};
+	#unevent {IAC WILL MSP}
+}
+
+#GAG              {^!!SOUND%*}
+#MACRO {\e[18~}
+{
+	#if {$volume <= -40}
+	{
+		#variable {volume} {-40}
+	};
+	#else
+	{
+		#math {volume} {$volume - 2}
+	};
+	synth_play newVolumeSound;
+#if {"$bgm" == "true"}
+{
+#delay {restartTileAmbiance}
+{
+nobgm;
+bgm
+}
+{0.25}
+}
+}
+
+#MACRO {\e[19~}
+{
+	#if {$volume >= 0}
+	{
+		#variable {volume} {0}
+	};
+	#else
+	{
+		#math {volume} {$volume + 2}
+	};
+	synth_play newVolumeSound;
+#if {"$bgm" == "true"}
+{
+#delay {restartTileAmbiance}
+{
+nobgm;
+bgm
+}
+{0.25}
+}
+}
+
+#VARIABLE         {msp}  {true}
+#VARIABLE         {volume}  {0}

@@ -1,0 +1,27 @@
+#alias {^Play_Lyre}
+{
+#math {i} {1d3};
+#system {play -nqV0 synth ${lyreChords[$i]} remix - vol 0.7 fade 0 2&}
+}
+{9}
+
+#alias {^Play_Flute}
+{
+#var {notes} {};
+#math {tuneLength} {1d4+3};
+#$tuneLength {#math {i} {1d6};
+#math {noteLength} {1d3};
+#if {$noteLength == 1} {#variable {noteLength} {0.25}};
+#if {$noteLength == 2} {#variable {noteLength} {0.5}};
+#if {$noteLength == 3} {#variable {noteLength} {0.75}};
+#var {notes} {$notes "|sox -np synth $noteLength ${fluteNotes[$i]}"}
+};
+#system {play -qV0 $notes remix - vol 0.11&}
+}
+{9}
+
+#var {tuneLength} {}
+#var {noteLength} {}
+#var {notes} {}
+#var {fluteNotes} {{1}{square B4}{2}{square A4}{3}{square G4}{4}{square F#4}{5}{square E4}{6}{square D4}}
+#var {lyreChords} {{1}{pl A4 pl E5 pl A5 pl B5 delay 0 0.2 0.4 0.6}{2}{pl D5 pl A5 pl D6 pl F#6 delay 0 0.2 0.4 0.6}{3}{pl G4 pl D5 pl B5 pl G6 delay 0 0.2 0.4 0.6}}

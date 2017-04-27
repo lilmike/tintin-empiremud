@@ -1,0 +1,465 @@
+#action {^Shadows creep up around you and then strike out at a %1!$}
+{
+lplay combat/terrify
+}
+{9}
+
+#action {%1 is terrified!$}
+{
+rplay combat/hit/terrified
+}
+{9}
+
+#action {^You toss a handful of sand into %1's eyes!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/blind
+}
+{9}
+
+#action {^You attempt to disarm %1, but fail.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/disarm_fail
+}
+{9}
+
+#action {^You skillfully disarm %1!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/disarm_succeed
+}
+{9}
+
+#action {^You try to {$damageTypes} %2, but {he|it|she} blocks.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/shield_block
+}
+{9}
+
+#action {^That last blow seems to stun %*!$}
+{
+rplay combat/hit/stun
+}
+{9}
+
+#action {^You sap %* in the back of the head.$}
+{
+rplay combat/hit/sap
+}
+{9}
+
+#action {^Your bash at %* sends {her|him|it} sprawling!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/bash_enemy
+}
+{9}
+
+#action {^Your kick hits %* in the solar plexus!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/kick
+}
+{9}
+
+#action {^Your {bash|blind|disarm|howl|jab|kick|outrage|prick|sap|terrify} cooldown has ended.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+#switch {"%1"}
+{
+#case {"bash"} {revplay combat/hit/bash_cooldown};
+#case {"blind"} {revplay combat/blind};
+#case {"disarm"} {revplay combat/disarm_fail};
+#case {"howl"} {revplay combat/howl};
+#case {"terrify"} {revplay combat/terrify};
+#default {revplay combat/hit/%1}
+}
+}
+{8}
+
+#action {^Your boots need polishing again -- blood all over them...$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/kick
+}
+{9}
+
+#action {^You aim %* and roast %* until it's fully cooked!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/fatal/fireball
+}
+{9}
+
+#action {^You spin wildly with outrage, hitting everything in sight!$}
+{
+play combat/hit/outrage
+}
+{9}
+
+#variable {damageTypes} {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}
+#action {^You jump out of the way in a panic as %* pounds at you!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+lplay combat/miss/miss
+}
+{9}
+
+#action {%1 {tries to {${damageTypes}}|{${damageTypes}} at} you but misses by a {hair!|mile\.}$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+lplay combat/miss/miss
+}
+{9}
+
+#action {^You {${damageTypes}} %* {missing|missing {it|her|him}}!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/miss/miss
+}
+{8}
+
+#action {^You {OBLITERATE|ANNIHILATE|LIQUIDATE|massacre|maul} %* with your {${damageTypes}}{\.|!|!!}$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+#if {"%3" == "{slash|slice|deadly slash|deadly slice}"}
+{
+rplay combat/hit/slash
+};
+#else
+{
+#regexp {%3} {{.*} {.*}} {rplay combat/hit/&2} {rplay combat/hit/%3}
+}
+}
+{9}
+
+#action {^You {${damageTypes}} %*{\.|!}$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+#if {"%1" == "{slash|slice}"}
+{
+rplay combat/hit/slash
+};
+#else
+{
+rplay combat/hit/%1
+}
+}
+{9}
+
+#action {^You beautifully slice %* into two parts -- both dead.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/fatal/death
+}
+{9}
+
+#action {^You try to {${damageTypes}} %* but miss by a mile.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/miss/miss
+}
+{9}
+
+#action {^You miss %* by an inch, curse that brat!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/miss/miss
+}
+{9}
+
+#action {^%1 engag{e|es} {her|him|it|you} in melee combat!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/engage;
+#if {&{autoshield}}
+{
+hold $autoshield
+}
+}
+{9}
+
+ #action {^You shudder with ecstasy as you feed from %*!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+seq_play combat/vampire_feed
+}
+{9}
+
+#action {^Your hostile flag cooldown has ended.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/hostile_cooldown
+}
+{9}
+  
+#action {^Your powerful slash cleanly cuts off %* head, which rolls away with a look of horror on it.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/fatal/decapitate
+}
+{9}
+
+#action {^You block %*.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+lplay combat/shield_block
+}
+{9}
+ 
+#action {^You grab {her|him|it} by the head and twist sharply!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/fatal/twist
+}
+{9}
+ 
+#action {^Your arrow pierces %1's heart, killing {her|him|it}!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/hit/arrow_enemy
+}
+{9}
+
+#action {^There is a thud as your arrow jabs into %1.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/hit/arrow_enemy
+}
+{9}
+
+#action {^Your arrow whistles past %1 harmlessly.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+play combat/miss/arrow_enemy
+}
+{9}
+ 
+#action {%1 snaps its teeth at you fiercely but misses.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+lplay combat/miss/bite
+}
+{9}
+
+#action {%* tries to bite you but bites its tongue instead!$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+lplay combat/miss/miss
+}
+{9}
+
+#action {^Your desperate %* at %* is easily avoided by {her|him|it}.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/miss/miss
+}
+{9}
+
+#action {^Your blood freezes as you hear %1's death cry.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+rplay combat/fatal/death;
+}
+{9}
+
+#action {^You have killed %1! R.I.P.$}
+{
+#delay {0.9} {lplay combat/victory};
+#if {"%1" != "someone"}
+{
+#if {"$autoloot" == "true"}
+{
+get all corpse
+};
+#if {"$autoskin" == "true"}
+{
+skin corpse
+}
+};
+#if {"$feeding" == "true"}
+{
+#variable {feeding} {false}
+}
+}
+{9}
+ 
+#action {%1 barely {${damageTypes}} you.$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+lplay combat/hit/kick
+}
+{9}
+
+#action {%1 {${damageTypes}}s you%*{\.|!}$}
+{
+#if {"$cspam" == "true"}
+{
+#line {gag}
+};
+#if {"%2" == "{slash|slice}"}
+{
+lplay combat/hit/slash
+};
+#else
+{
+lplay combat/hit/%2
+}
+}
+{9}
+
+#action {^You quickly prick %* with poison!}
+{
+#if {"${cspam}" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/prick
+}
+{9}
+
+#action {%* le{t|ts} out a fearsome howl!$}
+{
+#if {"${cspam}" == "true"}
+{
+#line {gag}
+};
+play combat/howl
+}
+{9}
+
+#action {%* acts like {she's|he's|it's} burning from the inside as poison flows through {her|its|his} veins!$}
+{
+#if {"${cspam}" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/poison-scream
+}
+{9}
+
+#action {%* winces in pain as poison courses through {his|her|its} blood!$}
+{
+#if {"${cspam}" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/poison-scream
+}
+{9}
+
+#action {%* looks ill as {it|she|he} is poisoned!$}
+{
+#if {"${cspam}" == "true"}
+{
+#line {gag}
+};
+rplay combat/hit/prick
+}
+{9}
+
+#action {{You wince in pain as poison courses through your blood!|You burn from the inside out as poison flows through your veins!}}
+{
+#if {"$cspam" == "true"}
+{
+#line gag
+};
+lplay combat/hit/poison-scream
+}
+{5}
+

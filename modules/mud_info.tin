@@ -1,0 +1,5 @@
+#VARIABLE         {MOTDURL}  {http://stormdragon.tk/scripts/emotd.ogg}
+#VARIABLE         {mudAddress}  {empiremud.net}
+#VARIABLE         {mudIntroMessage}  {Thanks for using tintin-empiremud, brought to you by Storm Dragon.\nVisit me on the web at http://stormdragon.tk. If you enjoy this package, feel free to leave a tip in the tip jar on the site.\nIf you have questions or feed back, you can post on the cowsay channel by typing /cowsay followed by your message, E.g. /cowsay hello.}
+#VARIABLE         {mudPort}  {4000}
+#VARIABLE         {mudSessionName}  {Empire Mud}

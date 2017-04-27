@@ -1,0 +1,150 @@
+#alias {^{bp|hp|mn|mv}$}
+{
+#if {"%0" == "bp"}
+{
+display %b of %B blood.
+};
+#if {"%0" == "hp"}
+{
+display %h of %H health.
+};
+#if {"%0" == "mv"}
+{
+display %v of %V move.
+};
+#if {"%0" == "mn"}
+{
+display %m of %M mana.
+}
+}
+{9}
+
+#alias {^{noaudio|audio}prompt$}
+{
+#if {"%0" == "audioprompt"}
+{
+#variable {audioprompt} {true};
+#unsplit;
+#showme {Audio prompt enabled.}
+};
+#else
+{
+#unvariable {audioprompt};
+#split;
+#showme {Audio prompt disabled.}
+}
+}
+{9}
+
+#gag {^\x7c%1\x2f%2\x2f%3\x3e}
+#gag {^\x7c%1\x2f%2\x3e}
+#gag {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x2f%3\x3e}
+#gag {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x3e}
+#prompt {^\x7c%1\x2f%2\x3e} {%0} {1}
+#prompt {^\x7c%1\x2f%2\x2f%3\x3e} {%0} {1}
+#prompt {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x3e} {%0} {1}
+#prompt {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x2f%3\x3e} {%0} {1}
+#substitute {^\x5b%.%d\x5d%*\x3e$} {%1%2 -> } {1}
+#action {^\x7c%1\x2f%2\x3e}
+{
+#if {"%1" != "$currentHitpoints"}
+{
+#variable {currentHitpoints} {%1};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentHitpoints}
+}
+};
+#if {"%2" != "$currentMove"}
+{
+#variable {currentMove} {%2};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentMove}
+}
+}
+}
+{9}
+
+#action {^({hostile|PVP}) \x7c%1\x2f%2\x3e}
+{
+#if {"%1" != "$currentHitpoints"}
+{
+#variable {currentHitpoints} {%1};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentHitpoints}
+}
+};
+#if {"%2" != "$currentMove"}
+{
+#variable {currentMove} {%2};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentMove}
+}
+}
+}
+{9}
+
+#action {^\x7c%1\x2f%2\x2f%3\x3e}
+{
+#if {"%1" != "$currentHitpoints"}
+{
+#variable {currentHitpoints} {%1};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentHitpoints}
+}
+};
+#if {"%2" != "$currentMove"}
+{
+#variable {currentMove} {%2};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentMove}
+}
+};
+#if {"%3" != "$currentMana"}
+{
+#variable {currentMana} {%3};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentMana}
+}
+}
+}
+{9}
+
+#action {^({hostile|PVP}) \x7c%1\x2f%2\x2f%3\x3e}
+{
+#if {"%1" != "$currentHitpoints"}
+{
+#variable {currentHitpoints} {%1};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentHitpoints}
+}
+};
+#if {"%2" != "$currentMove"}
+{
+#variable {currentMove} {%2};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentMove}
+}
+};
+#if {"%3" != "$currentMana"}
+{
+#variable {currentMana} {%3};
+#if {"$audioprompt" == "true"}
+{
+synth_play {$currentMana}
+}
+}
+}
+{9}
+
+#var {currentHitpoints} {}
+#var {currentMove} {}
+#var {currentMana} {}

@@ -1,0 +1,21 @@
+#action {^You are using (gear level %d):$}
+{
+#showme {Gear level %1:};
+#line {gag}
+}
+{9}
+
+#ALIAS {^nocspam$}
+{
+#unvariable {cspam};
+    #showme {Client side spam filters will no longer be applied.}
+}
+{9}
+
+#ALIAS {^cspam$}
+{
+#variable {cspam} {true};
+    #showme {Client side spam filters will now be applied.}
+}
+{9}
+#gag {^SILENT_%*} 

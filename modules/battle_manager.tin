@@ -1,0 +1,64 @@
+#ACTION {%1 is {bruised|crippled|healthy|hurt|injured|mauled|nearly dead|wounded}.$}
+{
+#if {"$beeps" == "true" && "$cspam" == "true"}
+{
+#line {gag}
+};
+#if {"%2" == "healthy"}
+	{
+		#variable {enemyConditionTone} {600}
+	};
+#elseif {"%2" == "bruised"}
+	{
+		#variable {enemyConditionTone} {575}
+	};
+	#elseif {"%2" == "hurt"}
+	{
+		#variable {enemyConditionTone} {550}
+	};
+	#elseif {"%2" == "injured"}
+	{
+		#variable {enemyConditionTone} {500}
+	};
+	#elseif {"%2" == "wounded"}
+	{
+		#variable {enemyConditionTone} {450}
+	};
+	#elseif {"%2" == "mauled"}
+	{
+		#variable {enemyConditionTone} {400}
+	};
+	#elseif {"%2" == "crippled"}
+	{
+		#variable {enemyConditionTone} {350}
+	};
+	#elseif {"%2" == "nearly dead"}
+	{
+		#variable {enemyConditionTone} {250}
+	};
+	#else
+	{
+		#variable {enemyConditionTone} {200}
+	};
+#if {"$beeps" == "true"}
+{
+	#system {play -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.06 remix v0.4 v0.9 gain $volume&};
+}
+}
+{9}
+
+#alias {^{nobeeps|beeps}$}
+{
+#if {"%0" == "beeps"}
+{
+#variable {beeps} {true};
+#showme {Enemy conditions will now be represented with beeps.}
+};
+#else
+{
+#unvariable {beeps};
+#showme {Enemy conditions will no longer be represented with beeps.}
+}
+}
+{9}
+

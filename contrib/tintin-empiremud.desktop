@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+# replace USER with your username
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+Name=Tintin Empire MUD
+Name[en]=Tintin Empire MUD
+GenericName=Sound and accessibility pack for Empire MUD
+GenericName[en]=Sound and accessibility pack for Empire MUD
+Comment=Sound and accessibility pack for Empire MUD
+Comment[en]=Sound and accessibility pack for Empire MUD
+Exec=/usr/bin/gnome-terminal --maximize --hide-menubar --working-directory=/home/USER/tintin-empiremud/ --title "Empire MUD" -e "/usr/bin/screen -t 'Empire MUD' /home/USER/tintin-empiremud/contrib/tt_launcher"
+StartupNotify=false
+Categories=Application;Game;ArcadeGame

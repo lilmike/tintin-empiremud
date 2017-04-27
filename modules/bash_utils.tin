@@ -1,0 +1,6 @@
+#script {operatingSystem} {uname -s}
+#script {sed} {if [[ "$(uname -s)" == "Darwin" ]] ; then echo "gsed";else echo "sed";fi}
+#script {shuf} {if [[ "$(uname -s)" == "Darwin" ]] ; then echo "gshuf";else echo "shuf";fi}
+#variable {sed} {${sed[1]}}
+#variable {shuf} {${shuf[1]}}
+#variable {operatingSystem} {${operatingSystem[1]}}

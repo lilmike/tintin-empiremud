@@ -1,0 +1,153 @@
+#ACTION {%1 tells you, 'http://sndup.net/%S/{a|d|a'|d'}$}
+{
+    #line {gag};
+        #variable {clipType} {private}
+    #variable {soundClip} {{1}{%1}{2}{%2}};
+    #if {"$autosoundclip" == "true" || "%1" == "{$autoClipList}"}
+    {
+        #echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop playback.};
+        playclip %2
+    };
+    #else
+    {
+        play new-clip;
+        #echo {%1 shared a $clipType sound clip. Press alt+' to listen. You can stop playback with alt+shift+|.}
+    };
+Add_Channel_Event tell %0
+Add_Channel_Event all %0
+}
+{5}
+ 
+#ACTION {^[%S %2{]: |] }http://sndup.net/%S/{a|d|a'|d'}$}
+{
+	#line {gag};
+		#variable {clipType}  {public};
+	#variable {soundClip} {{1}{%2}{2}{%4}};
+	#if {"$autosoundclip" == "true" || "%2" == "{$autoClipList}"}
+	{
+		#echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop playback.};
+		playclip %4
+	};
+	#else
+	{
+		play new-clip;
+		#echo {%2 shared a $clipType sound clip. Press alt+' to listen. You can stop playback with alt+shift+|.}
+	};
+Add_Channel_Event all %0
+}
+{5}
+
+#ALIAS {Sound_Clip_Handler %1}
+{
+	#if {"$recordingPID" == "false"}
+	{
+		#variable {soundClipChannel} {%1};
+		#echo {recording. Press alt+shift+P again to stop and post your clip.};
+		#system {rec -qV0 clip.ogg &echo "#variable {recordingPID} {$!}" > .recordingpid};
+		#read {.recordingpid}
+	};
+	#else
+	{
+		#system {kill $recordingPID};
+		#echo {Posting soundclip...};
+		#system {bash uploadclip.sh $soundClipChannel&};
+		#variable {recordingPID} {false}
+	}
+}
+{5}
+
+#ALIAS {^clipchat %S}
+{
+	#variable {clipTellTarget} {%1};
+	#if {"$clipTellTarget" != "reply"}
+	{
+		#showme {You can now send  sound clips to $clipTellTarget with alt+shift+T}
+	};
+	#else
+	{
+		#showme {Private soundclips set to reply.}
+	}
+}
+{9}
+
+#ALIAS {^playclip %S$}
+{
+	#system {play -qV0 http://sndup.net/%1/d gain $volume& echo "#variable {soundClipPID} {$!}" > .clippid};
+	#read {.clippid}
+}
+{9}
+
+#ALIAS {^{a|noa}utosoundclip$}
+{
+	#if {"%0" == "autosoundclip"}
+	{
+		#variable {autosoundclip} {true};
+		#echo {sound clips will play as soon as they are posted.}
+	};
+	#else
+	{
+		#unvariable {autosoundclip};
+		#echo {Autosoundclip disabled.}
+	}
+}
+{9}
+
+#MACRO {\e"}
+{
+	#if {!&{autoClipList}}
+	{
+		#variable {autoClipList} {${soundClip[1]}}
+	};
+	#else
+	{
+		#variable {autoClipList} {${autoClipList}|${soundClip[1]}}
+	};
+	#echo {${soundClip[1]} added to your allow list for sound clips.}
+}
+
+#MACRO {\e'}
+{
+	#echo {Playing sound clip from ${soundClip[1]}, press alt+shift+" to always allow clips from them. Press alt+shift+~ to download this clip.};
+	playclip ${soundClip[2]}
+}
+
+#MACRO {\eG}
+{
+	Sound_Clip_Handler gtell
+}
+
+#MACRO {\eP}
+{
+	Sound_Clip_Handler /music
+}
+
+#MACRO {\eT}
+{
+	#if {"$clipTellTarget" != "reply"}
+	{
+		Sound_Clip_Handler tell $clipTellTarget
+	};
+	#else
+	{
+		Sound_Clip_Handler reply
+	}
+}
+
+#MACRO {\e|}
+{
+	#if {&{soundClipPID}}
+	{
+		#system {kill $soundClipPID}
+	}
+}
+
+#MACRO {\e~}
+{
+	#system {bash scripts/downloadclip.sh ${soundClip[1]} ${soundClip[2]}}
+}
+
+#TICKER           {post_clip}  {#script {if [ -f cliplink.txt ] ; then echo "#textin {cliplink.txt}";rm cliplink.txt;fi}}                                                                 {1}
+#VARIABLE         {clipTellTarget}  {reply}
+#VARIABLE         {clipType}  {}
+#VARIABLE         {recordingPID}  {false}
+#VARIABLE         {soundClip}  {}

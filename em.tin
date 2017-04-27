@@ -1,0 +1,197 @@
+#ACTION {Password:}
+{
+	#if {&{password} && "$enteredPassword" == "false"}
+	{
+		$password;
+		#cr;
+		#variable {enteredPassword} {true}
+	}
+}
+{9}
+
+#ALIAS {^{em|login}$}
+{
+	#if {"$connected" == "false"}
+	{
+		#session {$mudSessionName} {$mudAddress} {$mudPort}
+	};
+	#else
+	{
+		#showme {Huh?}
+	}
+}
+{8}
+
+#ALIAS {^bot{kill|load|reload} %S$}
+{
+	#nop {Kill, load, or reload a specified bot.};
+	#if {"%1" == "{kill|reload}"}
+	{
+		#class {%2} {kill};
+		#showme {Bot %2 has been killed.}
+	};
+	#if {"%1" == "{load|reload}"}
+	{
+		#showme {Loading bot %2.tin};
+		#class {%2} {read} {modules/bots/%2.tin};
+		#class {gameData} {open}
+	}
+}
+{9}
+
+#ALIAS {^mod{kill|load|reload} %S$}
+{
+	#nop {reload all modules};
+	#if {"%0" == "modreload all"}
+	{
+		#script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename           "$module" .tin)} {read} {$module}";done}
+	};
+	#else
+	{
+		#nop {Kill, load, or reload a specified module.};
+		#if {"%1" == "{kill|reload}"}
+		{
+			#class {%2} {kill};
+			#showme {Class %2 has been killed.}
+		};
+		#if {"%1" == "{load|reload}"}
+		{
+			#showme {Loading modules/%2.tin};
+			#class {%2} {read} {modules/%2.tin};
+			#class {gameData} {open}
+		}
+	}
+}
+{9}
+
+#ALIAS {^set{a|b|c|d|e|f|g|h|n|q|r|s|t|v|w|x|y|z} %2}
+{
+	#macro {\e%1} {%2};
+	#showme {alt+%1 has been set to %2.}
+}
+{9}
+
+#ALIAS {^set{a|b|c|d|e|f|g|h|n|q|r|s|t|v|w|x|y|z}$}
+{
+	#macro {\e%1}
+}
+{9}
+
+#ALIAS {^unset %S}
+{
+	#if {"${%1}" == "true"}
+	{
+		#unvariable {%1};
+		#showme {%1 unset}
+	};
+	#else
+	{
+		#showme {%1 not found.}
+	}
+}
+{9}
+
+#ALIAS {^{em|login}%s%w$}
+{
+	Initialize_Settings %3;
+	#if {"$connected" == "false"}
+	{
+		#session {$mudSessionName} {$mudAddress} {$mudPort}
+	};
+	#else
+	{
+		#showme {Huh?}
+	}
+}
+{9}
+
+#ALIAS {^{quit|logoff}$}
+{
+	#script {if [[ "$musicPID" =~ [0-9].* ]] ; then kill $musicPID;echo "#unticker {backgroundMusic}";fi};
+	#system {if [ -f ".backgroundMusicPID" ] ; then rm ".backgroundMusicPID" &> /dev/null;fi};
+	#class {gameData} {write} {$gameDataPath};
+	#if {&{name}}
+	{
+		#history {write} {$historyPath}
+	};
+	#if {${mineCounter.total} > 0}
+	{
+		post ${name} discovered ${mineCounter.copper} copper, ${mineCounter.gold} gold, ${mineCounter.imperium} imperium, ${mineCounter.iron} iron, ${mineCounter.nocturnium} nocturnium and ${mineCounter.silver} silver mines for a total of ${mineCounter.total}\.
+	};
+	#send {quit}
+}
+{9}
+
+#EVENT {PROGRAM START}
+{
+	#nop {Set the home directory variable.};
+	#script {HOME} {if [ -z "$XDG_CONFIG_HOME" ] ; then if ! [ -d "$HOME/.config/tintin-empiremud/" ] ; then mkdir -p "$HOME/.config/tintin-empiremud";fi;echo -n "$HOME/.config/tintin-empiremud";else if ! [ -d "$XDG_CONFIG_HOME/tintin-empiremud/" ] ; then mkdir -p "$XDG_CONFIG_HOME/tintin-empiremud/";fi;echo -n "$XDG_CONFIG_HOME/tintin-empiremud";fi};
+	#variable {HOME} {${HOME[1]}};
+	#nop {Load all the .tin files in the modules directory in classes named after the module name.};
+	#script {for i in modules/*.tin ; do echo "#class {$(basename "$i" .tin)} {read} {$i}";done};
+	#nop {Get the date as a number, e.g. 1225 is Christmas day. Then play intros based on the date.};
+	#script {introDate} {date '+%m%d'};
+	#if {${introDate[1]} == 1031}
+	{
+		play halloween-intro
+	};
+	#elseif {${introDate[1]} > 1124 && ${introDate[1]} < 1200}
+	{
+		play thanksgiving-intro
+	};
+	#elseif {${introDate[1]} >= 1213 && ${introDate[1]} <= 1225}
+	{
+		play christmas-intro${introDate[1]}
+	};
+	#else
+	{
+		play intro
+	};
+	#nop {This is the only time we need the date number, so may as well clear it.};
+	#unvariable {introDate};
+	#nop {Get the last modified date of the news file.};
+	#script {motd} {curl -sI "$MOTDURL"};
+	#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}};
+	#regexp {${motd[4]}} {Last-Modified: {.*}} {#variable {motdTime} {News updated &1}};
+	#nop {Display intro message.};
+	#echo {$mudIntroMessage};
+	#nop {This is the only time we need the intro message, so may as well clear it.};
+	#unvariable {mudIntroMessage};
+	#echo {To get started type login};
+	#nop {If everything went ok with the news file above, display the last time news was updated.};
+	#if {$motdStatus == 200}
+	{
+		#echo {${motdTime}};
+		#echo {To listen to it type news.};
+		Add_Channel_Event all ${motdTime}
+	}
+}
+
+#EVENT {SESSION CONNECTED}
+{
+	synth_play connectedSound;
+	#nop {Set connected to true so if you accidently type login it won't try to login twice.};
+	#variable {connected} {true};
+	#nop {Create the log directory if it doesn't exist. Log files are based on date and time.};
+	#script {logFilePath} {date +'log/%Y/%B/%d/'};
+	#variable {logFilePath} {${HOME}/${logFilePath[1]}};
+	#script {logFileName} {date +'%I_%M%p.log'};
+	#system {mkdir -p $logFilePath};
+	#log {overwrite} {${logFilePath}${logFileName[1]}}
+}
+
+#EVENT {SESSION DISCONNECTED}
+{
+	#unvariable {connected};
+	#nop {Make sure background music is disabled when the program closes.};
+	#script {tileSoundFilePID} {if [ -f ".tileSoundFilePID" ] ; then echo "$(cat ".tileSoundFilePID")";else echo "false";fi;echo "false" > .tileSoundFilePID};
+	#variable {tileSoundFilePID} {${tileSoundFilePID[1]}};
+	#if {"$tileSoundFilePID" != "false"}
+	{
+		#system {kill $tileSoundFilePID}
+	}
+}
+
+#VARIABLE         {connected}  {false}
+#VARIABLE         {enteredPassword}  {false}
+#VARIABLE         {motd}  {}

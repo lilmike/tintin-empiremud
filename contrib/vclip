@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#vclip by Storm Dragon
+#License: WTFPL http://wtfpl.net/
+#This script makes recording and pasting sound clips to Alter Aeon's sound clip channel easier.
+
+#record sound file, press control+c to quit and send.
+echo "Recording, press control+c to post your clip."
+rec -qV0 clip.ogg
+#add blank line so the ^C doesn't show up on the same line as the link
+echo
+#Reduce file size for faster uploads, and to be nice to the sndup server
+sox clip.ogg -c 1 -r 22050 tmpclip.ogg
+mv tmpclip.ogg clip.ogg
+#upload the file and extract the url from the json
+upload="$(curl -s --form file=@clip.ogg --form submit=upload http://sndup.net/post.php)"
+jsonInfo="$(echo "$upload" | sed 's/,/\n/g')"
+#save channel command to the file and show link in the terminal
+echo -n "soundclip " > cliplink.txt
+echo -n "$jsonInfo" | grep 'url' | sed -e 's/^{"url":"//' -e 's/a$/d/' | tr -d '"\\' | tee -a cliplink.txt
+echo
+exit 0

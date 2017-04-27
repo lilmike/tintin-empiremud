@@ -1,0 +1,21 @@
+#SUBSTITUTE       {:{-D|D}\x7D}  {*bearded grin*}  {4}
+#SUBSTITUTE       {>:{-\x28|\x28}\x7D}  {*evil bearded frown*}  {4}
+#SUBSTITUTE       {>:{-\x29|\x29}\x7D}  {*evil bearded smile*}  {4}
+#SUBSTITUTE       {:{'-|'}\x28\x7D}  {*bearded cry*}  {5}
+#SUBSTITUTE       {:{'-|'}\x29\x7D}  {*bearded tears of joy*}  {5}
+#SUBSTITUTE       {:{-D|D}}  {*grin*}  {5}
+#SUBSTITUTE       {:{-O|O}}  {*surprise*}  {5}
+#SUBSTITUTE       {:{-P|P}}  {*tongue out*}  {5}
+#SUBSTITUTE       {:{-\x28|\x28}\x7D}  {*bearded frown*}  {5}
+#SUBSTITUTE       {:{-\x29|\x29}\x7D}  {*bearded smile*}  {5}
+#SUBSTITUTE       {:{-\x7c\x7c|@}}  {*angry*}  {5}
+#SUBSTITUTE       {>:{-\x28|\x28}}  {*evil frown*}  {5}
+#SUBSTITUTE       {>:{-\x29|\x29}}  {*evil smile*}  {5}
+#SUBSTITUTE       {{D:<|D:}}  {*horror*}  {5}
+#SUBSTITUTE       {{\x7c;-)|\x7c-O|:D|:-D}}     {*cool*}  {5}
+#SUBSTITUTE       {:{'-|'}\x28}  {*cry*}  {9}
+#SUBSTITUTE       {:{'-|'}\x29}  {*tears of joy*}  {9}
+#SUBSTITUTE       {:{-\x28|\x28}}  {*frown*}  {9}
+#SUBSTITUTE       {:{-\x29|\x29}}  {*smile*}  {9}
+#SUBSTITUTE       {{'| }QQ{ |'}}  {*cry*}  {9}
+#substitute {{:/|:-/}{ |'}} {*perplexed*} {9}
