@@ -17,9 +17,9 @@
 #ALIAS {MSDP_REPORT}
 {
 	#variable result {$IAC$SB$MSDP_PROTOCOL${VAR}REPORT};
-	#forall {${MSDP_REPORTABLE_VARIABLES[]}}
+	#forall {${MSDP.REPORTABLE_VARIABLES}[]}
 	{
-		#variable result {$result${VAL}${MSDP_REPORTABLE_VARIABLES[&0]}}
+		#variable result {$result${VAL}${MSDP.REPORTABLE_VARIABLES}[&0]}
 	};
 	#send {$result$IAC$SE\}
 }
