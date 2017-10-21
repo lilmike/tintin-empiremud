@@ -1,12 +1,3 @@
-#alias {^name%s%w$}
-{
-#unticker {autosave};
-#class {gameData} {kill};
-#variable {name} {%2};
-Initialize_Settings $name
-}
-{9}
-
 #action {^SILENT_CHANNELS_CONNECTED$}
 {
 #ungag {^You're already on that channel.$}
@@ -27,35 +18,8 @@ Tile_Play $tileSoundFile
 }
 {9}
 
-#action {^Reconnecting.$}
-{
-emote PLAYER_NAME_$n
-}
-{9}
-
-#action {^PLAYER_NAME_%w %*$}
-{
-#if {!&{name}}
-{
-#variable {name} {%1};
-Initialize_Settings $name
-}
-}
-{9}
-
-#action {^PLAYER_NAME_%w$}
-{
-#if {!&{name}}
-{
-#variable {name} {%1};
-Initialize_Settings $name
-}
-}
-{9}
-
 #action {^Welcome to your EmpireMUD! Prepare to face your destiny!$}
 {
-emote PLAYER_NAME_$n;
 #gag {^You're already on that channel.$};
 /join cowsay;
 /join music;
@@ -63,9 +27,10 @@ display SILENT_CHANNELS_CONNECTED
 }
 {9}
 
-#alias {^Initialize_Settings %w$}
+#event {VARIABLE UPDATE MSDP_ACCOUNT_NAME}
 {
-    #format {name} {%l} {%1};
+#echo {in event};    
+#format {name} {%l} {%1};
     #variable {gameDataPath} {${HOME}/$name};
     #variable {historyPath} {${HOME}/$name\.history};
     #replace {historyPath} {\\} {};
