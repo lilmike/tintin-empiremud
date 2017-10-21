@@ -27,14 +27,15 @@ display SILENT_CHANNELS_CONNECTED
 }
 {9}
 
-#event {VARIABLE UPDATE MSDP_ACCOUNT_NAME}
+#event {VARIABLE UPDATE MSDP}
 {
-#echo {in event};    
-#format {name} {%l} {%1};
+#if {"${MSDP.ACCOUNT_NAME}" != "${name}"}
+{
+#format {name} {%l} {${MSDP.ACCOUNT_NAME}};
     #variable {gameDataPath} {${HOME}/$name};
     #variable {historyPath} {${HOME}/$name\.history};
     #replace {historyPath} {\\} {};
-    #format {name} {%n} {%1};
+    #format {name} {%n} {${MSDP.ACCOUNT_NAME}};
     #script {if ! [ -f "$gameDataPath" ] ; then echo -e "#variable {channelBufferIndex} {0}\n#variable {beeps} {true}" > "$gameDataPath";fi;if [ -f "$historyPath" ] ; then echo "#history {read} {$historyPath}";fi};
     #class {gameData} {read} {$gameDataPath};
     #if {"$autocspam" == "true"}
@@ -47,6 +48,7 @@ display SILENT_CHANNELS_CONNECTED
 #if {"$bgm" == "true"}
 {
 look
+}
 }
 }
 {9}
