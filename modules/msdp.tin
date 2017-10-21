@@ -10,14 +10,14 @@
 
 #ALIAS {MSDP_LIST}
 {
-	#send {$IAC$SB$MSDP${VAR}LIST${VAL}%0$IAC$SE\}
+	#send {$IAC$SB$MSDP${VAR}LIST${VAL}REPORTABLE_VARIABLES$IAC$SE\}
 }
 {9}
 
 #ALIAS {MSDP_REPORT}
 {
 	#variable result {$IAC$SB$MSDP${VAR}REPORT};
-	#foreach {$REPORTABLE_VARIABLES[]} {MSDP_TMP}
+	#foreach {${MSDP_REPORTABLE_VARIABLES[]}} {MSDP_TMP}
 	{
 		#variable result {$result${VAL}$MSDP_TMP}
 	};
@@ -25,9 +25,9 @@
 }
 {9}
 
-#ALIAS {MSDP_SEND}
+#ALIAS {MSDP_SEND %*}
 {
-	#send {$IAC$SB$MSDP${VAR}SEND${VAL}%0$IAC$SE\}
+	#send {$IAC$SB$MSDP${VAR}SEND${VAL}%1$IAC$SE\}
 }
 {9}
 
@@ -56,7 +56,8 @@
 #EVENT {IAC WILL MSDP}
 {
 	#send {$IAC$DO$MSDP\};
-	MSDP_REPORT;
+        MSDP_LIST;
+#delay {10} {MSDP_REPORT};
 	MSDP_CONFIGURE sound,1
 }
 
