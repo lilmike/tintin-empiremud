@@ -17,9 +17,9 @@
 #ALIAS {MSDP_REPORT}
 {
 	#variable result {$IAC$SB$MSDP${VAR}REPORT};
-	#foreach {${MSDP_REPORTABLE_VARIABLES[]}} {MSDP_TMP}
+	#forall {${MSDP_REPORTABLE_VARIABLES[]}}
 	{
-		#variable result {$result${VAL}$MSDP_TMP}
+		#variable result {$result${VAL}${MSDP_REPORTABLE_VARIABLES[&0]}}
 	};
 	#send {$result$IAC$SE\}
 }
@@ -44,7 +44,11 @@
 		#case {"NAME"}
 		{
 			INITIALIZE_SETTINGS
-		}
+		};
+#case {"REPORTABLE_VARIABLES"}
+{
+MSDP_REPORT
+}
 	}
 }
 
@@ -57,7 +61,6 @@
 {
 	#send {$IAC$DO$MSDP\};
         MSDP_LIST;
-#delay {10} {MSDP_REPORT};
 	MSDP_CONFIGURE sound,1
 }
 
