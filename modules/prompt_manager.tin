@@ -2,19 +2,19 @@
 {
 #if {"%0" == "bp"}
 {
-display %b of %B blood.
+#echo {${MSDP.BLOOD} of ${MSDP.BLOOD_MAX} blood.}
 };
 #if {"%0" == "hp"}
 {
-display %h of %H health.
+#echo {${MSDP.HEALTH} of ${MSDP.HEALTH_MAX} health.}
 };
 #if {"%0" == "mv"}
 {
-display %v of %V move.
+#echo {${MSDP.MOVEMENT} of ${MSDP.MOVEMENT_MAX} move.}
 };
 #if {"%0" == "mn"}
 {
-display %m of %M mana.
+#echo {${MSDP.MANA} of ${MSDP.MANA_MAX} mana.}
 }
 }
 {9}
