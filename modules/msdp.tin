@@ -1,0 +1,72 @@
+#ALIAS {MSDP_CONFIGURE %1,%2}
+{
+	#list {MSDP_VALUES} {create} {%2};
+	#variable {index} {1};
+	#send {$IAC$SB$MSDP\};
+	#forall {%1} {#send {${VAR}&0${VAL}${MSDP_VALUES[$index]}\};#math {index} {$index+1}};
+	#send {$IAC$SE\}
+}
+{9}
+
+#ALIAS {MSDP_LIST}
+{
+	#send {$IAC$SB$MSDP${VAR}LIST${VAL}%0$IAC$SE\}
+}
+{9}
+
+#ALIAS {MSDP_REPORT}
+{
+	#variable result {$IAC$SB$MSDP${VAR}REPORT};
+	#foreach {$REPORTABLE_VARIABLES[]} {MSDP_TMP}
+	{
+		#variable result {$result${VAL}$MSDP_TMP}
+	};
+	#send {$result$IAC$SE\}
+}
+{9}
+
+#ALIAS {MSDP_SEND}
+{
+	#send {$IAC$SB$MSDP${VAR}SEND${VAL}%0$IAC$SE\}
+}
+{9}
+
+#EVENT {IAC SB MSDP}
+{
+	#nop Save all variables with an MSDP_ prefix.;
+	#variable {MSDP_%0} {%1};
+	#switch {"%0"}
+	{
+		#case {"PLAY_SOUND"}
+		{
+			play %1
+		};
+		#case {"NAME"}
+		{
+			INITIALIZE_SETTINGS
+		}
+	}
+}
+
+#EVENT {IAC SB MSDP IAC SE}
+{
+	#nop
+}
+
+#EVENT {IAC WILL MSDP}
+{
+	#send {$IAC$DO$MSDP\};
+	MSDP_REPORT;
+	MSDP_CONFIGURE sound,1
+}
+
+#FORMAT {IAC}  {%a} {255}
+#FORMAT {DONT} {%a} {254}
+#FORMAT {DO}   {%a} {253}
+#FORMAT {WONT} {%a} {252}
+#FORMAT {WILL} {%a} {251}
+#FORMAT {SB}   {%a} {250}
+#FORMAT {SE}   {%a} {240}
+#FORMAT {MSDP} {%a}  {69}
+#FORMAT {VAR}  {%a}  {01}
+#FORMAT {VAL}  {%a}  {02}
