@@ -106,7 +106,12 @@ show mana
 #math {playerCondition.currentHealth} {(${MSDP.HEALTH} / ${MSDP.HEALTH_MAX}) * 100};
 #math {playerCondition.currentMana} {(${MSDP.MANA} / ${MSDP.MANA_MAX}) * 100};
 #math {playerCondition.currentMovement} {(${MSDP.MOVEMENT} / ${MSDP.MOVEMENT_MAX}) * 100};
-#if {${playerCondition.currentHealth} >= 85 && ${playerCondition.currentHealth} < 100}
+#if {${playerCondition.currentHealth} == 100}
+{
+#variable {playerCondition.currentHealth} {healthy};
+#variable {playerCondition.oldHealth} {healthy}
+};
+#elseif {${playerCondition.currentHealth} >= 85}
 {
 #variable {playerCondition.currentHealth} {bruised}
 };
