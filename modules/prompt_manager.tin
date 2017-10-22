@@ -1,3 +1,23 @@
+#alias {^show %S$}
+{
+#format {tmp} {%u} {%1};
+#if {&{MSDP.${tmp}}}
+{
+#variable {msg} {${MSDP.${tmp}} %1};
+#if {&{MSDP.${tmp}_PERM}}
+{
+#variable {msg} {${msg} of ${MSDP.${tmp}_PERM}}
+};
+};
+#else
+{
+#variable {msg} {Nothing to show}
+};
+#variable {msg} {${msg}\.};
+#echo {${msg}}
+}
+{9}
+
 #alias {^{bp|hp|mn|mv}$}
 {
 #if {"%0" == "bp"}
