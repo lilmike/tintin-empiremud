@@ -27,9 +27,7 @@ display SILENT_CHANNELS_CONNECTED
 }
 {9}
 
-#event {VARIABLE UPDATE MSDP}
-{
-#if {"${MSDP.ACCOUNT_NAME}" != "${name}"}
+#alias {^INITIALIZE_SETTINGS$}
 {
 #format {name} {%l} {${MSDP.ACCOUNT_NAME}};
     #variable {gameDataPath} {${HOME}/$name};
@@ -48,7 +46,6 @@ display SILENT_CHANNELS_CONNECTED
 #if {"$bgm" == "true"}
 {
 look
-}
 }
 }
 {9}

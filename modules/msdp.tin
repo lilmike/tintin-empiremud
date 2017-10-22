@@ -70,4 +70,17 @@ MSDP_REPORT
 #FORMAT {MSDP_PROTOCOL} {%a}  {69}
 #FORMAT {VAR}  {%a}  {01}
 #FORMAT {VAL}  {%a}  {02}
+
+#event {VARIABLE UPDATE MSDP}
+{
+#if {"${name}" != "${MSDP.ACCOUNT_NAME}"}
+{
+INITIALIZE_SETTINGS
+};
+#if {${MSDP.OPPONENT_HEALTH} != 0}
+{
+ENEMY_CONDITION ${MSDP.OPPONENT_HEALTH}
+}
+}
+
 #variable {MSDP} {}
