@@ -8,6 +8,10 @@
 {
 #variable {msg} {${msg} of ${MSDP.${tmp}_PERM}}
 };
+#elseif {&{MSDP.${tmp}_MAX}}
+{
+#variable {msg} {${msg} of ${MSDP.${tmp}_MAX}}
+};
 };
 #else
 {
@@ -34,6 +38,10 @@
 #if {&{MSDP.${tmp}_PERM}}
 {
 #variable {msg} {${msg} of ${MSDP.${tmp}_PERM}}
+};
+#elseif {&{MSDP.${tmp}_MAX}}
+{
+#variable {msg} {${msg} of ${MSDP.${tmp}_MAX}}
 };
 };
 #else
