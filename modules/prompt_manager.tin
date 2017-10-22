@@ -1,4 +1,4 @@
-#alias {^show %s%w %s%S$}
+#alias {^show %s%S %s%w$}
 {
 #format {tmp} {%u} {%4};
 #if {&{MSDP.${tmp}}}
@@ -11,11 +11,17 @@
 };
 #else
 {
-#variable {msg} {Nothing to brag.};
-#break
+#variable {msg} {Nothing to show}
 };
 #variable {msg} {${msg}\.};
+#if {"${msg}" != "Nothing to show%*"}
+{
 %2 ${msg}
+};
+#else
+{
+#echo {${msg}}
+}
 }
 {9}
 
