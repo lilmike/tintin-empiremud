@@ -69,7 +69,7 @@
 {
 	#if {"$msp" == "true" && &{%1}}
 	{
-		#system {play -qV0 $%1 gain $volume&}
+		#system {play -qV0 ${%1} gain $volume&}
 	}
 }
 {9}
