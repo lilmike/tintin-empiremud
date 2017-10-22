@@ -1,3 +1,24 @@
+#alias {^show %s%w %s%S$}
+{
+#format {tmp} {%u} {%4};
+#if {&{MSDP.${tmp}}}
+{
+#variable {msg} {I have ${MSDP.${tmp}} %4};
+#if {&{MSDP.${tmp}_PERM}}
+{
+#variable {msg} {${msg} of ${MSDP.${tmp}_PERM}}
+};
+};
+#else
+{
+#variable {msg} {Nothing to brag.};
+#break
+};
+#variable {msg} {${msg}\.};
+%2 ${msg}
+}
+{9}
+
 #alias {^show %S$}
 {
 #format {tmp} {%u} {%1};
