@@ -103,7 +103,7 @@ show mana
 #alias {^PLAYER_CONDITION$}
 {
 #math {playerCondition.currentBlood} {(${MSDP.BLOOD} / ${MSDP.BLOOD_MAX}) * 100};
-#math {playerCondition.currentHealth} {(${MSDP.HEALTH} / ${MSDP.HEALTH_MAX}) * 100};
+#math {playerCondition.currentHealth} {(${MSDP.HEALTH}/${MSDP.HEALTH_MAX})*100};
 #math {playerCondition.currentMana} {(${MSDP.MANA} / ${MSDP.MANA_MAX}) * 100};
 #math {playerCondition.currentMovement} {(${MSDP.MOVEMENT} / ${MSDP.MOVEMENT_MAX}) * 100};
 #if {${playerCondition.currentHealth} == 100}
