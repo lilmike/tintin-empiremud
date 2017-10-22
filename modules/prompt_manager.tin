@@ -57,19 +57,19 @@
 {
 #if {"%0" == "bp"}
 {
-#echo {${MSDP.BLOOD} of ${MSDP.BLOOD_MAX} blood.}
+show blood
 };
 #if {"%0" == "hp"}
 {
-#echo {${MSDP.HEALTH} of ${MSDP.HEALTH_MAX} health.}
+show health
 };
 #if {"%0" == "mv"}
 {
-#echo {${MSDP.MOVEMENT} of ${MSDP.MOVEMENT_MAX} move.}
+show movement
 };
 #if {"%0" == "mn"}
 {
-#echo {${MSDP.MANA} of ${MSDP.MANA_MAX} mana.}
+show mana
 }
 }
 {9}
@@ -100,56 +100,42 @@
 #prompt {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x3e} {%0} {1}
 #prompt {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x2f%3\x3e} {%0} {1}
 #substitute {^\x5b%.%d\x5d%*\x3e$} {%1%2 -> } {1}
-#action {^\x7c%1\x2f%2\x3e}
+#alias {^PLAYER_CONDITION$}
 {
-#if {"%1" != "$currentHitpoints"}
+#math {playerCondition.currentBlood} {(${MSDP.BLOOD} / ${MSDP.BLOOD_MAX}) * 100};
+#math {playerCondition.currentHealth} {(${MSDP.HEALTH} / ${MSDP.HEALTH_MAX}) * 100};
+#math {playerCondition.currentMana} {(${MSDP.MANA} / ${MSDP.MANA_MAX}) * 100};
+#math {playerCondition.currentMovement} {(${MSDP.MOVEMENT} / ${MSDP.MOVEMENT_MAX}) * 100};
+#if {${playerCondition.currentHealth} >= 85 && ${playerCondition.currentHealth} < 100}
 {
-#variable {currentHitpoints} {%1};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentHitpoints}
-}
+#variable {playerCondition.currentHealth} {bruised}
 };
-#if {"%2" != "$currentMove"}
+#elseif {${playerCondition.currentHealth} >= 70}
 {
-#variable {currentMove} {%2};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentMove}
-}
-}
-}
-{9}
-
-#action {^({hostile|PVP}) \x7c%1\x2f%2\x3e}
-{
-#if {"%1" != "$currentHitpoints"}
-{
-#variable {currentHitpoints} {%1};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentHitpoints}
-}
+#variable {playerCondition.currentHealth} {hurt}
 };
-#if {"%2" != "$currentMove"}
+#elseif {${playerCondition.currentHealth} >= 55}
 {
-#variable {currentMove} {%2};
+#variable {playerCondition.currentHealth} {injured}
+};
+#elseif {${playerCondition.currentHealth} >= 40}
+{
+#variable {playerCondition.currentHealth} {wounded}
+};
+#elseif {${playerCondition.currentHealth} >= 25}
+{
+#variable {playerCondition.currentHealth} {mauled}
+};
+#elseif {${playerCondition.currentHealth} <= 10}
+{
+#variable {playerCondition.currentHealth} {crippled}
+};
+#if {"${playerCondition.oldHealth}" != "${playerCondition.currentHealth}"}
+{
+#variable {playerCondition.oldHealth} {${playerCondition.currentHealth}};
 #if {"$audioprompt" == "true"}
 {
-synth_play {$currentMove}
-}
-}
-}
-{9}
-
-#action {^\x7c%1\x2f%2\x2f%3\x3e}
-{
-#if {"%1" != "$currentHitpoints"}
-{
-#variable {currentHitpoints} {%1};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentHitpoints}
+synth_play ${playerCondition.currentHealth}
 }
 };
 #if {"%2" != "$currentMove"}
@@ -171,35 +157,4 @@ synth_play {$currentMana}
 }
 {9}
 
-#action {^({hostile|PVP}) \x7c%1\x2f%2\x2f%3\x3e}
-{
-#if {"%1" != "$currentHitpoints"}
-{
-#variable {currentHitpoints} {%1};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentHitpoints}
-}
-};
-#if {"%2" != "$currentMove"}
-{
-#variable {currentMove} {%2};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentMove}
-}
-};
-#if {"%3" != "$currentMana"}
-{
-#variable {currentMana} {%3};
-#if {"$audioprompt" == "true"}
-{
-synth_play {$currentMana}
-}
-}
-}
-{9}
-
-#var {currentHitpoints} {}
-#var {currentMove} {}
-#var {currentMana} {}
+#variable {playerCondition} {}
