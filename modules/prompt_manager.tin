@@ -1,3 +1,9 @@
+#action {That really did HURT!$}
+{
+MSDP_SEND HEALTh
+}
+{9}
+
 #alias {^show %s%S %s%w$}
 {
 #format {tmp} {%u} {%4};
@@ -102,10 +108,10 @@ show mana
 #substitute {^\x5b%.%d\x5d%*\x3e$} {%1%2 -> } {1}
 #alias {^PLAYER_CONDITION$}
 {
-#math {playerCondition.currentBlood} {(${MSDP.BLOOD} / ${MSDP.BLOOD_MAX}) * 100};
-#math {playerCondition.currentHealth} {(${MSDP.HEALTH}/${MSDP.HEALTH_MAX})*100};
-#math {playerCondition.currentMana} {(${MSDP.MANA} / ${MSDP.MANA_MAX}) * 100};
-#math {playerCondition.currentMovement} {(${MSDP.MOVEMENT} / ${MSDP.MOVEMENT_MAX}) * 100};
+#math {playerCondition.currentBlood} {(${MSDP.BLOOD} / ${MSDP.BLOOD_MAX}) * 100.0};
+#math {playerCondition.currentHealth} {(${MSDP.HEALTH} / ${MSDP.HEALTH_MAX}) * 100.0};
+#math {playerCondition.currentMana} {(${MSDP.MANA} / ${MSDP.MANA_MAX}) * 100.0};
+#math {playerCondition.currentMovement} {(${MSDP.MOVEMENT} / ${MSDP.MOVEMENT_MAX}) * 100.0};
 #if {${playerCondition.currentHealth} == 100}
 {
 #variable {playerCondition.currentHealth} {healthy};
