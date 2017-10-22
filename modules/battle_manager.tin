@@ -6,7 +6,7 @@
 };
 #if {%1 != 0}
 	{
-		#math {enemyConditionTone} {%1 * 20}
+		#math {enemyConditionTone} {%1 * 12 + 100}
 	};
 #if {"$beeps" == "true"}
 {
