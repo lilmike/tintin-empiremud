@@ -97,16 +97,9 @@ show mana
 }
 {9}
 
-#gag {^\x7c%1\x2f%2\x2f%3\x3e}
-#gag {^\x7c%1\x2f%2\x3e}
-#gag {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x2f%3\x3e}
-#gag {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x3e}
-#prompt {^\x7c%1\x2f%2\x3e} {%0} {1}
-#prompt {^\x7c%1\x2f%2\x2f%3\x3e} {%0} {1}
-#prompt {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x3e} {%0} {1}
-#prompt {^\x28{hostile|PVP}\x29 \x7c%1\x2f%2\x2f%3\x3e} {%0} {1}
-#substitute {^\x5b%.%d\x5d%*\x3e$} {%1%2 -> } {1}
 #alias {^PLAYER_CONDITION$}
+{
+#if {&{name}}
 {
 #math {playerCondition.currentBlood} {(${MSDP.BLOOD} / ${MSDP.BLOOD_MAX}) * 100.0};
 #math {playerCondition.currentHealth} {(${MSDP.HEALTH} / ${MSDP.HEALTH_MAX}) * 100.0};
@@ -143,27 +136,65 @@ show mana
 };
 #if {"${playerCondition.oldHealth}" != "${playerCondition.currentHealth}"}
 {
+#echo {Your condition: $playerCondition.currentHealth};
 #variable {playerCondition.oldHealth} {${playerCondition.currentHealth}};
 #if {"$audioprompt" == "true"}
 {
 synth_play ${playerCondition.currentHealth}
 }
 };
-#if {"%2" != "$currentMove"}
+#if {${playerCondition.currentMana} == 100}
 {
-#variable {currentMove} {%2};
+#variable {playerCondition.currentMana} {full};
+#variable {playerCondition.oldMana} {full}
+};
+#elseif {${playerCondition.currentMana} >= 75}
+{
+#variable {playerCondition.currentMana} {lots of mana}
+};
+#elseif {${playerCondition.currentMana} >= 50}
+{
+#variable {playerCondition.currentMana} {half mana}
+};
+#elseif {${playerCondition.currentMana} <= 15}
+{
+#variable {playerCondition.currentMana} {low mana}
+};
+#if {"${playerCondition.oldMana}" != "${playerCondition.currentMana}"}
+{
+#echo {Your mana: $playerCondition.currentMana};
+#variable {playerCondition.oldMana} {${playerCondition.currentMana}};
 #if {"$audioprompt" == "true"}
 {
-synth_play {$currentMove}
+synth_play ${playerCondition.currentMana}
 }
 };
-#if {"%3" != "$currentMana"}
+#if {${playerCondition.currentMovement} <= 90}
 {
-#variable {currentMana} {%3};
+#variable {playerCondition.currentMovement} {full};
+#variable {playerCondition.oldMovement} {full}
+};
+#elseif {${playerCondition.currentMovement} >= 75}
+{
+#variable {playerCondition.currentMovement} {going strong}
+};
+#elseif {${playerCondition.currentMovement} >= 50}
+{
+#variable {playerCondition.currentMovement} {tiring}
+};
+#elseif {${playerCondition.currentMovement} <= 15}
+{
+#variable {playerCondition.currentMovement} {exhausted}
+};
+#if {"${playerCondition.oldMovement}" != "${playerCondition.currentMovement}"}
+{
+#echo {Your movement: $playerCondition.currentMovement};
+#variable {playerCondition.oldMovement} {${playerCondition.currentMovement}};
 #if {"$audioprompt" == "true"}
 {
-synth_play {$currentMana}
+synth_play ${playerCondition.currentMovement}
 }
+};
 }
 }
 {9}
