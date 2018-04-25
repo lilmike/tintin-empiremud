@@ -115,7 +115,7 @@ play combat/unconscious;
 }
 {9}
 
-#action {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to reboot faster) ]$}
+#action {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to {reboot|shutdown} faster) ]$}
 {
 play system/%1 system/%2;
 #if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
