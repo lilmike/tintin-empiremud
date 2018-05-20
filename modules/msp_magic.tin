@@ -73,7 +73,7 @@
 #ACTION {^Your %w cooldown has ended.$}
 {
 	revplay magic/%1;
-	#list {autoDo} {find} {%1%*} {i};
+	#list {autoDo} {find} {%1} {i};
 	#if {$i > 0}
 	{
 		%1
