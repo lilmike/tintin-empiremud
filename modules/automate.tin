@@ -119,7 +119,7 @@
 {
 	#if {"%1" == "add"}
 	{
-		#list {autoDo} {find} {%2} {i};
+		#list {autoDo} {find} {%2%*} {i};
 		#if {$i == 0}
 		{
 			#list {autoDo} {add} {%2};
@@ -132,10 +132,10 @@
 	};
 	#else
 	{
-		#list {autoDo} {find} {%2} {i};
+		#list {autoDo} {find} {%2%*} {i};
 		#if {$i > 0}
 		{
-			#list {autoDo} {remove} {%2};
+			#list {autoDo} {delete} {$i};
 			#echo {%2 removed from auto do list}
 		};
 		#else
