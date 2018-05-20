@@ -146,6 +146,12 @@
 }
 {9}
 
+#ALIAS {^autodo$}
+{
+	#forall {${autoDo[]}}{#echo {${autoDo[&0]}}}
+}
+{9}
+
 #ALIAS {^autoshield %1}
 {
 	#showme {You will now equip %1 as shield in melee combat.};
