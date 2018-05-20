@@ -1,200 +1,238 @@
-#action {%1 is trying to summon you to %2 -- use 'accept/reject summon'.$}
+#ACTION {^You are hungry.$}
 {
-#variable {playerSummoner} {%1}
-}
-{9}
-
-#action {^You are rescued by %1!$}
-{
-#regexp {%1} {{.*} {.*}} {assist &1} {assist %1}
-}
-{9}
-
-#alias {^{noauto|auto}{loot|skin}$}
-{
-#switch {"%0"}
-{
-#case {"autoloot"}
-{
-#showme {autoloot is enabled.};
-#variable {autoloot} {true}
-};
-#case {"noautoloot"}
-{
-#showme {autoloot is disabled.};
-#variable {autoloot} {false}
-};
-#case {"autoskin"}
-{
-#showme {autoskinning is enabled.};
-#variable {autoskin} {true}
-};
-#case {"noautoskin"}
-{
-#showme {autoskinning is disabled.};
-#variable {autoskin} {false}
-}
-}
-}
-{9}
-
-#alias {{ho|hol|hold|wea|wear|wi|wie|wiel|wield}%*}
-{
-#variable {lastCommand} {%0};
-#send {%0}
-}
-{9}
-
-#action {^Yo{u're|u} already {have|holding|wearing|wielding} %2{\.| on your .*\.| around your waist\.}$}
-{
-#line {gag};
-#regexp {%2} {{.*} {.*}} {remove &2;$lastCommand}
-}
-{9}
-
-#action {^No-one by that name here.$}
-{
-#variable {feeding} {false}
-}
-{9}
-
-#action {^You stop feeding.$}
-{
-#variable {feeding} {false}
-}
-{9}
-
-#action {^You pull the last of %* blood from {her|his|its} veins, and {he|it|she} falls limply to the ground!$}
-{
-#variable {feeding} {false};
-play combat/vampire_feed
-}
-{9}
-
-#action {^You lunge at %*, grasping onto its neck and biting into it vigorously!$}
-{
-#variable {feeding} {true}
+	play health/hungry;
+	#if {"$autoforage" == "true"}
+	{
+		forage
+	}
 }
 {8}
 
-#alias {^{noauto|auto}bite$}
+#ACTION {^You forage around %*}
 {
-#if {"%0" == "autobite"}
-{
-#showme {autobite enabled};
-#variable {autobite} {true}
-};
-#else
-{
-#showme {autobite disabled};
-#unvariable {autobite}
-}
-}
-{9}
-
-#action {%* is {stunned, but will probably regain consciousness again|knocked unconscious|incapacitated and will slowly die, if not aided}{\.|!}$}
-{
-play combat/unconscious;
-#if {"$autobite" == "true" && "$feeding" == "false"}
-{
-#regexp {%1} {{.*} {.*}}{bite &2};
-#variable {feeding} {true}
-}
-}
-{9}
- 
-#action {^{\[|\(}%*IDLE]%*}
-{
-#switch {1d4}
-{
-#case {1} {l};
-#case {2} {lo};
-#case {3} {loo};
-#default {look}
-}
-}
-{9}
-
-#action {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to reboot faster) ]$}
-{
-play system/%1 system/%2;
-#if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
-{
-confirm
-};
-#if {%1 == 1}
-{
-#variable {rebootConfirmed} {false}
-}
-}
-{9}
-
-#action {^You are hungry.$}
-{
-play health/hungry;
-#if {"$autoforage" == "true"}
-{
-forage
-}
+	pan_play skills/search;
+	#if {"$autoforage" == "true"}
+	{
+		#regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})} {#&4 eat &3}
+	}
 }
 {8}
 
-#action {^You forage around %*}
+#ACTION {^You lunge at %*, grasping onto its neck and biting into it vigorously!$}
 {
-pan_play skills/search;
-#if {"$autoforage" == "true"}
-{
-#regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})} {#&4 eat &3}
-}
+	#variable {feeding} {true}
 }
 {8}
 
-#alias {^{noauto|auto}confirmreboots$}
+#ACTION {%* is {stunned, but will probably regain consciousness again|knocked unconscious|incapacitated and will slowly die, if not aided}{\.|!}$}
 {
-#if {"%0" == "autoconfirmreboots"}
-{
-#showme {You will now automatically confirm reboots when asked by the game.};
-#variable {autoconfirmreboots} {true}
-};
-#else
-{
-#showme {Autoconfirmreboots disabled.};
-#unvariable {autoconfirmreboots}
-}
+	play combat/unconscious;
+	#if {"$autobite" == "true" && "$feeding" == "false"}
+	{
+		#regexp {%1} {{.*} {.*}} {bite &2};
+		#variable {feeding} {true}
+	}
 }
 {9}
 
-#alias {^{noauto|auto}forage$}
+#ACTION {%1 is trying to summon you to %2 -- use 'accept/reject summon'.$}
 {
-#if {"%0" == "autoforage"}
-{
-#echo {You will automatically forage for and eat food when you are hungry.};
-#variable {autoforage} {true}
-};
-#else
-{
-#showme {Autoforage disabled.};
-#unvariable {autoforage}
-}
+	#variable {playerSummoner} {%1}
 }
 {9}
 
-#alias {^noautoshield$}
+#ACTION {^No-one by that name here.$}
 {
-#showme {Autoshield disabled.};
-#unvariable {autoshield}
+	#variable {feeding} {false}
 }
 {9}
 
-#alias {^autoshield %1}
+#ACTION {^You are rescued by %1!$}
 {
-#showme {You will now equip %1 as shield in melee combat.};
-#variable {autoshield} {%1}
+	#regexp {%1} {{.*} {.*}} {assist &1};
+	#else
+	{
+		assist %1
+	}
 }
 {9}
-#variable {feeding} {false}
-#variable {rebootConfirmed} {false}
-#variable {lastCommand} {}
-#variable {autoloot} {false}
-#variable {autoskin} {false}
-#variable {playerSummoner} {}
+
+#ACTION {^You pull the last of %* blood from {her|his|its} veins, and {he|it|she} falls limply to the ground!$}
+{
+	#variable {feeding} {false};
+	play combat/vampire_feed
+}
+{9}
+
+#ACTION {^You stop feeding.$}
+{
+	#variable {feeding} {false}
+}
+{9}
+
+#ACTION {^Yo{u're|u} already {have|holding|wearing|wielding} %2{\.| on your .*\.| around your waist\.}$}
+{
+	#line {gag};
+	#regexp {%2} {{.*} {.*}} {remove &2;$lastCommand}
+}
+{9}
+
+#ACTION {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to reboot faster) ]$}
+{
+	play system/%1 system/%2;
+	#if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
+	{
+		confirm
+	};
+	#if {%1 == 1}
+	{
+		#variable {rebootConfirmed} {false}
+	}
+}
+{9}
+
+#ACTION {^{\[|\(}%*IDLE]%*}
+{
+	#switch {1d4}
+	{
+		#case {1}
+		{
+			l
+		};
+		#case {2}
+		{
+			lo
+		};
+		#case {3}
+		{
+			loo
+		};
+		#default
+		{
+			look
+		}
+	}
+}
+{9}
+
+#ALIAS {^autodo {add|remove} %w$}
+{
+	#if {"%1" == "add"}
+	{
+		#list {autoDo} {find} {%2} {i}#if {$i == 0}{#list {autoDo} {add} {%2};#echo {%2 added to auto do list}};
+		#else
+		{
+			#echo {%2 already in list}
+		}
+	};
+	#else
+	{
+		#list {autoDo} {find} {%2} {i}#if {$i > 0}{#list {autoDo} {remove} {%2};#echo {%2 removed from auto do list}};
+		#else
+		{
+			#echo {%2 not found.}
+		}
+	}
+}
+{9}
+
+#ALIAS {^autoshield %1}
+{
+	#showme {You will now equip %1 as shield in melee combat.};
+	#variable {autoshield} {%1}
+}
+{9}
+
+#ALIAS {^noautoshield$}
+{
+	#showme {Autoshield disabled.};
+	#unvariable {autoshield}
+}
+{9}
+
+#ALIAS {^{noauto|auto}bite$}
+{
+	#if {"%0" == "autobite"}
+	{
+		#showme {autobite enabled};
+		#variable {autobite} {true}
+	};
+	#else
+	{
+		#showme {autobite disabled};
+		#unvariable {autobite}
+	}
+}
+{9}
+
+#ALIAS {^{noauto|auto}confirmreboots$}
+{
+	#if {"%0" == "autoconfirmreboots"}
+	{
+		#showme {You will now automatically confirm reboots when asked by the game.};
+		#variable {autoconfirmreboots} {true}
+	};
+	#else
+	{
+		#showme {Autoconfirmreboots disabled.};
+		#unvariable {autoconfirmreboots}
+	}
+}
+{9}
+
+#ALIAS {^{noauto|auto}forage$}
+{
+	#if {"%0" == "autoforage"}
+	{
+		#echo {You will automatically forage for and eat food when you are hungry.};
+		#variable {autoforage} {true}
+	};
+	#else
+	{
+		#showme {Autoforage disabled.};
+		#unvariable {autoforage}
+	}
+}
+{9}
+
+#ALIAS {^{noauto|auto}{loot|skin}$}
+{
+	#switch {"%0"}
+	{
+		#case {"autoloot"}
+		{
+			#showme {autoloot is enabled.};
+			#variable {autoloot} {true}
+		};
+		#case {"noautoloot"}
+		{
+			#showme {autoloot is disabled.};
+			#variable {autoloot} {false}
+		};
+		#case {"autoskin"}
+		{
+			#showme {autoskinning is enabled.};
+			#variable {autoskin} {true}
+		};
+		#case {"noautoskin"}
+		{
+			#showme {autoskinning is disabled.};
+			#variable {autoskin} {false}
+		}
+	}
+}
+{9}
+
+#ALIAS {{ho|hol|hold|wea|wear|wi|wie|wiel|wield}%*}
+{
+	#variable {lastCommand} {%0};
+	#send {%0}
+}
+{9}
+
+#VARIABLE         {autoloot}  {false}
+#VARIABLE         {autoskin}  {false}
+#VARIABLE         {feeding}  {false}
+#VARIABLE         {lastCommand}  {}
+#VARIABLE         {playerSummoner}  {}
+#VARIABLE         {rebootConfirmed}  {false}
