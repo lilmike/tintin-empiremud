@@ -1,24 +1,24 @@
 #action {^As you chant, {a mighty tree springs from the ground|the plants around you grow with amazing speed}!$}
 {
-play ambiance/grow
+PLAY ambiance/grow
 }
 {9}
 
 #action {^You pull a yellow lightning stone from the ground!$}
 {
-play get/lightning_stone
+PLAY get/lightning_stone
 }
 {9}
 
 #action {^Your alternate cooldown has ended.$}
 {
-synth_play alternateCooldownSound
+SYNTH_PLAY alternateCooldownSound
 }
 {8}
 
 #action {^You carefully skin the corpse of %*...$}
 {
-play skills/skin
+PLAY skills/skin
 }
 {9}
 
@@ -28,73 +28,73 @@ play skills/skin
 {
 #line {gag}
 };
-revplay skills/shadowstep
+revPLAY skills/shadowstep
 }
 {8}
 
 #action {^You shadowstep to %*!$}
 {
-play skills/shadowstep
+PLAY skills/shadowstep
 }
 {9}
 
 #action {^You are starving!$}
 {
-play miscellaneous/vampire_starving
+PLAY miscellaneous/vampire_starving
 }
 {8}
 
 #action {^You wince and recoil from the sunlight!$}
 {
-play miscellaneous/vampire_hiss
+PLAY miscellaneous/vampire_hiss
 }
 {9}
 
 #action {^You whistle loudly...$}
 {
-play miscellaneous/whistle
+PLAY miscellaneous/whistle
 }
 {9}
 
 #action {^You strike a flint set and light %*.$}
 {
-play miscellaneous/flint_and_steel
+PLAY miscellaneous/flint_and_steel
 }
 {9}
 
 #action {^You have become $name%*!$}
 {
-play skills/form_normal
+PLAY skills/form_normal
 }
 {9}
 
 #action {^You have become a {black|brown|cloud of swirling|horrid|sage|savage|towering} {bat|mist|monstrosity|werewolf|wolf}!$}
 {
-play skills/animal_form_%2
+PLAY skills/animal_form_%2
 }
 {9}
 
 #action {^Yo{u|ur} {begin to transform|body warps and distorts painfully}!$}
 {
-play skills/morph
+PLAY skills/morph
 }
 {9}
 
 #action {^You can't enter it from this side. The entrance is from the %w.$}
 {
-synth_play noEnterSound
+SYNTH_PLAY noEnterSound
 }
 {9}
 
 #action {^You chant a few mystic words and a portal whirls open!$}
 {
-play miscellaneous/portal
+PLAY miscellaneous/portal
 }
 {9}
 
 #action {^You don't seem to have more to smelt.$}
 {
-play skills/work_complete
+PLAY skills/work_complete
 }
 {9}
 
@@ -102,18 +102,18 @@ play skills/work_complete
 {
 #if {"%1" == "rises over"}
 {
-play ambiance/sunrise
+PLAY ambiance/sunrise
 };
 #else
 {
-play ambiance/sunset
+PLAY ambiance/sunset
 }
 }
 {9}
 
 #action {^You lay a road here.$}
 {
-play craft/rock;
+PLAY craft/rock;
 #if {"$bgm" == "true"}
 {
 look
@@ -123,73 +123,73 @@ look
 
 #action {^You toss a shovel-full of dirt out of the trench.$}
 {
-play_norandom skills/dig2
+PLAY_norandom skills/dig2
 }
 {9}
 
 #action {^You jab your shovel into the dirt...$}
 {
-play_norandom skills/dig
+PLAY_norandom skills/dig
 }
 {9}
 
 #action {^You {heave a huge stone block into place|put down a layer of bricks}.$}
 {
-play craft/stone
+PLAY craft/stone
 }
 {9}
 
 #action {^You plant %* and tie %* to stakes.$}
 {
-play skills/tie_plant
+PLAY skills/tie_plant
 }
 {9}
 
 #action {^It starts to rain.$}
 {
-play weather/rain
+PLAY weather/rain
 }
 {9}
 
 #action {^%S se{t|ts} up a large beehive.$}
 {
-play craft/beehive
+PLAY craft/beehive
 }
 {9}
 
 #action {^The ground under you shakes violently!$}
 {
-play ambiance/earthquake
+PLAY ambiance/earthquake
 }
 {9}
 
 #action {^You transport to another starting location!$}
 {
-seq_play move/transport
+seq_PLAY move/transport
 }
 {9}
 
 #action {^You {hammer nails into the wood joints|nail the wood onto the structure}.$}
 {
-play craft/wood1
+PLAY craft/wood1
 }
 {9}
 
 #action {^You position some {lumber and tie it in place|wood on the structure}.$}
 {
-play craft/tie_wood
+PLAY craft/tie_wood
 }
 {9}
 
 #action {^You don't seem to have a tree.$}
 {
-play skills/work_complete
+PLAY skills/work_complete
 }
 {9}
 
 #action {^You find a small flake of gold!$}
 {
-play get/gold_flake
+PLAY get/gold_flake
 }
 {9}
 
@@ -197,16 +197,16 @@ play get/gold_flake
 {
 #switch {"%2"}
 {
-#case {"iron ingot"} {play craft/metal};
-#case {"rock"} {play craft/rock};
-#default {play craft/wood}
+#case {"iron ingot"} {PLAY craft/metal};
+#case {"rock"} {PLAY craft/rock};
+#default {PLAY craft/wood}
 }
 }
 {9}
 
 #action {^You {complete|finish crafting} %*!$}
 {
-play skills/work_complete;
+PLAY skills/work_complete;
 #if {"$bgm" == "true" && "%2" == "the construction"}
 {
 look
@@ -216,43 +216,43 @@ look
 
 #action {^The searing magical pain proves too much for %*, and {he|it|she} falls over dead!$}
 {
-play magic/death_residual
+PLAY magic/death_residual
 }
 {9}
 
 #action {^The residual magic flowing through %* proves too much, and {he|it|she} falls over dead!$}
 {
-play magic/death_residual
+PLAY magic/death_residual
 }
 {9}
 
 #action {^You run toward %1!}
 {
-play move/you_run
+PLAY move/you_run
 }
 {9}
 
 #action {%1 runs toward you!$}
 {
-play move/enemy_run
+PLAY move/enemy_run
 }
 {9}
 
 #action {^{A covered wagon|A rickety cart|Something} is pulled%* %w.$}
 {
-seq_play_norandom move/cart_%3
+seq_PLAY_norandom move/cart_%3
 }
 {9}
 
 #action {^You don't seem to have more to tan.$}
 {
-play skills/work_complete
+PLAY skills/work_complete
 }
 {9}
 
 #action {^You have finished planting!$}
 {
-play skills/work_complete;
+PLAY skills/work_complete;
 #if {"$bgm" == "true"}
 {
 look
@@ -262,7 +262,7 @@ look
 
 #action {^You finish harvesting the crop!$}
 {
-play skills/work_complete;
+PLAY skills/work_complete;
 #if {"$bgm" == "true"}
 {
 look
@@ -272,103 +272,103 @@ look
 
 #action {^You store a {pile of gold dust|silver nugget}.$}
 {
-seq_play store/treasure
+seq_PLAY store/treasure
 }
 {9}
 
 #action {^You mark %1 with a glowing blue skybrand!$}
 {
-rplay magic/skybrand
+rPLAY magic/skybrand
 }
 {9}
 
 #action {^You {begin scraping|scrape at} a large tree{\.\.\.|\.}$}
 {
-seq_play skills/tree_scrape
+seq_PLAY skills/tree_scrape
 }
 {9}
 
 #action {^You thrust your hand toward %1 and strike {her|him|it} with a powerful bolt of lightning!$}
 {
-rplay magic/lightningbolt
+rPLAY magic/lightningbolt
 }
 {9}
 
 #action {^You {brush|soak|stretch} the {raw leather|skin}...$}
 {
-play skills/tan_%1
+PLAY skills/tan_%1
 }
 {9}
 
 #action {^You {continue|start} cook%*.$}
 {
-play skills/cook
+PLAY skills/cook
 }
 {9}
 
 #action {^You knead the skin with a foul-smelling mixture...$}
 {
-play skills/tan_kneed
+PLAY skills/tan_kneed
 }
 {9}
 
 #action {^You scrape the skin clean...$}
 {
-play skills/tan_scrape
+PLAY skills/tan_scrape
 }
 {9}
 
 #action {^Lightning starts to show in the sky.$}
 {
-pan_play weather/thunder
+pan_PLAY weather/thunder
 }
 {9}
 
 #action {^You {carefully|finish} {sew|sewing} %3{\.\.\.|!}$}
 {
-play skills/sew
+PLAY skills/sew
 }
 {9}
 
 #action {^You carefully plant seeds in rows along the ground.$}
 {
-play skills/plant_seed
+PLAY skills/plant_seed
 }
 {9}
 
 #action {^You water the freshly seeded ground.$}
 {
-play skills/plant_water
+PLAY skills/plant_water
 }
 {9}
 
 #action {^You cover the seeds and gently pack the dirt.$}
 {
-play skills/plant_pat
+PLAY skills/plant_pat
 }
 {9}
 
 #action {^You kneel and begin digging holes to plant %1 here.$}
 {
-play skills/dig
+PLAY skills/dig
 }
 {8}
 
 #action {^{There is a bright blue glow all around you\.\.\.|A hestian trinket glows a bright blue and the light begins to envelop you!}$}
 {
-play magic/hestian_trinket_teleport
+PLAY magic/hestian_trinket_teleport
 }
 {9}
 
 #action {^You touch a hestian trinket and it begins to swirl with light...$}
 {
-play magic/hestian_trinket_charge
+PLAY magic/hestian_trinket_charge
 }
 {9}
 
 #action {^You finish forging %1!$}
 {
-play skills/complete_forge
+PLAY skills/complete_forge
 }
 {9}
 
@@ -379,49 +379,49 @@ play skills/complete_forge
 #showme {You pan for %2.};
 #line {gag}
 };
-seq_play skills/pan
+seq_PLAY skills/pan
 }
 {9}
 
 #action {^You kneel down and begin panning at %1.$}
 {
-seq_play skills/pan
+seq_PLAY skills/pan
 }
 {9}
 
 #action {^You hit %1 on the anvil hard with %2!$}
 {
-play skills/forge
+PLAY skills/forge
 }
 {9}
 
 #action {^You start forging.$}
 {
-play skills/forge
+PLAY skills/forge
 }
 {9}
 
 #ACTION {^A fish darts past you, but you narrowly miss it!$}
 {
-	play fail/miss
+	PLAY fail/miss
 }
 {9}
 
 #ACTION {^It splits open!$}
 {
-	play skills/split_rock
+	PLAY skills/split_rock
 }
 {9}
 
 #ACTION {^Mana twists and swirls around your hand and becomes a fireball!$}
 {
-	play magic/ready_fireball
+	PLAY magic/ready_fireball
 }
 {9}
 
 #ACTION {^There's nothing left here to chop.$}
 {
-	play skills/work_complete;
+	PLAY skills/work_complete;
 #if {"$bgm" == "true"}
 {
 look
@@ -431,73 +431,73 @@ look
 
 #ACTION {^With a loud crack, %* falls!$}
 {
-	play get/tree
+	PLAY get/tree
 }
 {9}
 
 #ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore} falls from the wall!$}
 {
-	play get/iron_ore
+	PLAY get/iron_ore
 }
 {9}
 
 #ACTION {^You are thirsty.$}
 {
-	play health/thirsty
+	PLAY health/thirsty
 }
 {9}
 
 #ACTION {^You begin harvesting %*.$}
 {
-	play skills/harvest
+	PLAY skills/harvest
 }
 {9}
 
 #ACTION {^You start smelting.$}
 {
-	seq_play skills/smelt
+	seq_PLAY skills/smelt
 }
 {9}
 
 #ACTION {^You brush dust out of the cracks in the stone.$}
 {
-	play skills/dust_stone
+	PLAY skills/dust_stone
 }
 {9}
 
 #ACTION {^You carefully harvest the %*.$}
 {
-	pan_play skills/harvest
+	pan_PLAY skills/harvest
 }
 {9}
 
 #ACTION {^You carefully remove %1 from the structure.$}
 {
-	play skills/dismantle
+	PLAY skills/dismantle
 }
 {9}
 
 #ACTION {^You click your fingers and %1 catches fire!$}
 {
-	play magic/touch_of_flame
+	PLAY magic/touch_of_flame
 }
 {9}
 
 #ACTION {^You empty %1 of %2.$}
 {
-	play ambiance/empty_liquid
+	PLAY ambiance/empty_liquid
 }
 {9}
 
 #ACTION {^You find {a|a daggerbite|a handfull of|a twig of|a small|an iridescent blue|some|some magewhisper} %*{bileberries|fiveleaf|flower|frond|iris|redthorn|sepals|stick|whitegrass}!$}
 {
-	seq_play get/%3
+	seq_PLAY get/%3
 }
 {9}
 
 #ACTION {^You finish dismantling the building.$}
 {
-	play skills/complete_dismantle;
+	PLAY skills/complete_dismantle;
 #if {"$bgm" == "true"}
 {
 look
@@ -507,197 +507,197 @@ look
 
 #ACTION {^You finish milling a sack of {flour|cornmeal} (x%d)!$}
 {
-	play get/sack
+	PLAY get/sack
 }
 {9}
 
 #ACTION {^You finish sawing a stack of lumber (x%d).$}
 {
-	play get/lumber
+	PLAY get/lumber
 }
 {9}
 
 #ACTION {^You gently fill %1 from %2.$}
 {
-	play ambiance/liquid_fill
+	PLAY ambiance/liquid_fill
 }
 {9}
 
 #ACTION {^You give the plug drill one final swing and pry loose %1 stone block!$}
 {
-	play get/stone
+	PLAY get/stone
 }
 {9}
 
 #ACTION {^You grind the millstone, making %*...$}
 {
-	seq_play skills/mill
+	seq_PLAY skills/mill
 }
 {9}
 
 #ACTION {^You have crafted a handaxe!$}
 {
-	play craft/handaxe
+	PLAY craft/handaxe
 }
 {9}
 
 #ACTION {^You have crafted a stone spear head!$}
 {
-	play craft/spear_head
+	PLAY craft/spear_head
 }
 {9}
 
 #ACTION {^You have successfully created an iron ingot!$}
 {
-	play get/iron_ingot
+	PLAY get/iron_ingot
 }
 {9}
 
 #ACTION {^You jab your %1 into the water and when you extract it you find %1 on the end!$}
 {
-	play get/fish
+	PLAY get/fish
 }
 {9}
 
 #ACTION {^You lay down and go to sleep.$}
 {
-	seq_play ambiance/sleep
+	seq_PLAY ambiance/sleep
 }
 {9}
 
 #action {^You sift through some dirt...$}
 {
-	pan_play skills/sift
+	pan_PLAY skills/sift
 }
 {9}
 
 #action {^You pick at the ground a little bit...$}
 {
-	pan_play skills/mine
+	pan_PLAY skills/mine
 }
 {9}
 
 #ACTION {^You pick at the walls with %1, looking for %2.$}
 {
-	pan_play skills/mine
+	pan_PLAY skills/mine
 }
 {9}
 
 #ACTION {^You pull a flint stone from the ground!$}
 {
-	play get/flint_stone
+	PLAY get/flint_stone
 }
 {9}
 
 #ACTION {^You pull a pile of clay from the ground!$}
 {
-	play get/clay
+	PLAY get/clay
 }
 {9}
 
 #ACTION {^You pull a rock from the ground!$}
 {
-	play get/rock
+	PLAY get/rock
 }
 {9}
 
 #ACTION {^You slip some shims into cracks in the stone.$}
 {
-	play skills/shim_stone
+	PLAY skills/shim_stone
 }
 {9}
 
 #ACTION {^You start milling.$}
 {
-	seq_play skills/mill
+	seq_PLAY skills/mill
 }
 {9}
 
 #ACTION {^You store a pile of clay.$}
 {
-	seq_play store/clay
+	seq_PLAY store/clay
 }
 {9}
 
 #ACTION {^You store a sack of {barley|cornmeal|flour|dried rice}.$}
 {
-	seq_play store/sack
+	seq_PLAY store/sack
 }
 {9}
 
 #ACTION {^You store a {heavy log|large tree|stack of lumber|stick}.$}
 {
-	seq_play store/lumber
+	seq_PLAY store/lumber
 }
 {9}
 
 #ACTION {^You store an iron ingot.$}
 {
-	seq_play store/metal
+	seq_PLAY store/metal
 }
 {9}
 
 #ACTION {^You store {a giant linefish|magenta arrowfish|fillet of raw meat|a slab of pork}.$}
 {
-	seq_play store/meat
+	seq_PLAY store/meat
 }
 {9}
 
 #ACTION {^You swing %1 hard!$}
 {
-	play skills/chop
+	PLAY skills/chop
 }
 {9}
 
 #ACTION {^You swing back your %* and prepare to chop...$}
 {
-	play skills/ready_axe
+	PLAY skills/ready_axe
 }
 {9}
 
 #ACTION {^You walk through the field, harvesting the %*.$}
 {
-	pan_play skills/harvest
+	pan_PLAY skills/harvest
 }
 {9}
 
 #ACTION {^You smelt %* in the fire...$}
 {
-	seq_play skills/smelt
+	seq_PLAY skills/smelt
 }
 {9}
 
 #ACTION {^You {begin looking around for sticks|begin looking around|look around for something nice to pick\.\.|search the ground for sticks\.\.}.$}
 {
-	pan_play skills/search
+	pan_PLAY skills/search
 }
 {9}
 
 #ACTION {^You {begin sawing|saw} %*.$}
 {
-	seq_play skills/saw
+	seq_PLAY skills/saw
 }
 {9}
 
 #ACTION {^You {begin to chip at a handaxe|begin to chip at a chipped rock|begin to chip at a rock|chip away at the piece of rock\.\.}.$}
 {
-	play skills/chip_rock
+	PLAY skills/chip_rock
 }
 {9}
 
 #ACTION {^You {begin to dig into|dig vigorously at} the ground.$}
 {
-	pan_play skills/dig
+	pan_PLAY skills/dig
 }
 {9}
 
-#ACTION {^You {begin to play a lyre|strum at a lyre and hum to the tune|pluck at a lyre}.$}
+#ACTION {^You {begin to PLAY a lyre|strum at a lyre and hum to the tune|pluck at a lyre}.$}
 {
 	Play_Lyre
 }
 {9}
 
-#ACTION {^You {begin to play a wooden flute|whistle a tune through a wooden flute|play a wooden flute}.$}
+#ACTION {^You {begin to PLAY a wooden flute|whistle a tune through a wooden flute|PLAY a wooden flute}.$}
 {
 	Play_Flute
 }
@@ -705,7 +705,7 @@ look
 
 #ACTION {^You {begin to quarry|hammer a plug drill into} the stone.$}
 {
-	play skills/quarry
+	PLAY skills/quarry
 }
 {9}
 
@@ -713,11 +713,11 @@ look
 {
 #if {"%1" == "finish"}
 {
-play craft/complete_wood
+PLAY craft/complete_wood
 };
 #else
 {
-	play craft/wood
+	PLAY craft/wood
 }
 }
 {9}
@@ -726,18 +726,18 @@ play craft/complete_wood
 {
 	#if {"%1" == "find"}
 	{
-		play get/fruit
+		PLAY get/fruit
 	};
 	#else
 	{
-		seq_play store/fruit
+		seq_PLAY store/fruit
 	}
 }
 {9}
 
 #ACTION {^You%* {drink|eat} %*.$}
 {
-	seq_play health/%2
+	seq_PLAY health/%2
 }
 {9}
 
@@ -747,12 +747,12 @@ play craft/complete_wood
 	{
 		#variable {rememberCoordinates} {false}
 	};
-	play fail/error
+	PLAY fail/error
 }
 {9}
 
 #ACTION {^{there's|You can't find} {anything|nothing} {here left|left here} to {chop|pick}.$}
 {
-	play fail/nothing
+	PLAY fail/nothing
 }
 {9}

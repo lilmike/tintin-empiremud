@@ -5,13 +5,13 @@
     #variable {soundClip} {{1}{%1}{2}{%2}};
     #if {"$autosoundclip" == "true" || "%1" == "{$autoClipList}"}
     {
-        #echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop playback.};
-        playclip %2
+        #echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop PLAYback.};
+        PLAYclip %2
     };
     #else
     {
-        play new-clip;
-        #echo {%1 shared a $clipType sound clip. Press alt+' to listen. You can stop playback with alt+shift+|.}
+        PLAY new-clip;
+        #echo {%1 shared a $clipType sound clip. Press alt+' to listen. You can stop PLAYback with alt+shift+|.}
     };
 Add_Channel_Event tell %0
 Add_Channel_Event all %0
@@ -25,13 +25,13 @@ Add_Channel_Event all %0
 	#variable {soundClip} {{1}{%2}{2}{%4}};
 	#if {"$autosoundclip" == "true" || "%2" == "{$autoClipList}"}
 	{
-		#echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop playback.};
-		playclip %4
+		#echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop PLAYback.};
+		PLAYclip %4
 	};
 	#else
 	{
-		play new-clip;
-		#echo {%2 shared a $clipType sound clip. Press alt+' to listen. You can stop playback with alt+shift+|.}
+		PLAY new-clip;
+		#echo {%2 shared a $clipType sound clip. Press alt+' to listen. You can stop PLAYback with alt+shift+|.}
 	};
 Add_Channel_Event all %0
 }
@@ -70,9 +70,9 @@ Add_Channel_Event all %0
 }
 {9}
 
-#ALIAS {^playclip %S$}
+#ALIAS {^PLAYclip %S$}
 {
-	#system {play -qV0 http://sndup.net/%1/d gain $volume& echo "#variable {soundClipPID} {$!}" > .clippid};
+	#system {PLAY -qV0 http://sndup.net/%1/d gain $volume& echo "#variable {soundClipPID} {$!}" > .clippid};
 	#read {.clippid}
 }
 {9}
@@ -82,7 +82,7 @@ Add_Channel_Event all %0
 	#if {"%0" == "autosoundclip"}
 	{
 		#variable {autosoundclip} {true};
-		#echo {sound clips will play as soon as they are posted.}
+		#echo {sound clips will PLAY as soon as they are posted.}
 	};
 	#else
 	{
@@ -108,7 +108,7 @@ Add_Channel_Event all %0
 #MACRO {\e'}
 {
 	#echo {Playing sound clip from ${soundClip[1]}, press alt+shift+" to always allow clips from them. Press alt+shift+~ to download this clip.};
-	playclip ${soundClip[2]}
+	PLAYclip ${soundClip[2]}
 }
 
 #MACRO {\eG}

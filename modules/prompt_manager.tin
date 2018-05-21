@@ -1,202 +1,106 @@
-#action {That really did HURT!$}
+#EVENT {VARIABLE UPDATE MSDP_HEALTH}
 {
-MSDP_SEND HEALTh
+	#if {!&{character.audioprompt}}
+	{
+		#variable {character.audioprompt} {1}
+	};
+	#math {audioprompt.health} {(%1 / $MSDP_HEALTH_MAX) *100.0};
+	#if {${audioprompt.health} < 100}
+	{
+		#format {audioprompt.health} {%d} {${audioprompt.health} - ${audioprompt.health} % 10};
+		#if {${audioprompt.health} != ${audioprompt.oldHealth} && ${character.audioprompt} && ${MSP.SOUND}}
+		{
+			#if {&{health${audioprompt.health}}}
+			{
+				SYNTH_PLAY health${audioprompt.health};
+				#variable {audioprompt.oldHealth} {${audioprompt.health}}
+			}
+		}
+	};
+	#nop {Use the autorecall command if hp is below the specified %};
+	#if {!&{auto.recallPercent}}
+	{
+		#variable {auto.recallPercent} {20};
+		CSAVE
+	};
+	#if {(%1 / $MSDP_HEALTH_MAX) * 100.0 <= ${auto.recallPercent} && $MSDP_OPPONENT_NUMBER > 0}
+	{
+		#if {!${spam.recall}}
+		{
+			#if {&{auto.recall}}
+			{
+				breakout;
+				${auto.recall};
+				spamset recall 5
+			}
+		}
+	};
+	#nop {Use the autoheal self command if hp is below the specified %};
+	#if {!&{autoHealSelfPercent}}
+	{
+		#variable {autoHealSelfPercent} {50};
+		CSAVE
+	};
+	#if {(%1 / $MSDP_HEALTH_MAX) *100.0 <= $autoHealSelfPercent}
+	{
+		#if {&{autoHealSelf}}
+		{
+			${autoHealSelf}
+		}
+	}
 }
-{9}
 
-#alias {^show %s%S %s%w$}
+#EVENT {VARIABLE UPDATE MSDP_MANA}
 {
-#format {tmp} {%u} {%4};
-#if {&{MSDP.${tmp}}}
-{
-#variable {msg} {I have ${MSDP.${tmp}} %4};
-#if {&{MSDP.${tmp}_PERM}}
-{
-#variable {msg} {${msg} of ${MSDP.${tmp}_PERM}}
-};
-#elseif {&{MSDP.${tmp}_MAX}}
-{
-#variable {msg} {${msg} of ${MSDP.${tmp}_MAX}}
-};
-};
-#else
-{
-#variable {msg} {Nothing to show}
-};
-#variable {msg} {${msg}\.};
-#if {"${msg}" != "Nothing to show%*"}
-{
-%2 ${msg}
-};
-#else
-{
-#echo {${msg}}
+	#math {audioprompt.mana} {(%1 / $MSDP_MANA_MAX) *100.0};
+	#if {${audioprompt.mana} < 100}
+	{
+		#format {audioprompt.mana} {%d} {${audioprompt.mana} - ${audioprompt.mana} % 10};
+		#if {${audioprompt.mana} != ${audioprompt.oldMana}}
+		{
+			#if {${character.audioprompt} && ${MSP.SOUND}}
+			{
+				#if {&{mana${audioprompt.mana}}}
+				{
+					SYNTH_PLAY mana${audioprompt.mana};
+					#variable {audioprompt.oldMana} {${audioprompt.mana}}
+				}
+			}
+		}
+	}
 }
-}
-{9}
 
-#alias {^show %S$}
+#EVENT {VARIABLE UPDATE MSDP_OPPONENT_HEALTH}
 {
-#format {tmp} {%u} {%1};
-#if {&{MSDP.${tmp}}}
-{
-#variable {msg} {${MSDP.${tmp}} %1};
-#if {&{MSDP.${tmp}_PERM}}
-{
-#variable {msg} {${msg} of ${MSDP.${tmp}_PERM}}
-};
-#elseif {&{MSDP.${tmp}_MAX}}
-{
-#variable {msg} {${msg} of ${MSDP.${tmp}_MAX}}
-};
-};
-#else
-{
-#variable {msg} {Nothing to show}
-};
-#variable {msg} {${msg}\.};
-#echo {${msg}}
+	#if {!&{character.beeps}}
+	{
+		#variable {character.beeps} {1}
+	};
+	#if {%1 != 0 && ${character.beeps} && ${MSP.SOUND}}
+	{
+		#math {enemyConditionTone} {%1 * 10 + 200};
+		#system {PLAY -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.09 gain ${MSP[VOLUME]}&}
+	}
 }
-{9}
 
-#alias {^{bp|hp|mn|mv}$}
+#EVENT {VARIABLE UPDATE MSDP_MOVEMENT}
 {
-#if {"%0" == "bp"}
-{
-show blood
-};
-#if {"%0" == "hp"}
-{
-show health
-};
-#if {"%0" == "mv"}
-{
-show movement
-};
-#if {"%0" == "mn"}
-{
-show mana
+	#math {audioprompt.movement} {(%1 / $MSDP_MOVEMENT_MAX) *100.0};
+	#if {${audioprompt.movement} < 100}
+	{
+		#format {audioprompt.movement} {%d} {${audioprompt.movement} - ${audioprompt.movement} % 10};
+		#if {${audioprompt.movement} != ${audioprompt.oldMovement}}
+		{
+			#if {${character.audioprompt} && ${MSP.SOUND}}
+			{
+				#if {&{movement${audioprompt.movement}}}
+				{
+					SYNTH_PLAY movement${audioprompt.movement};
+					#variable {audioprompt.oldMovement} {${audioprompt.movement}}
+				}
+			}
+		}
+	}
 }
-}
-{9}
 
-#alias {^{noaudio|audio}prompt$}
-{
-#if {"%0" == "audioprompt"}
-{
-#variable {audioprompt} {true};
-#unsplit;
-#showme {Audio prompt enabled.}
-};
-#else
-{
-#unvariable {audioprompt};
-#split;
-#showme {Audio prompt disabled.}
-}
-}
-{9}
-
-#alias {^PLAYER_CONDITION$}
-{
-#if {&{name}}
-{
-#math {playerCondition.currentBlood} {(${MSDP.BLOOD} / ${MSDP.BLOOD_MAX}) * 100.0};
-#math {playerCondition.currentHealth} {(${MSDP.HEALTH} / ${MSDP.HEALTH_MAX}) * 100.0};
-#math {playerCondition.currentMana} {(${MSDP.MANA} / ${MSDP.MANA_MAX}) * 100.0};
-#math {playerCondition.currentMovement} {(${MSDP.MOVEMENT} / ${MSDP.MOVEMENT_MAX}) * 100.0};
-#if {${playerCondition.currentHealth} == 100}
-{
-#variable {playerCondition.currentHealth} {healthy};
-#variable {playerCondition.oldHealth} {healthy}
-};
-#elseif {${playerCondition.currentHealth} >= 85}
-{
-#variable {playerCondition.currentHealth} {bruised}
-};
-#elseif {${playerCondition.currentHealth} >= 70}
-{
-#variable {playerCondition.currentHealth} {hurt}
-};
-#elseif {${playerCondition.currentHealth} >= 55}
-{
-#variable {playerCondition.currentHealth} {injured}
-};
-#elseif {${playerCondition.currentHealth} >= 40}
-{
-#variable {playerCondition.currentHealth} {wounded}
-};
-#elseif {${playerCondition.currentHealth} >= 25}
-{
-#variable {playerCondition.currentHealth} {mauled}
-};
-#elseif {${playerCondition.currentHealth} <= 10}
-{
-#variable {playerCondition.currentHealth} {crippled}
-};
-#if {"${playerCondition.oldHealth}" != "${playerCondition.currentHealth}"}
-{
-#echo {Your condition: $playerCondition.currentHealth};
-#variable {playerCondition.oldHealth} {${playerCondition.currentHealth}};
-#if {"$audioprompt" == "true"}
-{
-synth_play ${playerCondition.currentHealth}
-}
-};
-#if {${playerCondition.currentMana} == 100}
-{
-#variable {playerCondition.currentMana} {full};
-#variable {playerCondition.oldMana} {full}
-};
-#elseif {${playerCondition.currentMana} >= 75}
-{
-#variable {playerCondition.currentMana} {lots of mana}
-};
-#elseif {${playerCondition.currentMana} >= 50}
-{
-#variable {playerCondition.currentMana} {half mana}
-};
-#elseif {${playerCondition.currentMana} <= 15}
-{
-#variable {playerCondition.currentMana} {low mana}
-};
-#if {"${playerCondition.oldMana}" != "${playerCondition.currentMana}"}
-{
-#echo {Your mana: $playerCondition.currentMana};
-#variable {playerCondition.oldMana} {${playerCondition.currentMana}};
-#if {"$audioprompt" == "true"}
-{
-synth_play ${playerCondition.currentMana}
-}
-};
-#if {${playerCondition.currentMovement} <= 90}
-{
-#variable {playerCondition.currentMovement} {full};
-#variable {playerCondition.oldMovement} {full}
-};
-#elseif {${playerCondition.currentMovement} >= 75}
-{
-#variable {playerCondition.currentMovement} {going strong}
-};
-#elseif {${playerCondition.currentMovement} >= 50}
-{
-#variable {playerCondition.currentMovement} {tiring}
-};
-#elseif {${playerCondition.currentMovement} <= 15}
-{
-#variable {playerCondition.currentMovement} {exhausted}
-};
-#if {"${playerCondition.oldMovement}" != "${playerCondition.currentMovement}"}
-{
-#echo {Your movement: $playerCondition.currentMovement};
-#variable {playerCondition.oldMovement} {${playerCondition.currentMovement}};
-#if {"$audioprompt" == "true"}
-{
-synth_play ${playerCondition.currentMovement}
-}
-};
-}
-}
-{9}
-
-#variable {playerCondition} {}
+#VARIABLE         {audioprompt}  {{oldHealth}{0}{oldMana}{0}{oldMovement}{0}}

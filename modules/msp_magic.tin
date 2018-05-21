@@ -1,78 +1,78 @@
 #ACTION {%1 seems to be burning on the inside as magical pain courses through it!$}
 {
-	rplay magic/residual_damage
+	rPLAY magic/residual_damage
 }
 {9}
 
 #ACTION {%1 twitches as magical pain sears through it!$}
 {
-	rplay magic/residual_damage
+	rPLAY magic/residual_damage
 }
 {9}
 
 #ACTION {^You %* with your deadly blast!!$}
 {
-	rplay magic/fireball
+	rPLAY magic/fireball
 }
 {9}
 
 #ACTION {^You feel the weight of the world lift from your shoulders!$}
 {
-	play magic/ritual_of_burdens
+	PLAY magic/ritual_of_burdens
 }
 {9}
 
 #ACTION {^You fire a blinding sunshock from your hand and hit %1 square in the face!$}
 {
-	play magic/sunshock
+	PLAY magic/sunshock
 }
 {9}
 
 #ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
 {
-	lplay magic/heal_friend
+	lPLAY magic/heal_friend
 }
 {9}
 
 #ACTION {^You scorch %* with hotter and hotter fire until it is blackened and dead!$}
 {
-	play combat/fatal/fireball
+	PLAY combat/fatal/fireball
 }
 {9}
 
 #ACTION {^You shoot fire at %1, but {he|it|she} skillfully dodges.$}
 {
-	rplay magic/miss_fireball
+	rPLAY magic/miss_fireball
 }
 {9}
 
 #ACTION {^You swirl your mana around your body to heal your wounds.$}
 {
-	lplay magic/heal_self
+	lPLAY magic/heal_self
 }
 {9}
 
 #ACTION {^You whip your hand forward and fire a burst of color at %1!$}
 {
-	rplay magic/colorburst
+	rPLAY magic/colorburst
 }
 {9}
 
 #ACTION {^You {begin|call out the chorus of|hum the melody to|sing} the chant of {druids|nature}.$}
 {
-	seq_play magic/chant_of_%2
+	seq_PLAY magic/chant_of_%2
 }
 {9}
 
 #ACTION {^You {whisper your burdens into the air|wrap yourself up and begin chanting}...$}
 {
-	play magic/ritual_start
+	PLAY magic/ritual_start
 }
 {9}
 
 #ACTION {^Your %w cooldown has ended.$}
 {
-	revplay magic/%1;
+	revPLAY magic/%1;
 	#list {autoDo} {find} {%1} {i};
 	#if {$i > 0}
 	{

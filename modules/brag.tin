@@ -1,0 +1,113 @@
+#ACTION {^ end paste$}
+{
+	#line {gag};
+	#replace {pasteText} {< $MSDP_CHARACTER_NAME |%*>} {};
+	${pasteText};
+	#variable {pasteText} {}
+}
+{9}
+
+#ALIAS {^boast %S %2}
+{
+	#format {tmp} {%u} {%1};
+	#if {&{MSDP_${tmp}}}
+	{
+		#variable {msg} {${MSDP_${tmp}} %1};
+		#if {&{MSDP_${tmp}_PERM}}
+		{
+			#variable {msg} {${msg} of ${MSDP_${tmp}_PERM}}
+		};
+		#elseif {&{MSDP_${tmp}_MAX} && ${MSDP_${tmp}_MAX} != 0}
+		{
+			#variable {msg} {${msg} of ${MSDP_${tmp}_MAX}}
+		}
+	};
+	#else
+	{
+		#variable {msg} {Nothing to brag}
+	};
+	#variable {msg} {${msg}\.};
+	#if {"$msg" != "Nothing to brag\\."}
+	{
+		#send {%2 $msg}
+	};
+	#else
+	{
+		#echo {${msg}}
+	}
+}
+{9}
+
+#ALIAS {^paste %1 > %2}
+{
+	#variable {pasteText} {%2};
+	#send {%1};
+	localecho end paste
+}
+{9}
+
+#ALIAS {^show %S$}
+{
+	#format {tmp} {%u} {%1};
+	#if {&{MSDP_${tmp}}}
+	{
+		#variable {msg} {${MSDP_${tmp}} %1};
+		#if {&{MSDP_${tmp}_PERM}}
+		{
+			#variable {msg} {${msg} of ${MSDP_${tmp}_PERM}}
+		};
+		#elseif {&{MSDP_${tmp}_MAX} && ${MSDP_${tmp}_MAX} != 0}
+		{
+			#variable {msg} {${msg} of ${MSDP_${tmp}_MAX}}
+		}
+	};
+	#else
+	{
+		#variable {msg} {Nothing to show}
+	};
+	#variable {msg} {${msg}\.};
+	#echo {${msg}}
+}
+{9}
+
+#ALIAS {^{cash|enemy|enemies|hp|mn|mv|tnl|xp}$}
+{
+	#switch {"%0"}
+	{
+		#case {"cash"}
+		{
+			#echo {Gold: $MSDP_MONEY}
+		};
+		#case {"{enemy|enemies}"}
+		{
+			#echo {Enemies: $MSDP_OPPONENT_NUMBER}
+		};
+		#case {"hp"}
+		{
+			show health
+		};
+		#case {"mv"}
+		{
+			show stamina
+		};
+		#case {"mn"}
+		{
+			show mana
+		};
+		#case {"{tnl|xp}"}
+		{
+			#echo {Exp: $MSDP_EXPERIENCE ToLvl: $MSDP_EXPERIENCE_TNL}
+		}
+	}
+}
+{9}
+
+#EVENT {RECEIVED LINE}
+{
+	#if {"${pasteText}" != "" && "%1" != " end paste"}
+	{
+		#variable {pasteText} {${pasteText} %1}
+	}
+}
+
+#VARIABLE         {pasteText}  {}

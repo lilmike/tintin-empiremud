@@ -10,7 +10,7 @@
 	};
 #if {"$beeps" == "true"}
 {
-	#system {play -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.06 remix v0.4 v0.9 gain $volume&};
+	#system {PLAY -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.06 remix v0.4 v0.9 gain $volume&};
 }
 }
 {9}

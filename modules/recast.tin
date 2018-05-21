@@ -30,7 +30,7 @@
 
 #action {^You feel the gift of foresight!$}
 {
-play magic/foresight;
+PLAY magic/foresight;
 Remove_Spell foresight;
 Recast
 }
@@ -38,7 +38,7 @@ Recast
 
 #action {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
 {
-play magic/eartharmor;
+PLAY magic/eartharmor;
 Remove_Spell eartharmor;
 Recast
 }
@@ -46,7 +46,7 @@ Recast
 
 #action {^Sparkling blue wings made of pure mana erupt from your back!$}
 {
-play magic/fly;
+PLAY magic/fly;
 Remove_Spell fly;
 Recast
 }
@@ -54,7 +54,7 @@ Recast
 
 #action {^You feel yourself shielded by your mana!$}
 {
-play magic/manashield;
+PLAY magic/manashield;
 Remove_Spell manashield;
 Recast
 }
@@ -62,7 +62,7 @@ Recast
 
 #action {^You concentrate and veins of red mana streak down your skin.$}
 {
-play magic/hasten;
+PLAY magic/hasten;
 Remove_Spell hasten;
 Recast
 }
@@ -70,35 +70,35 @@ Recast
 
 #action {^Your foresight ends.$}
 {
-revplay magic/foresight;
+revPLAY magic/foresight;
 Add_Spell foresight
 }
 {9}
 
 #action {^Your mana shield fades.$}
 {
-revplay magic/manashield;
+revPLAY magic/manashield;
 Add_Spell manashield
 }
 {9}
 
 #action {^Your plating of earth armor fades.$}
 {
-revplay magic/eartharmor;
+revPLAY magic/eartharmor;
 Add_Spell eartharmor
 }
 {9}
 
 #action {^You land quickly as your magical flight wears off.$}
 {
-revplay magic/fly;
+revPLAY magic/fly;
 Add_Spell fly
 }
 {9}
 
 #action {^Your haste fades.$}
 {
-revplay magic/hasten;
+revPLAY magic/hasten;
 Add_Spell hasten
 }
 {9}

@@ -1,6 +1,6 @@
 #ACTION {^You are hungry.$}
 {
-	play health/hungry;
+	PLAY health/hungry;
 	#if {"$autoforage" == "true"}
 	{
 		forage
@@ -10,7 +10,7 @@
 
 #ACTION {^You forage around %*}
 {
-	pan_play skills/search;
+	pan_PLAY skills/search;
 	#if {"$autoforage" == "true"}
 	{
 		#regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})} {#&4 eat &3}
@@ -26,7 +26,7 @@
 
 #ACTION {%* is {stunned, but will probably regain consciousness again|knocked unconscious|incapacitated and will slowly die, if not aided}{\.|!}$}
 {
-	play combat/unconscious;
+	PLAY combat/unconscious;
 	#if {"$autobite" == "true" && "$feeding" == "false"}
 	{
 		#regexp {%1} {{.*} {.*}} {bite &2};
@@ -37,7 +37,7 @@
 
 #ACTION {%1 is trying to summon you to %2 -- use 'accept/reject summon'.$}
 {
-	#variable {playerSummoner} {%1}
+	#variable {PLAYerSummoner} {%1}
 }
 {9}
 
@@ -60,7 +60,7 @@
 #ACTION {^You pull the last of %* blood from {her|his|its} veins, and {he|it|she} falls limply to the ground!$}
 {
 	#variable {feeding} {false};
-	play combat/vampire_feed
+	PLAY combat/vampire_feed
 }
 {9}
 
@@ -79,7 +79,7 @@
 
 #ACTION {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to reboot faster) ]$}
 {
-	play system/%1 system/%2;
+	PLAY system/%1 system/%2;
 	#if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
 	{
 		confirm
@@ -257,5 +257,5 @@
 #VARIABLE         {autoskin}  {false}
 #VARIABLE         {feeding}  {false}
 #VARIABLE         {lastCommand}  {}
-#VARIABLE         {playerSummoner}  {}
+#VARIABLE         {PLAYerSummoner}  {}
 #VARIABLE         {rebootConfirmed}  {false}

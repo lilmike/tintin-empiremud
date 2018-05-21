@@ -32,11 +32,11 @@
 		};
 		#case {"pianobar"}
 		{
-			#script {i} {cut -f 1 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null};
+			#script {i} {cut -f 1 -d '\' "$HOME/../pianobar/nowPLAYing" 2> /dev/null};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {cut -f 2 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null};
+			#script {i} {cut -f 2 -d '\' "$HOME/../pianobar/nowPLAYing" 2> /dev/null};
 			#format {msg[2]} {%p} {${i[1]}};
-			#script {i} {cut -f 3 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null};
+			#script {i} {cut -f 3 -d '\' "$HOME/../pianobar/nowPLAYing" 2> /dev/null};
 			#variable {msg[3]} {%p} {${i[1]}}
 		};
 		#case {"xmms2"}
@@ -68,7 +68,7 @@
 }
 {9}
 
-#ALIAS {^musicplayer %s{audacious|cmus|moc|mopidy|mpc|mpd|pianobar|xmms2}$}
+#ALIAS {^musicPLAYer %s{audacious|cmus|moc|mopidy|mpc|mpd|pianobar|xmms2}$}
 {
 	#if {"%2" == "mpc"}
 	{
@@ -78,14 +78,14 @@
 	{
 		#variable {musicPlayer} {%2}
 	};
-	#showme {music player set to $musicPlayer\.}
+	#showme {music PLAYer set to $musicPlayer\.}
 }
 {9}
 
 #ALIAS {^m{p|po|pos|post} %2}
 {
 	Get_Music_Message_String;
-	%2 Now playing: $msg via $musicPlayer\.
+	%2 Now PLAYing: $msg via $musicPlayer\.
 }
 {9}
 
@@ -93,7 +93,7 @@
 {
 	#if {"%0" == "autotitle"}
 	{
-		#showme {Your title will automatically change to currently playing song.};
+		#showme {Your title will automatically change to currently PLAYing song.};
 		#variable {autotitle} {true}
 	};
 	#else
@@ -120,7 +120,7 @@
 
 #MACRO {\e+}
 {
-	#nop {Increase music player volume};
+	#nop {Increase music PLAYer volume};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
@@ -154,12 +154,12 @@
 
 #MACRO {\eB}
 {
-	#nop {Music player next};
+	#nop {Music PLAYer next};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playlist-advance}
+			#system {audtool --PLAYlist-advance}
 		};
 		#case {"moc"}
 		{
@@ -186,12 +186,12 @@
 
 #MACRO {\eC}
 {
-	#nop {Music player pause};
+	#nop {Music PLAYer pause};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playback-pause}
+			#system {audtool --PLAYback-pause}
 		};
 		#case {"moc"}
 		{
@@ -227,12 +227,12 @@
 
 #MACRO {\eR}
 {
-	#nop {Music player repeat.};
+	#nop {Music PLAYer repeat.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playlist-repeat-toggle&&echo "Repeat $(audtool --playlist-repeat-status)."}
+			#system {audtool --PLAYlist-repeat-toggle&&echo "Repeat $(audtool --PLAYlist-repeat-status)."}
 		};
 		#case {"moc"}
 		{
@@ -256,12 +256,12 @@
 
 #MACRO {\eS}
 {
-	#nop {Music player randomize tracks.};
+	#nop {Music PLAYer randomize tracks.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playlist-shuffle-toggle&&echo "Shuffle $(audtool --playlist-shuffle-status)."}
+			#system {audtool --PLAYlist-shuffle-toggle&&echo "Shuffle $(audtool --PLAYlist-shuffle-status)."}
 		};
 		#case {"moc"}
 		{
@@ -273,7 +273,7 @@
 		};
 		#case {"xmms2"}
 		{
-			#system {xmms2 playlist shuffle;if [ $? -eq 0 ] ; then echo "Playlist shuffled.";fi}
+			#system {xmms2 PLAYlist shuffle;if [ $? -eq 0 ] ; then echo "Playlist shuffled.";fi}
 		};
 		#default
 		{
@@ -285,19 +285,19 @@
 
 #MACRO {\eU}
 {
-	#nop {Currently playing track};
+	#nop {Currently PLAYing track};
 	Get_Music_Message_String;
 	#showme {$msg\.}
 }
 
 #MACRO {\eV}
 {
-	#nop {Music player stop.};
+	#nop {Music PLAYer stop.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playback-stop}
+			#system {audtool --PLAYback-stop}
 		};
 		#case {"moc"}
 		{
@@ -324,12 +324,12 @@
 
 #MACRO {\eX}
 {
-	#nop {Music player play.};
+	#nop {Music PLAYer PLAY.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {if ! ps -C audacious &> /dev/null ; then audacious -Hp &> /dev/null&fi;audtool --playback-play}
+			#system {if ! ps -C audacious &> /dev/null ; then audacious -Hp &> /dev/null&fi;audtool --PLAYback-PLAY}
 		};
 		#case {"moc"}
 		{
@@ -337,7 +337,7 @@
 		};
 		#case {"{mpd|mopidy}"}
 		{
-			#system {mpc -q play}
+			#system {mpc -q PLAY}
 		};
 		#case {"pianobar"}
 		{
@@ -345,7 +345,7 @@
 		};
 		#case {"xmms2"}
 		{
-			#system {xmms2 play}
+			#system {xmms2 PLAY}
 		};
 		#default
 		{
@@ -356,12 +356,12 @@
 
 #MACRO {\eZ}
 {
-	#nop {Music player previous track.};
+	#nop {Music PLAYer previous track.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playlist-reverse}
+			#system {audtool --PLAYlist-reverse}
 		};
 		#case {"moc"}
 		{
@@ -384,12 +384,12 @@
 
 #MACRO {\e\x7B}
 {
-	#nop {Music player seek backward.};
+	#nop {Music PLAYer seek backward.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playback-seek-relative time -5}
+			#system {audtool --PLAYback-seek-relative time -5}
 		};
 		#case {"moc"}
 		{
@@ -412,12 +412,12 @@
 
 #MACRO {\e\x7D}
 {
-	#nop {Music player seek forward.};
+	#nop {Music PLAYer seek forward.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}
 		{
-			#system {audtool --playback-seek-relative time 5}
+			#system {audtool --PLAYback-seek-relative time 5}
 		};
 		#case {"moc"}
 		{
@@ -440,7 +440,7 @@
 
 #MACRO {\e_}
 {
-	#nop {Music player volume down.};
+	#nop {Music PLAYer volume down.};
 	#switch {"$musicPlayer"}
 	{
 		#case {"audacious"}

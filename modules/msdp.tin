@@ -16,11 +16,8 @@
 
 #ALIAS {MSDP_REPORT}
 {
-	#variable result {$IAC$SB$MSDP_PROTOCOL${VAR}REPORT};
-	#forall {${MSDP.REPORTABLE_VARIABLES}[]}
-	{
-		#variable result {$result${VAL}${MSDP.REPORTABLE_VARIABLES}[&0]}
-	};
+	#variable {result} {$IAC$SB$MSDP_PROTOCOL${VAR}REPORT};
+	#forall {${MSDP_REPORTABLE_VARIABLES[]}}{#variable {result} {${result}${VAL}${MSDP_REPORTABLE_VARIABLES[&0]}}};
 	#send {$result$IAC$SE\}
 }
 {9}
@@ -31,20 +28,53 @@
 }
 {9}
 
+#ALIAS {^MSDP$}
+{
+	#if {${PROTOCOL[%0]}}
+	{
+		#echo {%0 enabled.}
+	};
+	#else
+	{
+		#echo {%0 disabled.}
+	}
+}
+{9}
+
+#CONFIG           {256 COLORS}  {OFF}
+#CONFIG           {AUTO TAB}  {5000}
+#CONFIG           {BUFFER SIZE}  {20000}
+#CONFIG           {CHARSET}  {ASCII}
+#CONFIG           {COLOR PATCH}  {OFF}
+#CONFIG           {COMMAND COLOR}  {<078>}
+#CONFIG           {COMMAND ECHO}  {ON}
+#CONFIG           {CONNECT RETRY}  {0}
+#CONFIG           {HISTORY SIZE}  {1000}
+#CONFIG           {LOG}  {RAW}
+#CONFIG           {PACKET PATCH}  {0.00}
+#CONFIG           {REPEAT CHAR}  {!}
+#CONFIG           {REPEAT ENTER}  {OFF}
+#CONFIG           {SCROLL LOCK}  {ON}
+#CONFIG           {SPEEDWALK}  {OFF}
+#CONFIG           {TINTIN CHAR}  {#}
+#CONFIG           {VERBATIM}  {OFF}
+#CONFIG           {VERBATIM CHAR}  {\}
+#CONFIG           {VERBOSE}  {OFF}
+#CONFIG           {WORDWRAP}  {ON}
 #EVENT {IAC SB MSDP}
 {
 	#nop Save all variables in an MSDP list.;
-	#variable {MSDP[%0]} {%1};
+	#variable {MSDP_%0} {%1};
 	#switch {"%0"}
 	{
 		#case {"PLAY_SOUND"}
 		{
-			play %1
+			PLAY %1
 		};
-#case {"REPORTABLE_VARIABLES"}
-{
-MSDP_REPORT
-}
+		#case {"REPORTABLE_VARIABLES"}
+		{
+			MSDP_REPORT
+		}
 	}
 }
 
@@ -56,32 +86,92 @@ MSDP_REPORT
 #EVENT {IAC WILL MSDP}
 {
 	#send {$IAC$DO$MSDP_PROTOCOL\};
-        MSDP_LIST;
-	MSDP_CONFIGURE sound,1
+	MSDP_LIST;
+	#nop {Uncooment the next line to use MSDP for sound instead of MSP};
+	#nop {MSDP_CONFIGURE sound,1};
+	#variable {PROTOCOL[MSDP]} {1}
 }
 
-#FORMAT {IAC}  {%a} {255}
-#FORMAT {DONT} {%a} {254}
-#FORMAT {DO}   {%a} {253}
-#FORMAT {WONT} {%a} {252}
-#FORMAT {WILL} {%a} {251}
-#FORMAT {SB}   {%a} {250}
-#FORMAT {SE}   {%a} {240}
-#FORMAT {MSDP_PROTOCOL} {%a}  {69}
-#FORMAT {VAR}  {%a}  {01}
-#FORMAT {VAL}  {%a}  {02}
-
-#event {VARIABLE UPDATE MSDP}
-{
-#if {"${name}" != "${MSDP.ACCOUNT_NAME}"}
-{
-INITIALIZE_SETTINGS
-};
-#if {${MSDP.OPPONENT_HEALTH} != 0}
-{
-ENEMY_CONDITION ${MSDP.OPPONENT_HEALTH}
-};
-PLAYER_CONDITION
-}
-
-#variable {MSDP} {}
+#PATHDIR          {d}  {u}  {32}
+#PATHDIR          {e}  {w}  {2}
+#PATHDIR          {n}  {s}  {1}
+#PATHDIR          {ne}  {sw}  {3}
+#PATHDIR          {nw}  {se}  {9}
+#PATHDIR          {s}  {n}  {4}
+#PATHDIR          {se}  {nw}  {6}
+#PATHDIR          {sw}  {ne}  {12}
+#PATHDIR          {u}  {d}  {16}
+#PATHDIR          {w}  {e}  {8}
+#VARIABLE         {DO}  {ý}
+#VARIABLE         {DONT}  {þ}
+#VARIABLE         {IAC}  {ÿ}
+#VARIABLE         {MSDP_AC}  {}
+#VARIABLE         {MSDP_AFFECTS}  {}
+#VARIABLE         {MSDP_ALIGNMENT}  {}
+#VARIABLE         {MSDP_ANSI_COLORS}  {}
+#VARIABLE         {MSDP_AREA_MAXLEVEL}  {}
+#VARIABLE         {MSDP_AREA_MINLEVEL}  {}
+#VARIABLE         {MSDP_AREA_NAME}  {}
+#VARIABLE         {MSDP_CHARACTER_NAME}  {}
+#VARIABLE         {MSDP_CLASS}  {}
+#VARIABLE         {MSDP_CLIENT_ID}  {}
+#VARIABLE         {MSDP_CLIENT_VERSION}  {}
+#VARIABLE         {MSDP_CON}  {}
+#VARIABLE         {MSDP_CON_PERM}  {}
+#VARIABLE         {MSDP_DAMROLL}  {}
+#VARIABLE         {MSDP_DEX}  {}
+#VARIABLE         {MSDP_DEX_PERM}  {}
+#VARIABLE         {MSDP_EXPERIENCE}  {}
+#VARIABLE         {MSDP_EXPERIENCE_MAX}  {}
+#VARIABLE         {MSDP_EXPERIENCE_TNL}  {}
+#VARIABLE         {MSDP_MONEY}  {}
+#VARIABLE         {MSDP_HEALTH}  {}
+#VARIABLE         {MSDP_HEALTH_MAX}  {}
+#VARIABLE         {MSDP_HITROLL}  {}
+#VARIABLE         {MSDP_INT}  {}
+#VARIABLE         {MSDP_INT_PERM}  {}
+#VARIABLE         {MSDP_LEVEL}  {}
+#VARIABLE         {MSDP_LUK}  {}
+#VARIABLE         {MSDP_LUK_PERM}  {}
+#VARIABLE         {MSDP_MANA}  {}
+#VARIABLE         {MSDP_MANA_MAX}  {}
+#VARIABLE         {MSDP_MONEY}  {}
+#VARIABLE         {MSDP_MXP}  {}
+#VARIABLE         {MSDP_OPPONENT_HEALTH}  {}
+#VARIABLE         {MSDP_OPPONENT_HEALTH_MAX}      {}
+#VARIABLE         {MSDP_OPPONENT_LEVEL}  {}
+#VARIABLE         {MSDP_OPPONENT_NAME}  {}
+#VARIABLE         {MSDP_OPPONENT_NUMBER}  {}
+#VARIABLE         {MSDP_PARAGON_LEVEL}  {}
+#VARIABLE         {MSDP_PLUGIN_ID}  {}
+#VARIABLE         {MSDP_POSITION}  {}
+#VARIABLE         {MSDP_PRACTICE}  {}
+#VARIABLE         {MSDP_PROTOCOL}  {E}
+#VARIABLE         {MSDP_QPOINTS}  {}
+#VARIABLE         {MSDP_RACE}  {}
+#VARIABLE         {MSDP_ROOM_EXITS}  {}
+#VARIABLE         {MSDP_ROOM_NAME}  {}
+#VARIABLE         {MSDP_ROOM_TERRAIN}  {}
+#VARIABLE         {MSDP_ROOM_VNUM}  {}
+#VARIABLE         {MSDP_SERVER_TIME}  {}
+#VARIABLE         {MSDP_SNIPPET_VERSION}  {}
+#VARIABLE         {MSDP_SOUND}  {}
+#VARIABLE         {MSDP_MOVEMENT}  {}
+#VARIABLE         {MSDP_MOVEMENT_MAX}  {}
+#VARIABLE         {MSDP_BLOOD}  {}
+#VARIABLE         {MSDP_BLOOD_MAX}  {}
+#VARIABLE         {MSDP_STR}  {}
+#VARIABLE         {MSDP_STR_PERM}  {}
+#VARIABLE         {MSDP_UTF_8}  {}
+#VARIABLE         {MSDP_WIMPY}  {}
+#VARIABLE         {MSDP_WIS}  {}
+#VARIABLE         {MSDP_WIS_PERM}  {}
+#VARIABLE         {MSDP_WORLD_TIME}  {}
+#VARIABLE         {MSDP_XTERM_256_COLORS}   {}
+#VARIABLE         {PROTOCOL}  {{MSDP}{0}}
+#VARIABLE         {SB}  {ú}
+#VARIABLE         {SE}  {ð}
+#VARIABLE         {VAL}  {}
+#VARIABLE         {VAR}  {}
+#VARIABLE         {WILL}  {û}
+#VARIABLE         {WONT}  {ü}

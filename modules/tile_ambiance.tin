@@ -6,7 +6,7 @@
 #variable {tileSoundFile} {none};
 #if {"%0" != "$oldCoordinates"}
 {
-play move/default_step;
+PLAY move/default_step;
 #variable {oldCoordinates} {%0}
 };
 Tile_Play $tileSoundFile;
@@ -42,7 +42,7 @@ claim
 };
 #if {"%0" != "$oldCoordinates"}
 {
-play move/$tileSoundFile;
+PLAY move/$tileSoundFile;
 #variable {oldCoordinates} {%0}
 };
 #variable {tileSoundFile} {$tileSoundFile\.opus};
@@ -91,7 +91,7 @@ Tile_Play tileSoundFile
 #variable {tileSoundFilePID} {false}
 };
 #var {oldSoundFile} {$tileSoundFile};
-#system {if [ -f "sounds/terrain/$tileSoundFile" ] ; then play -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain $volume &> /dev/null&echo "$!" > .tileSoundFilePID;else echo "false" > .tileSoundFilePID;fi};
+#system {if [ -f "sounds/terrain/$tileSoundFile" ] ; then PLAY -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain $volume &> /dev/null&echo "$!" > .tileSoundFilePID;else echo "false" > .tileSoundFilePID;fi};
 #delay {0.01} {#script {tileSoundFilePID} {cat .tileSoundFilePID};#var {tileSoundFilePID} {${tileSoundFilePID[1]}}}
 }
 }

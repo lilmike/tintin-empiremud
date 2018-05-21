@@ -6,35 +6,35 @@ gt Out of movement!
 
 #action {^[ %* has switched to %* ]$}
 {
-synth_play switchCharacterSound;
+SYNTH_PLAY switchCharacterSound;
 Add_Channel_Event all %0
 }
 {9}
 
 #ACTION {^Your daily quests and bonus experience have reset!$}
 {
-    play skills/reset;
+    PLAY skills/reset;
 Add_Channel_Event all %0
 }
 {9}
 
 #ACTION {^[ %1 has been {demote|promote}d to %* ]$}
 {
-    play miscellaneous/%2;
+    PLAY miscellaneous/%2;
 Add_Channel_Event all %0
 }
 {9}
  
 #ACTION {^[ %1 has been {executed|killed} by %* ]$}
 {
-    play miscellaneous/death;
+    PLAY miscellaneous/death;
 Add_Channel_Event all %0
 }
 {9}
  
 #ACTION {^[ %1 has died at %* ]$}
 {
-    play miscellaneous/death;
+    PLAY miscellaneous/death;
 Add_Channel_Event all %0
 }
 {9}
@@ -43,7 +43,7 @@ Add_Channel_Event all %0
 {
     #format {i} {%l} {%1};
     #replace {i} { } {_};
-    play improve/$i;
+    PLAY improve/$i;
 Add_Channel_Event all %0
 }
 {9}
@@ -56,7 +56,7 @@ Add_Channel_Event all %0
 }
 {9}
 
-#alias {^display_channel %w %d}
+#alias {^disPLAY_channel %w %d}
 {
 #echo {${%1List[%2]}}
 }
@@ -68,7 +68,7 @@ Add_Channel_Event all %0
 	#script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
 	#variable {unencryptedMessage} {${unencryptedMessage[1]}};
 	#echo {%1${unencryptedMessage}'};
-	play cryptmsg
+	PLAY cryptmsg
 }
 {8}
 
@@ -78,25 +78,25 @@ Add_Channel_Event all %0
 		{
 			#case {"say"}
 			{
-				synth_play saySendSound;
+				SYNTH_PLAY saySendSound;
 				Add_Channel_Event all %0;
 				Add_Channel_Event say %0
 			};
 			#case {"tell %*"}
 			{
-				synth_play tellSendSound;
+				SYNTH_PLAY tellSendSound;
 				Add_Channel_Event all %0;
 				Add_Channel_Event tell %0
 			};
 			#case {"tell the party"}
 			{
-				synth_play grouptellSendSound;
+				SYNTH_PLAY grouptellSendSound;
 				Add_Channel_Event all %0;
 				Add_Channel_Event party %0
 			};
 			#default
 			{
-				synth_play defaultSendSound;
+				SYNTH_PLAY defaultSendSound;
 				Add_Channel_Event all %0
 			}
 		}
@@ -109,19 +109,19 @@ Add_Channel_Event all %0
 		{
 			#case {"says"}
 			{
-				synth_play sayReceiveSound;
+				SYNTH_PLAY sayReceiveSound;
 				Add_Channel_Event all %0;
 				Add_Channel_Event say %0
 			};
 			#case {"tells you"}
 			{
-				synth_play tellReceiveSound;
+				SYNTH_PLAY tellReceiveSound;
 				Add_Channel_Event all %0;
 				Add_Channel_Event tell %0
 			};
 			#case {"tells the party"}
 			{
-				synth_play grouptellReceiveSound;
+				SYNTH_PLAY grouptellReceiveSound;
 				Add_Channel_Event all %0;
 				Add_Channel_Event party %0
 			}
@@ -131,27 +131,27 @@ Add_Channel_Event all %0
 
 #ACTION {^[ %1 has entered the game ]$}
 {
-	play miscellaneous/player_enter;
+	PLAY miscellaneous/PLAYer_enter;
 	Add_Channel_Event all %0
 }
 {9}
 
 #ACTION {^[ %1 has left the game ]$}
 {
-	play miscellaneous/player_leave;
+	PLAY miscellaneous/PLAYer_leave;
 	Add_Channel_Event all %0
 }
 {9}
 
 #ACTION {^(friend) %S was kille%*}
 {
-	play friend-death
+	PLAY friend-death
 }
 {9}
 
 #ACTION {^[/%S{]| }%*}
 {
-	synth_play %1ChannelSound;
+	SYNTH_PLAY %1ChannelSound;
 				Add_Channel_Event all %0;
 #if {"%1" == "{cowsay|gossip|music|ooc|say|tell}"}
 {
@@ -162,7 +162,7 @@ Add_Channel_Event all %0
 
 #ACTION {^[{EMPIRE|gsay|IMMORTAL}%*}
 {
-	synth_play %1ChannelSound;
+	SYNTH_PLAY %1ChannelSound;
 				Add_Channel_Event all %0;
 #if {"%1" == "gsay"}
 {
@@ -266,52 +266,52 @@ Add_Channel_Event all %0
 
 #MACRO {\e0}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 10
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 10
 }
 
 #MACRO {\e1}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 1
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 1
 }
 
 #MACRO {\e2}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 2
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 2
 }
 
 #MACRO {\e3}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 3
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 3
 }
 
 #MACRO {\e4}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 4
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 4
 }
 
 #MACRO {\e5}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 5
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 5
 }
 
 #MACRO {\e6}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 6
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 6
 }
 
 #MACRO {\e7}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 7
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 7
 }
 
 #MACRO {\e8}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 8
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 8
 }
 
 #MACRO {\e9}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 9
+	disPLAY_channel $channelBuffer[$channelBufferIndex] 9
 }
 
 #MACRO {\e=}

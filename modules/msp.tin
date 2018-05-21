@@ -1,0 +1,101 @@
+#ACTION {^!!SOUND(%1)$}
+{
+	#variable {MSP.LAST} {%1};
+	PLAY %1
+}
+{9}
+
+#ACTION {^Audible sound is {ON|OFF}.$}
+{
+	#variable {MSP.SOUND} {%1};
+	#replace {MSP.SOUND} {ON} {1};
+	#replace {MSP.SOUND} {OFF} {0};
+	CSAVE
+}
+{9}
+
+#ALIAS {PLAY %S}
+{
+#if {!&{MSP[VOLUME]}}
+{
+#variable {MSP[VOLUME]} {0}
+};
+	#if {!&{MSP.SOUND}}
+	{
+		#variable {MSP[SOUND]} {1}
+	};
+	#if {${MSP[SOUND]}}
+	{
+		#line {substitute} {escape} #system {PLAY -qV0 "$($shuf -n1 -e ${HOME}/sounds/%1)" gain ${MSP[VOLUME]} &> /dev/null &}
+	}
+}
+{9}
+
+#ALIAS {^MSP$}
+{
+	#if {${PROTOCOL[%0]}}
+	{
+		#echo {%0 enabled.}
+	};
+	#else
+	{
+		#echo {%0 disabled.}
+	};
+}
+{9}
+
+#ALIAS {^SYNTH_PLAY %1}
+{
+#if {!&{MSP[VOLUME]}}
+{
+#variable {MSP[VOLUME]} {0}
+};
+	#if {!&{MSP.SOUND}}
+	{
+		#variable {MSP.SOUND} {1}
+	};
+	#if {${MSP.SOUND}}
+	{
+		#if {&{%1}}
+		{
+			#system {PLAY -qV0 ${%1} gain ${MSP[VOLUME]} &> /dev/null &}
+		}
+	}
+}
+{9}
+
+#EVENT {IAC WILL MSP}
+{
+	#send {\xFF\xFD\x5A\};
+	#variable {MSP.PROTOCOL} {enabled}
+}
+
+#GAG              {^!!SOUND%*}
+#MACRO {\e>}
+{
+	#if {$volume <= -40}
+	{
+		#variable {MSP[VOLUME]} {-40}
+	};
+	#else
+	{
+		#math {MSP[VOLUME]} {${MSP[VOLUME]} - 2}
+	};
+	SYNTH_PLAY newVolumeSound;
+	CSAVE
+}
+
+#MACRO {\e?}
+{
+	#if {${MSP[VOLUME]} >= 0}
+	{
+		#variable {MSP[VOLUME]} {0}
+	};
+	#else
+	{
+		#math {MSP[VOLUME]} {${MSP[VOLUME]} + 2}
+	};
+	SYNTH_PLAY newVolumeSound;
+	CSAVE
+}
+#variable {PROTOCOL[MSP]} {0}

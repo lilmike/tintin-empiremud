@@ -23,7 +23,7 @@ Tile_Play $tileSoundFile
 #gag {^You're already on that channel.$};
 /join cowsay;
 /join music;
-display SILENT_CHANNELS_CONNECTED
+disPLAY SILENT_CHANNELS_CONNECTED
 }
 {9}
 

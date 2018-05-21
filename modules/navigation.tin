@@ -1,9 +1,9 @@
 #action {^Obvious exits:$}
 {
-#if {"$playerSummoner" != ""}
+#if {"$PLAYerSummoner" != ""}
 {
-follow $playerSummoner;
-#variable {playerSummoner} {}
+follow $PLAYerSummoner;
+#variable {PLAYerSummoner} {}
 }
 }
 {9}
@@ -55,7 +55,7 @@ follow $playerSummoner;
 #else
 {
 #unvariable {quicknav};
-#showme {Exit information will be displayed normally.}
+#showme {Exit information will be disPLAYed normally.}
 }
 }
 {9}
@@ -132,17 +132,17 @@ $Southeast}
 {
 #if {"$findTerrainDirection" == "FALSE"}
 {
-#regexp {%0} {{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};synth_play foundTerrainSound}
+#regexp {%0} {{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};SYNTH_PLAY foundTerrainSound}
 };
 #else
 {
-#regexp {%0} {^$findTerrainDirection:{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};synth_play foundTerrainSound}
+#regexp {%0} {^$findTerrainDirection:{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};SYNTH_PLAY foundTerrainSound}
 }
 }
-#if {"$playerSummoner != ""}
+#if {"$PLAYerSummoner != ""}
 {
-follow $playerSummoner;
-#variable {playerSummoner} {}
+follow $PLAYerSummoner;
+#variable {PLAYerSummoner} {}
 }
 }
 {9}
@@ -220,7 +220,7 @@ sail %0
 
 #ACTION {^Alas, you cannot go that way...$}
 {
-	play move/bump
+	PLAY move/bump
 }
 {9}
 

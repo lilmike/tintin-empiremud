@@ -1,12 +1,12 @@
 #action {^{A|An} {candle|torch} burns out.$}
 {
-play miscellaneous/burnout
+PLAY miscellaneous/burnout
 }
 {9}
 
 #action {^{A|An} {candle|torch} begins to flicker and fade.$}
 {
-play miscellaneous/flicker
+PLAY miscellaneous/flicker
 }
 {9}
 
@@ -67,7 +67,7 @@ stand
 
 #ALIAS {^{c|qc}save$}
 {
-	#unvariable {play_%*};
+	#unvariable {PLAY_%*};
 	#unvariable {encryptedMessage};
 	#unvariable {unencryptedMessage};
 #class {gameData} {write} {$gameDataPath};

@@ -1,126 +1,126 @@
 #ACTION {^You howl at the moon.$}
 {
-	seq_play socials/howl
+	seq_PLAY socials/howl
 }
 {8}
 
 #ACTION {%1 burps at %2.$}
 {
-	seq_play socials/burp
+	seq_PLAY socials/burp
 }
 {9}
 
 #ACTION {%1 burps in your general direction.$}
 {
-	seq_play socials/burp
+	seq_PLAY socials/burp
 }
 {9}
 
 #ACTION {%1 bur{ps|p}.$}
 {
-	seq_play socials/burp
+	seq_PLAY socials/burp
 }
 {9}
 
 #ACTION {%1 enjoys a cup of coffee.$}
 {
-	seq_play socials/coffee
+	seq_PLAY socials/coffee
 }
 {9}
 
 #ACTION {%S lets off a real rip-roarer!$}
 {
-	seq_play socials/fart
+	seq_PLAY socials/fart
 }
 {9}
 
 #ACTION {%1 po{p|ps} open a bottle of beer and enjo{y|ys}.$}
 {
-	seq_play socials/beer
+	seq_PLAY socials/beer
 }
 {9}
 
 #ACTION {%1 {get|gets} down on all fours and {bark|barks} like a dog.$}
 {
-	seq_play socials/bark
+	seq_PLAY socials/bark
 }
 {9}
 
 #ACTION {%1 {bark|barks loudly} at %2.$}
 {
-	seq_play socials/bark
+	seq_PLAY socials/bark
 }
 {9}
 
 #ACTION {^Where are your manners?$}
 {
-	seq_play socials/fart
+	seq_PLAY socials/fart
 }
 {9}
 
 #ACTION {^%S howls like a forlorn coyote.$}
 {
-	seq_play socials/howl
+	seq_PLAY socials/howl
 }
 {9}
 
 #ACTION {^%S {give|gives} %3 the birdie.$}
 {
-	seq_play socials/bird
+	seq_PLAY socials/bird
 }
 {9}
 
 #ACTION {^%S {throw|throws} back {her|his|its|your} head and {howl|howls} mournfully at %5's misfortune.$}
 {
-	seq_play socials/howl
+	seq_PLAY socials/howl
 }
 {9}
 
 #ACTION {^%S {throw|throws} back {her|his|its|your} head and {howl|howls} mournfully at {her|his|its|your} own misfortune.$}
 {
-	seq_play socials/howl
+	seq_PLAY socials/howl
 }
 {9}
 
 #ACTION {^%S {throw|throws} back {her|his|its|your} head and {howl|howls} mournfully.$}
 {
-	seq_play socials/howl
+	seq_PLAY socials/howl
 }
 {9}
 
 #ACTION {^Arf! Woof! Aroooo!$}
 {
-	seq_play socials/bark
+	seq_PLAY socials/bark
 }
 {9}
 
 #ACTION {^You attempt to use %1 as a lure.$}
 {
-	seq_play socials/perv
+	seq_PLAY socials/perv
 }
 {9}
 
 #ACTION {^%S bur{p|ps} loudly.$}
 {
-	seq_play socials/burp
+	seq_PLAY socials/burp
 }
 {9}
 
 #ACTION {^You hold your precious coffee mug with care and love and sip the elixir within.$}
 {
-	seq_play socials/coffee
+	seq_PLAY socials/coffee
 }
 {9}
 
 #ACTION {^You {fart, and are totally amazed at the resulting smell|fart then look around innocently|smell something foul\. Ok, who farted}{\.|\?}$}
 {
-	seq_play socials/fart
+	seq_PLAY socials/fart
 }
 {9}
 
 #ACTION {^You're a pervert and you know it.$}
 {
-	seq_play socials/perv
+	seq_PLAY socials/perv
 }
 {9}
 

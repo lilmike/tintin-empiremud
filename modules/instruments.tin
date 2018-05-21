@@ -1,7 +1,7 @@
 #alias {^Play_Lyre}
 {
 #math {i} {1d3};
-#system {play -nqV0 synth ${lyreChords[$i]} remix - vol 0.7 fade 0 2&}
+#system {PLAY -nqV0 synth ${lyreChords[$i]} remix - vol 0.7 fade 0 2&}
 }
 {9}
 
@@ -16,7 +16,7 @@
 #if {$noteLength == 3} {#variable {noteLength} {0.75}};
 #var {notes} {$notes "|sox -np synth $noteLength ${fluteNotes[$i]}"}
 };
-#system {play -qV0 $notes remix - vol 0.11&}
+#system {PLAY -qV0 $notes remix - vol 0.11&}
 }
 {9}
 
