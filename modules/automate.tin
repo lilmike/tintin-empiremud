@@ -10,7 +10,7 @@
 
 #ACTION {^You forage around %*}
 {
-	pan_PLAY skills/search;
+	PAN_PLAY skills/search;
 	#if {"$autoforage" == "true"}
 	{
 		#regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})} {#&4 eat &3}

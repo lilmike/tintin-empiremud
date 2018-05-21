@@ -1,8 +1,5 @@
 #ALIAS {PAN_PLAY %S}
 {
-    #if {!&{play_%1} && ${MSP.SOUND}}
-    {
-        #variable {play_%1} {false};
         #script {soundFileName} {$shuf -n 1 -e sounds/%1*opus};
         #math {lChannel} {1d9};
        #if {$lChannel < 5}
@@ -14,12 +11,7 @@
         #math {rChannel} {1d9}
 };
         #variable {soundFileName} {${soundFileName[1]}};
-        #system {play -qV0 "$soundFileName" gain ${MSP[VOLUME]} remix v0.$lChannel v0.
-$rChannel &> /dev/null &};
-        #script {i} {soxi "$soundFileName" | grep Duration | cut -d ':' -f2- | cut -d '=' -f1 | tr -d "[:space:]"};
-        #variable {i} {${i[1]}};
-        #delay {$i}  {#unvariable {play_%1}}
-    }
+        #system {play -qV0 "$soundFileName" gain ${MSP[VOLUME]} remix v0.$lChannel v0.$rChannel &> /dev/null &}
 }
 {9}
 

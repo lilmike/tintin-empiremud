@@ -320,7 +320,7 @@ PLAY skills/tan_scrape
 
 #action {^Lightning starts to show in the sky.$}
 {
-pan_PLAY weather/thunder
+PAN_PLAY weather/thunder
 }
 {9}
 
@@ -567,19 +567,19 @@ look
 
 #action {^You sift through some dirt...$}
 {
-	pan_PLAY skills/sift
+	PAN_PLAY skills/sift
 }
 {9}
 
 #action {^You pick at the ground a little bit...$}
 {
-	pan_PLAY skills/mine
+	PAN_PLAY skills/mine
 }
 {9}
 
 #ACTION {^You pick at the walls with %1, looking for %2.$}
 {
-	pan_PLAY skills/mine
+	PAN_PLAY skills/mine
 }
 {9}
 
@@ -657,7 +657,7 @@ look
 
 #ACTION {^You walk through the field, harvesting the %*.$}
 {
-	pan_PLAY skills/harvest
+	PAN_PLAY skills/harvest
 }
 {9}
 
@@ -669,7 +669,7 @@ look
 
 #ACTION {^You {begin looking around for sticks|begin looking around|look around for something nice to pick\.\.|search the ground for sticks\.\.}.$}
 {
-	pan_PLAY skills/search
+	PAN_PLAY skills/search
 }
 {9}
 
@@ -687,7 +687,7 @@ look
 
 #ACTION {^You {begin to dig into|dig vigorously at} the ground.$}
 {
-	pan_PLAY skills/dig
+	PAN_PLAY skills/dig
 }
 {9}
 
