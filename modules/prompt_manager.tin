@@ -17,37 +17,6 @@
 			}
 		}
 	};
-	#nop {Use the autorecall command if hp is below the specified %};
-	#if {!&{auto.recallPercent}}
-	{
-		#variable {auto.recallPercent} {20};
-		CSAVE
-	};
-	#if {(%1 / $MSDP_HEALTH_MAX) * 100.0 <= ${auto.recallPercent} && $MSDP_OPPONENT_NUMBER > 0}
-	{
-		#if {!${spam.recall}}
-		{
-			#if {&{auto.recall}}
-			{
-				breakout;
-				${auto.recall};
-				spamset recall 5
-			}
-		}
-	};
-	#nop {Use the autoheal self command if hp is below the specified %};
-	#if {!&{autoHealSelfPercent}}
-	{
-		#variable {autoHealSelfPercent} {50};
-		CSAVE
-	};
-	#if {(%1 / $MSDP_HEALTH_MAX) *100.0 <= $autoHealSelfPercent}
-	{
-		#if {&{autoHealSelf}}
-		{
-			${autoHealSelf}
-		}
-	}
 }
 
 #EVENT {VARIABLE UPDATE MSDP_MANA}
@@ -79,7 +48,7 @@
 	#if {%1 != 0 && ${character.beeps} && ${MSP.SOUND}}
 	{
 		#math {enemyConditionTone} {%1 * 10 + 200};
-		#system {PLAY -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.09 gain ${MSP[VOLUME]}&}
+		#system {play -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.09 gain ${MSP[VOLUME]}&}
 	}
 }
 

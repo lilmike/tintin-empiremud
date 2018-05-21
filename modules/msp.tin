@@ -26,8 +26,50 @@
 	};
 	#if {${MSP[SOUND]}}
 	{
-		#line {substitute} {escape} #system {PLAY -qV0 "$($shuf -n1 -e ${HOME}/sounds/%1)" gain ${MSP[VOLUME]} &> /dev/null &}
+		#line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%1.opus)" gain ${MSP[VOLUME]} &> /dev/null &}
 	}
+}
+{9}
+
+#ALIAS {{L|R}PLAY %S}
+{
+#if {!&{MSP[VOLUME]}}
+{
+#variable {MSP[VOLUME]} {0}
+};
+        #if {!&{MSP.SOUND}}
+        {
+                #variable {MSP[SOUND]} {1}
+        };
+        #if {${MSP[SOUND]}}
+        {
+                #if {"%1" == "R"} {
+                    #variable {lChannel} {v0.9};
+                    #variable {rChannel} {v0.4}
+                };
+                #if {"%1" == "L"} {
+                    #variable {lChannel} {v0.4};
+                    #variable {rChannel} {v0.9}
+                };
+                #line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%2.opus)" remix $lChannel $rChannel gain ${MSP[VOLUME]} &> /dev/null &}
+        }
+}
+{9}
+
+#ALIAS {REV_PLAY %S}
+{
+#if {!&{MSP[VOLUME]}}
+{
+#variable {MSP[VOLUME]} {0}
+};
+        #if {!&{MSP.SOUND}}
+        {
+                #variable {MSP[SOUND]} {1}
+        };
+        #if {${MSP[SOUND]}}
+        {
+                #line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%1.opus)" gain ${MSP[VOLUME]} reverse  &> /dev/null &}
+        }
 }
 {9}
 
@@ -58,7 +100,7 @@
 	{
 		#if {&{%1}}
 		{
-			#system {PLAY -qV0 ${%1} gain ${MSP[VOLUME]} &> /dev/null &}
+			#system {play -qV0 ${%1} gain ${MSP[VOLUME]} &> /dev/null &}
 		}
 	}
 }

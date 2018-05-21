@@ -1,18 +1,18 @@
 #ACTION {%1 seems to be burning on the inside as magical pain courses through it!$}
 {
-	rPLAY magic/residual_damage
+	RPLAY magic/residual_damage
 }
 {9}
 
 #ACTION {%1 twitches as magical pain sears through it!$}
 {
-	rPLAY magic/residual_damage
+	RPLAY magic/residual_damage
 }
 {9}
 
 #ACTION {^You %* with your deadly blast!!$}
 {
-	rPLAY magic/fireball
+	RPLAY magic/fireball
 }
 {9}
 
@@ -30,7 +30,7 @@
 
 #ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
 {
-	lPLAY magic/heal_friend
+	LPLAY magic/heal_friend
 }
 {9}
 
@@ -42,25 +42,25 @@
 
 #ACTION {^You shoot fire at %1, but {he|it|she} skillfully dodges.$}
 {
-	rPLAY magic/miss_fireball
+	RPLAY magic/miss_fireball
 }
 {9}
 
 #ACTION {^You swirl your mana around your body to heal your wounds.$}
 {
-	lPLAY magic/heal_self
+	LPLAY magic/heal_self
 }
 {9}
 
 #ACTION {^You whip your hand forward and fire a burst of color at %1!$}
 {
-	rPLAY magic/colorburst
+	RPLAY magic/colorburst
 }
 {9}
 
 #ACTION {^You {begin|call out the chorus of|hum the melody to|sing} the chant of {druids|nature}.$}
 {
-	seq_PLAY magic/chant_of_%2
+	PLAY magic/chant_of_%2
 }
 {9}
 
@@ -72,7 +72,7 @@
 
 #ACTION {^Your %w cooldown has ended.$}
 {
-	revPLAY magic/%1;
+	REV_PLAY magic/%1;
 	#list {autoDo} {find} {%1} {i};
 	#if {$i > 0}
 	{

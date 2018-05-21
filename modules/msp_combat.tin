@@ -4,7 +4,7 @@
 	{
 		#line gag
 	};
-	lPLAY combat/hit/poison-scream
+	LPLAY combat/hit/poison-scream
 }
 {5}
 
@@ -14,7 +14,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/miss/miss
+	RPLAY combat/miss/miss
 }
 {8}
 
@@ -28,27 +28,27 @@
 	{
 		#case {"bash"}
 		{
-			revPLAY combat/hit/bash_cooldown
+			REV_PLAY combat/hit/bash_cooldown
 		};
 		#case {"blind"}
 		{
-			revPLAY combat/blind
+			REV_PLAY combat/blind
 		};
 		#case {"disarm"}
 		{
-			revPLAY combat/disarm_fail
+			REV_PLAY combat/disarm_fail
 		};
 		#case {"howl"}
 		{
-			revPLAY combat/howl
+			REV_PLAY combat/howl
 		};
 		#case {"terrify"}
 		{
-			revPLAY combat/terrify
+			REV_PLAY combat/terrify
 		};
 		#default
 		{
-			revPLAY combat/hit/%1
+			REV_PLAY combat/hit/%1
 		}
 	};
 	#list {autoDo} {find} {%1} {i};
@@ -65,7 +65,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/poison-scream
+	RPLAY combat/hit/poison-scream
 }
 {9}
 
@@ -85,7 +85,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/prick
+	RPLAY combat/hit/prick
 }
 {9}
 
@@ -95,7 +95,7 @@
 	{
 		#line {gag}
 	};
-	lPLAY combat/miss/miss
+	LPLAY combat/miss/miss
 }
 {9}
 
@@ -105,7 +105,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/poison-scream
+	RPLAY combat/hit/poison-scream
 }
 {9}
 
@@ -115,13 +115,13 @@
 	{
 		#line {gag}
 	};
-	lPLAY combat/hit/kick
+	LPLAY combat/hit/kick
 }
 {9}
 
 #ACTION {%1 is terrified!$}
 {
-	rPLAY combat/hit/terrified
+	RPLAY combat/hit/terrified
 }
 {9}
 
@@ -131,7 +131,7 @@
 	{
 		#line {gag}
 	};
-	lPLAY combat/miss/bite
+	LPLAY combat/miss/bite
 }
 {9}
 
@@ -143,11 +143,11 @@
 	};
 	#if {"%2" == "{slash|slice}"}
 	{
-		lPLAY combat/hit/slash
+		LPLAY combat/hit/slash
 	};
 	#else
 	{
-		lPLAY combat/hit/%2
+		LPLAY combat/hit/%2
 	}
 }
 {9}
@@ -158,7 +158,7 @@
 	{
 		#line {gag}
 	};
-	lPLAY combat/miss/miss
+	LPLAY combat/miss/miss
 }
 {9}
 
@@ -178,13 +178,13 @@
 
 #ACTION {^Shadows creep up around you and then strike out at a %1!$}
 {
-	lPLAY combat/terrify
+	LPLAY combat/terrify
 }
 {9}
 
 #ACTION {^That last blow seems to stun %*!$}
 {
-	rPLAY combat/hit/stun
+	RPLAY combat/hit/stun
 }
 {9}
 
@@ -204,7 +204,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/fatal/fireball
+	RPLAY combat/fatal/fireball
 }
 {9}
 
@@ -214,7 +214,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/disarm_fail
+	RPLAY combat/disarm_fail
 }
 {9}
 
@@ -224,7 +224,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/fatal/death
+	RPLAY combat/fatal/death
 }
 {9}
 
@@ -234,7 +234,7 @@
 	{
 		#line {gag}
 	};
-	lPLAY combat/shield_block
+	LPLAY combat/shield_block
 }
 {9}
 
@@ -244,13 +244,13 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/fatal/twist
+	RPLAY combat/fatal/twist
 }
 {9}
 
 #ACTION {^You have killed %1! R.I.P.$}
 {
-	#delay {0.9} {lPLAY combat/victory};
+	#delay {0.9} {LPLAY combat/victory};
 	#if {"%1" != "someone"}
 	{
 		#if {"$autoloot" == "true"}
@@ -275,7 +275,7 @@
 	{
 		#line {gag}
 	};
-	lPLAY combat/miss/miss
+	LPLAY combat/miss/miss
 }
 {9}
 
@@ -295,13 +295,13 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/prick
+	RPLAY combat/hit/prick
 }
 {9}
 
 #ACTION {^You sap %* in the back of the head.$}
 {
-	rPLAY combat/hit/sap
+	RPLAY combat/hit/sap
 }
 {9}
 
@@ -311,7 +311,7 @@
 	{
 		#line {gag}
 	};
-	seq_PLAY combat/vampire_feed
+	PLAY combat/vampire_feed
 }
 {9}
 
@@ -321,7 +321,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/disarm_succeed
+	RPLAY combat/disarm_succeed
 }
 {9}
 
@@ -337,7 +337,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/blind
+	RPLAY combat/blind
 }
 {9}
 
@@ -347,7 +347,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/shield_block
+	RPLAY combat/shield_block
 }
 {9}
 
@@ -369,14 +369,14 @@
 	};
 	#if {"%3" == "{slash|slice|deadly slash|deadly slice}"}
 	{
-		rPLAY combat/hit/slash
+		RPLAY combat/hit/slash
 	};
 	#else
 	{
-		#regexp {%3} {{.*} {.*}} {rPLAY combat/hit/&2};
+		#regexp {%3} {{.*} {.*}} {RPLAY combat/hit/&2};
 		#else
 		{
-			rPLAY combat/hit/%3
+			RPLAY combat/hit/%3
 		}
 	}
 }
@@ -390,11 +390,11 @@
 	};
 	#if {"%1" == "{slash|slice}"}
 	{
-		rPLAY combat/hit/slash
+		RPLAY combat/hit/slash
 	};
 	#else
 	{
-		rPLAY combat/hit/%1
+		RPLAY combat/hit/%1
 	}
 }
 {9}
@@ -425,7 +425,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/bash_enemy
+	RPLAY combat/hit/bash_enemy
 }
 {9}
 
@@ -435,7 +435,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/fatal/death
+	RPLAY combat/fatal/death
 }
 {9}
 
@@ -445,7 +445,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/kick
+	RPLAY combat/hit/kick
 }
 {9}
 
@@ -455,7 +455,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/miss/miss
+	RPLAY combat/miss/miss
 }
 {9}
 
@@ -475,7 +475,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/hit/kick
+	RPLAY combat/hit/kick
 }
 {9}
 
@@ -485,7 +485,7 @@
 	{
 		#line {gag}
 	};
-	rPLAY combat/fatal/decapitate
+	RPLAY combat/fatal/decapitate
 }
 {9}
 

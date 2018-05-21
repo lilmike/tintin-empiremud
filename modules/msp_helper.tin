@@ -28,7 +28,7 @@ PLAY skills/skin
 {
 #line {gag}
 };
-revPLAY skills/shadowstep
+REV_PLAY skills/shadowstep
 }
 {8}
 
@@ -165,7 +165,7 @@ PLAY ambiance/earthquake
 
 #action {^You transport to another starting location!$}
 {
-seq_PLAY move/transport
+PLAY move/transport
 }
 {9}
 
@@ -240,7 +240,7 @@ PLAY move/enemy_run
 
 #action {^{A covered wagon|A rickety cart|Something} is pulled%* %w.$}
 {
-seq_PLAY_norandom move/cart_%3
+PLAY_norandom move/cart_%3
 }
 {9}
 
@@ -272,25 +272,25 @@ look
 
 #action {^You store a {pile of gold dust|silver nugget}.$}
 {
-seq_PLAY store/treasure
+PLAY store/treasure
 }
 {9}
 
 #action {^You mark %1 with a glowing blue skybrand!$}
 {
-rPLAY magic/skybrand
+RPLAY magic/skybrand
 }
 {9}
 
 #action {^You {begin scraping|scrape at} a large tree{\.\.\.|\.}$}
 {
-seq_PLAY skills/tree_scrape
+PLAY skills/tree_scrape
 }
 {9}
 
 #action {^You thrust your hand toward %1 and strike {her|him|it} with a powerful bolt of lightning!$}
 {
-rPLAY magic/lightningbolt
+RPLAY magic/lightningbolt
 }
 {9}
 
@@ -379,13 +379,13 @@ PLAY skills/complete_forge
 #showme {You pan for %2.};
 #line {gag}
 };
-seq_PLAY skills/pan
+PLAY skills/pan
 }
 {9}
 
 #action {^You kneel down and begin panning at %1.$}
 {
-seq_PLAY skills/pan
+PLAY skills/pan
 }
 {9}
 
@@ -455,7 +455,7 @@ look
 
 #ACTION {^You start smelting.$}
 {
-	seq_PLAY skills/smelt
+	PLAY skills/smelt
 }
 {9}
 
@@ -491,7 +491,7 @@ look
 
 #ACTION {^You find {a|a daggerbite|a handfull of|a twig of|a small|an iridescent blue|some|some magewhisper} %*{bileberries|fiveleaf|flower|frond|iris|redthorn|sepals|stick|whitegrass}!$}
 {
-	seq_PLAY get/%3
+	PLAY get/%3
 }
 {9}
 
@@ -531,7 +531,7 @@ look
 
 #ACTION {^You grind the millstone, making %*...$}
 {
-	seq_PLAY skills/mill
+	PLAY skills/mill
 }
 {9}
 
@@ -561,7 +561,7 @@ look
 
 #ACTION {^You lay down and go to sleep.$}
 {
-	seq_PLAY ambiance/sleep
+	PLAY ambiance/sleep
 }
 {9}
 
@@ -609,37 +609,37 @@ look
 
 #ACTION {^You start milling.$}
 {
-	seq_PLAY skills/mill
+	PLAY skills/mill
 }
 {9}
 
 #ACTION {^You store a pile of clay.$}
 {
-	seq_PLAY store/clay
+	PLAY store/clay
 }
 {9}
 
 #ACTION {^You store a sack of {barley|cornmeal|flour|dried rice}.$}
 {
-	seq_PLAY store/sack
+	PLAY store/sack
 }
 {9}
 
 #ACTION {^You store a {heavy log|large tree|stack of lumber|stick}.$}
 {
-	seq_PLAY store/lumber
+	PLAY store/lumber
 }
 {9}
 
 #ACTION {^You store an iron ingot.$}
 {
-	seq_PLAY store/metal
+	PLAY store/metal
 }
 {9}
 
 #ACTION {^You store {a giant linefish|magenta arrowfish|fillet of raw meat|a slab of pork}.$}
 {
-	seq_PLAY store/meat
+	PLAY store/meat
 }
 {9}
 
@@ -663,7 +663,7 @@ look
 
 #ACTION {^You smelt %* in the fire...$}
 {
-	seq_PLAY skills/smelt
+	PLAY skills/smelt
 }
 {9}
 
@@ -675,7 +675,7 @@ look
 
 #ACTION {^You {begin sawing|saw} %*.$}
 {
-	seq_PLAY skills/saw
+	PLAY skills/saw
 }
 {9}
 
@@ -730,14 +730,14 @@ PLAY craft/complete_wood
 	};
 	#else
 	{
-		seq_PLAY store/fruit
+		PLAY store/fruit
 	}
 }
 {9}
 
 #ACTION {^You%* {drink|eat} %*.$}
 {
-	seq_PLAY health/%2
+	PLAY health/%2
 }
 {9}
 

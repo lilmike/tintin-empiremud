@@ -70,35 +70,35 @@ Recast
 
 #action {^Your foresight ends.$}
 {
-revPLAY magic/foresight;
+REV_PLAY magic/foresight;
 Add_Spell foresight
 }
 {9}
 
 #action {^Your mana shield fades.$}
 {
-revPLAY magic/manashield;
+REV_PLAY magic/manashield;
 Add_Spell manashield
 }
 {9}
 
 #action {^Your plating of earth armor fades.$}
 {
-revPLAY magic/eartharmor;
+REV_PLAY magic/eartharmor;
 Add_Spell eartharmor
 }
 {9}
 
 #action {^You land quickly as your magical flight wears off.$}
 {
-revPLAY magic/fly;
+REV_PLAY magic/fly;
 Add_Spell fly
 }
 {9}
 
 #action {^Your haste fades.$}
 {
-revPLAY magic/hasten;
+REV_PLAY magic/hasten;
 Add_Spell hasten
 }
 {9}

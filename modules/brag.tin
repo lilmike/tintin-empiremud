@@ -70,17 +70,17 @@
 }
 {9}
 
-#ALIAS {^{cash|enemy|enemies|hp|mn|mv|tnl|xp}$}
+#ALIAS {^{bp|cash|hp|mn|mv}$}
 {
 	#switch {"%0"}
 	{
+#case {"bp"}
+{
+show blood
+};
 		#case {"cash"}
 		{
 			#echo {Gold: $MSDP_MONEY}
-		};
-		#case {"{enemy|enemies}"}
-		{
-			#echo {Enemies: $MSDP_OPPONENT_NUMBER}
 		};
 		#case {"hp"}
 		{
@@ -88,15 +88,11 @@
 		};
 		#case {"mv"}
 		{
-			show stamina
+			show movement
 		};
 		#case {"mn"}
 		{
 			show mana
-		};
-		#case {"{tnl|xp}"}
-		{
-			#echo {Exp: $MSDP_EXPERIENCE ToLvl: $MSDP_EXPERIENCE_TNL}
 		}
 	}
 }

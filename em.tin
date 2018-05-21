@@ -129,23 +129,23 @@
 	#variable {HOME} {${HOME[1]}};
 	#nop {Load all the .tin files in the modules directory in classes named after the module name.};
 	#script {for i in modules/*.tin ; do echo "#class {$(basename "$i" .tin)} {read} {$i}";done};
-	#nop {Get the date as a number, e.g. 1225 is Christmas day. Then play intros based on the date.};
+	#nop {Get the date as a number, e.g. 1225 is Christmas day. Then PLAY intros based on the date.};
 	#script {introDate} {date '+%m%d'};
 	#if {${introDate[1]} == 1031}
 	{
-		play halloween-intro
+		PLAY halloween-intro
 	};
 	#elseif {${introDate[1]} > 1124 && ${introDate[1]} < 1200}
 	{
-		play thanksgiving-intro
+		PLAY thanksgiving-intro
 	};
 	#elseif {${introDate[1]} >= 1213 && ${introDate[1]} <= 1225}
 	{
-		play christmas-intro${introDate[1]}
+		PLAY christmas-intro${introDate[1]}
 	};
 	#else
 	{
-		play intro
+		PLAY intro
 	};
 	#nop {This is the only time we need the date number, so may as well clear it.};
 	#unvariable {introDate};
@@ -153,12 +153,12 @@
 	#script {motd} {curl -sI "$MOTDURL"};
 	#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}};
 	#regexp {${motd[4]}} {Last-Modified: {.*}} {#variable {motdTime} {News updated &1}};
-	#nop {Display intro message.};
+	#nop {DisPLAY intro message.};
 	#echo {$mudIntroMessage};
 	#nop {This is the only time we need the intro message, so may as well clear it.};
 	#unvariable {mudIntroMessage};
 	#echo {To get started type login};
-	#nop {If everything went ok with the news file above, display the last time news was updated.};
+	#nop {If everything went ok with the news file above, disPLAY the last time news was updated.};
 	#if {$motdStatus == 200}
 	{
 		#echo {${motdTime}};
@@ -169,7 +169,7 @@
 
 #EVENT {SESSION CONNECTED}
 {
-	synth_play connectedSound;
+	SYNTH_PLAY connectedSound;
 	#nop {Set connected to true so if you accidently type login it won't try to login twice.};
 	#variable {connected} {true};
 	#nop {Create the log directory if it doesn't exist. Log files are based on date and time.};
