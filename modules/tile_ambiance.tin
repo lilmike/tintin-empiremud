@@ -91,7 +91,7 @@ Tile_Play tileSoundFile
 #variable {tileSoundFilePID} {false}
 };
 #var {oldSoundFile} {$tileSoundFile};
-#system {if [ -f "sounds/terrain/$tileSoundFile" ] ; then PLAY -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain $volume &> /dev/null&echo "$!" > .tileSoundFilePID;else echo "false" > .tileSoundFilePID;fi};
+#system {if [ -f "sounds/terrain/$tileSoundFile" ] ; then play -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain $volume &> /dev/null&echo "$!" > .tileSoundFilePID;else echo "false" > .tileSoundFilePID;fi};
 #delay {0.01} {#script {tileSoundFilePID} {cat .tileSoundFilePID};#var {tileSoundFilePID} {${tileSoundFilePID[1]}}}
 }
 }
