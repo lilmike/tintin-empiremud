@@ -467,7 +467,7 @@ look
 
 #ACTION {^You carefully harvest the %*.$}
 {
-	pan_PLAY skills/harvest
+	PAN_PLAY skills/harvest
 }
 {9}
 
