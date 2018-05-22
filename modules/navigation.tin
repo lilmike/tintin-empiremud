@@ -1,9 +1,9 @@
 #action {^Obvious exits:$}
 {
-#if {"$PLAYerSummoner" != ""}
+#if {"$playerSummoner" != ""}
 {
-follow $PLAYerSummoner;
-#variable {PLAYerSummoner} {}
+follow $playerSummoner;
+#variable {playerSummoner} {}
 }
 }
 {9}
@@ -139,10 +139,10 @@ $Southeast}
 #regexp {%0} {^$findTerrainDirection:{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};SYNTH_PLAY foundTerrainSound}
 }
 }
-#if {"$PLAYerSummoner != ""}
+#if {"$playerSummoner != ""}
 {
-follow $PLAYerSummoner;
-#variable {PLAYerSummoner} {}
+follow $playerSummoner;
+#variable {playerSummoner} {}
 }
 }
 {9}

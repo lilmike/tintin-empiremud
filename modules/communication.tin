@@ -131,14 +131,14 @@ Add_Channel_Event all %0
 
 #ACTION {^[ %1 has entered the game ]$}
 {
-	PLAY miscellaneous/PLAYer_enter;
+	PLAY miscellaneous/player_enter;
 	Add_Channel_Event all %0
 }
 {9}
 
 #ACTION {^[ %1 has left the game ]$}
 {
-	PLAY miscellaneous/PLAYer_leave;
+	PLAY miscellaneous/player_leave;
 	Add_Channel_Event all %0
 }
 {9}

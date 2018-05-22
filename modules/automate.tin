@@ -37,7 +37,7 @@
 
 #ACTION {%1 is trying to summon you to %2 -- use 'accept/reject summon'.$}
 {
-	#variable {PLAYerSummoner} {%1}
+	#variable {playerSummoner} {%1}
 }
 {9}
 
@@ -257,5 +257,5 @@
 #VARIABLE         {autoskin}  {false}
 #VARIABLE         {feeding}  {false}
 #VARIABLE         {lastCommand}  {}
-#VARIABLE         {PLAYerSummoner}  {}
+#VARIABLE         {playerSummoner}  {}
 #VARIABLE         {rebootConfirmed}  {false}
