@@ -70,6 +70,16 @@
 }
 {9}
 
+#ACTION {^Your counterspell {goes off!|expires\.}$}
+{
+	#list {autoDo} {find} {counterspell} {i};
+	#if {$i > 0}
+	{
+		counterspell
+	}
+}
+{9}
+
 #ACTION {^Yo{u're|u} already {have|holding|wearing|wielding} %2{\.| on your .*\.| around your waist\.}$}
 {
 	#line {gag};
