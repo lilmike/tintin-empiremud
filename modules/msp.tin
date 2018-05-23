@@ -110,12 +110,12 @@
 	};
 	#if {${MSP[SOUND]}}
 	{
-		#if {"%1" == "R"}
+		#if {"%1" == "L"}
 		{
 			#variable {lChannel} {v0.9};
 			#variable {rChannel} {v0.4}
 		};
-		#if {"%1" == "L"}
+		#if {"%1" == "R"}
 		{
 			#variable {lChannel} {v0.4};
 			#variable {rChannel} {v0.9}
