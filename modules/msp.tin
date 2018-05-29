@@ -1,20 +1,3 @@
-#ALIAS {PAN_PLAY %S}
-{
-        #script {soundFileName} {$shuf -n 1 -e sounds/%1*opus};
-        #math {lChannel} {1d9};
-       #if {$lChannel < 5}
-{
-        #math {rChannel} {1d5+4}
-};
-#else
-{
-        #math {rChannel} {1d9}
-};
-        #variable {soundFileName} {${soundFileName[1]}};
-        #system {play -qV0 "$soundFileName" gain ${MSP[VOLUME]} remix v0.$lChannel v0.$rChannel &> /dev/null &}
-}
-{9}
-
 #ACTION {^!!SOUND(%1)$}
 {
 	#variable {MSP.LAST} {%1};
@@ -31,7 +14,24 @@
 }
 {9}
 
-#ALIAS {PLAY %S}
+#ALIAS {PAN_PLAY %S}
+{
+	#script {soundFileName} {$shuf -n 1 -e sounds/%1*opus};
+	#math {lChannel} {1d9};
+	#if {$lChannel < 5}
+	{
+		#math {rChannel} {1d5+4}
+	};
+	#else
+	{
+		#math {rChannel} {1d9}
+	};
+	#variable {soundFileName} {${soundFileName[1]}};
+	#system {play -qV0 "$soundFileName" gain ${MSP[VOLUME]} remix v0.$lChannel v0.$rChannel &> /dev/null &}
+}
+{9}
+
+#ALIAS {PLAY %*}
 {
 	#if {!&{MSP[VOLUME]}}
 	{
@@ -43,7 +43,15 @@
 	};
 	#if {${MSP[SOUND]}}
 	{
-		#line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%1.opus)" gain ${MSP[VOLUME]} &> /dev/null &}
+		#variable {tmp} {%1};
+		#replace {tmp} { } {;};
+		#variable {sounds} {};
+		#foreach {$tmp} {tmp3}
+		{
+			#script {echo "#var {sounds} {$sounds \"$($shuf -n1 -e sounds/$tmp3\.opus)\"}"}
+		};
+		#echo {$sounds};
+		#system {play -qV0 $sounds gain ${MSP[VOLUME]} &}
 	}
 }
 {9}
@@ -163,3 +171,6 @@
 #VARIABLE         {PROTOCOL}  {{MSP}{0}}
 #VARIABLE         {lChannel}  {}
 #VARIABLE         {rChannel}  {}
+#VARIABLE         {sounds}  {}
+#VARIABLE         {tmp}  {}
+#VARIABLE         {tmp3}  {}

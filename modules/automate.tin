@@ -92,7 +92,7 @@
 	PLAY system/%1 system/%2;
 	#if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
 	{
-#var {rebootConfirmed} {true};
+		#variable {rebootConfirmed} {true};
 		confirm
 	};
 	#if {%2 == 1}
