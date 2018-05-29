@@ -82,7 +82,7 @@ Add_Spell manashield
 }
 {9}
 
-#action {^Your plating of earth armor fades.$}
+#action {^Your plating of earth armor crumbles to dust.$}
 {
 REV_PLAY magic/eartharmor;
 Add_Spell eartharmor
