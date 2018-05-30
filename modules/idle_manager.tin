@@ -23,7 +23,7 @@
 	#script {idle.time} {date '+%s'};
 	#variable {idle.time} {${idle.time[1]}};
 	#math {idle.seconds} {${idle.time} - ${idle.lastUse}};
-	#if {${idle.seconds} > 120}
+	#if {${idle.seconds} > 300}
 	{
 		#if {!&{idleList}}
 		{
