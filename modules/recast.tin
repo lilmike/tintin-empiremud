@@ -1,134 +1,136 @@
-#alias {^mis{s|si|sin|sing}$}
+#ACTION {^Sparkling blue wings made of pure mana erupt from your back!$}
 {
-#list {recastList} {size} {recastListSize};
-#if {$recastListSize > 0}
-{
-#showme {Missing spells:};
-#forall {${recastList[]}} {#showme {${recastList[&0]}}}
-};
-#else
-{
-#showme {No spells are missing currently.}
-}
+	PLAY magic/fly;
+	Remove_Spell fly;
+	Recast
 }
 {9}
 
-#alias {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield}$}
+#ACTION {^You concentrate and veins of red mana streak down your skin.$}
 {
-#if {"%1" == "auto"}
-{
-#variable {%3} {true};
-#showme {%3 will automatically recast.}
-};
-#else
-{
-#unvariable {%3};
-#showme {%3 will no longer automatically recast.}
-}
+	PLAY magic/hasten;
+	Remove_Spell hasten;
+	Recast
 }
 {9}
 
-#action {^You feel the gift of foresight!$}
+#ACTION {^You feel the gift of foresight!$}
 {
-PLAY magic/foresight;
-Remove_Spell foresight;
-Recast
+	PLAY magic/foresight;
+	Remove_Spell foresight;
+	Recast
 }
 {9}
 
-#action {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
+#ACTION {^You feel yourself shielded by your mana!$}
 {
-PLAY magic/eartharmor;
-Remove_Spell eartharmor;
-Recast
+	PLAY magic/manashield;
+	Remove_Spell manashield;
+	Recast
 }
 {9}
 
-#action {^Sparkling blue wings made of pure mana erupt from your back!$}
+#ACTION {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
 {
-PLAY magic/fly;
-Remove_Spell fly;
-Recast
+	PLAY magic/eartharmor;
+	Remove_Spell eartharmor;
+	Recast
 }
 {9}
 
-#action {^You feel yourself shielded by your mana!$}
+#ACTION {^You land quickly as your magical flight wears off.$}
 {
-PLAY magic/manashield;
-Remove_Spell manashield;
-Recast
+	REV_PLAY magic/fly;
+	Add_Spell fly
 }
 {9}
 
-#action {^You concentrate and veins of red mana streak down your skin.$}
+#ACTION {^Your foresight ends.$}
 {
-PLAY magic/hasten;
-Remove_Spell hasten;
-Recast
+	REV_PLAY magic/foresight;
+	Add_Spell foresight
 }
 {9}
 
-#action {^Your foresight ends.$}
+#ACTION {^Your haste fades.$}
 {
-REV_PLAY magic/foresight;
-Add_Spell foresight
+	REV_PLAY magic/hasten;
+	Add_Spell hasten
 }
 {9}
 
-#action {^Your mana shield fades.$}
+#ACTION {^Your mana shield fades.$}
 {
-REV_PLAY magic/manashield;
-Add_Spell manashield
+	REV_PLAY magic/manashield;
+	Add_Spell manashield
 }
 {9}
 
-#action {^Your plating of earth armor crumbles to dust.$}
+#ACTION {^Your plating of earth armor crumbles to dust.$}
 {
-REV_PLAY magic/eartharmor;
-Add_Spell eartharmor
+	REV_PLAY magic/eartharmor;
+	Add_Spell eartharmor
 }
 {9}
 
-#action {^You land quickly as your magical flight wears off.$}
+#ALIAS {^Recast$}
 {
-REV_PLAY magic/fly;
-Add_Spell fly
+	#list {recastList} {size} {recastListSize};
+	#if {$recastListSize > 0}
+	{
+		${recastList[1]}
+	}
 }
 {9}
 
-#action {^Your haste fades.$}
+#ALIAS {^mis{s|si|sin|sing}$}
 {
-REV_PLAY magic/hasten;
-Add_Spell hasten
+	#list {recastList} {size} {recastListSize};
+	#if {$recastListSize > 0}
+	{
+		#showme {Missing spells:};
+		#forall {${recastList[]}} {#showme {${recastList[&0]}}}
+	};
+	#else
+	{
+		#showme {No spells are missing currently.}
+	}
 }
 {9}
 
-#alias {^{Add|Remove}_Spell %2}
+#ALIAS {^{Add|Remove}_Spell %2}
 {
-#list {recastList} {find} {%2} {recastListIndex};
-#if {$recastListIndex > 0 && "%1" == "Remove"}
-{
-#list {recastList} {delete} {$recastListIndex}
-};
-#if {"$%2" == "true"}
-{
-#if {$recastListIndex == 0 && "%1" == "Add"}
-{
-#list {recastList} {add} {%2};
-Recast
-}
-}
-}
-{9}
-
-#alias {^Recast$}
-{
-#list {recastList} {size} {recastListSize};
-#if {$recastListSize > 0}
-{
-${recastList[1]}
-}
+	#list {recastList} {find} {%2} {recastListIndex};
+	#if {$recastListIndex > 0 && "%1" == "Remove"}
+	{
+		#list {recastList} {delete} {$recastListIndex}
+	};
+	#if {"$%2" == "true"}
+	{
+		#if {$recastListIndex == 0 && "%1" == "Add"}
+		{
+			#list {recastList} {add} {%2};
+			Recast
+		}
+	}
 }
 {9}
 
-#var {recastList} {}
+#ALIAS {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield}$}
+{
+	#if {"%1" == "auto"}
+	{
+		#variable {%3} {true};
+		#showme {%3 will automatically recast.}
+	};
+	#else
+	{
+		#unvariable {%3};
+		#showme {%3 will no longer automatically recast.}
+	}
+}
+{9}
+
+#VARIABLE         {recastList}  {}
+#VARIABLE         {recastListIndex}  {1}
+#VARIABLE         {recastListSize}  {0}
