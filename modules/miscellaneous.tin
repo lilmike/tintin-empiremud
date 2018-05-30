@@ -41,6 +41,12 @@ stand
 }
 {9}
 
+#action {^*** Press ENTER:$}
+{
+        #history {insert} {#cr}
+}
+{9}
+
 #ALIAS {rm}
 {
 	remove
