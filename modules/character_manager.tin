@@ -136,7 +136,7 @@
 	#nop {clear out old leader settings};
 	#unvariable {leader};
 	#nop {clear old hooks.};
-	#unvariable {hook};
+	#variable {hook} {};
 	#class {%1} {read} {${HOME}/%1};
 	#nop {Load common personal modules.};
 	#script {if [[ -d "$HOME/modules" ]]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
