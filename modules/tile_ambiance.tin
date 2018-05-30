@@ -99,4 +99,5 @@ Tile_Play tileSoundFile
 {9}
 #variable {tileSoundFile} {}
 #variable {tileSoundFilePID} {false}
+#variable {oldCoordinates} {}
 #variable {oldSoundFile} {}
