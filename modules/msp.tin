@@ -170,7 +170,7 @@
 #VARIABLE         {PROTOCOL}  {{MSP}{0}}
 #VARIABLE         {lChannel}  {}
 #VARIABLE         {rChannel}  {}
-#variable {soundFile} {}
+#variable {soundFileName} {}
 #VARIABLE         {sounds}  {}
 #VARIABLE         {tmp}  {}
 #VARIABLE         {tmp3}  {}
