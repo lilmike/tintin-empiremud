@@ -105,6 +105,11 @@
 }
 {9}
 
+#EVENT {SESSION DISCONNECTED}
+{
+	CSAVE
+}
+
 #EVENT {VARIABLE UPDATE MSDP_CHARACTER_NAME}
 {
 	#nop {Hook name: characterName};
@@ -137,12 +142,12 @@
 	#script {if [[ -d "$HOME/modules" ]]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 	#nop {Load personal modules.};
 	#script {if [[ -d "$HOME/%1.modules" ]]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-        #if {"$bgm" == "true"}
-        {
-#variable {tileSoundFile} {none};
-Tile_Play $tileSoundFile;
-            look
-        };
+	#if {"$bgm" == "true"}
+	{
+		#variable {tileSoundFile} {none};
+		Tile_Play $tileSoundFile;
+		look
+	};
 	#class {%1} {open};
 	#list {hook[characterName]} {size} {i};
 	#if {$i > 0}

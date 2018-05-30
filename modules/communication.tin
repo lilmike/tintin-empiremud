@@ -365,7 +365,7 @@ Add_Channel_Event all %0
 }
 
 #VARIABLE         {awayMessage}  {false}
-#VARIABLE         {channelBuffer}  {{0}{all}{1}{cowsay}{2}{empire}{3}{gossip}{4}{music}{5}{ooc}{6}{say}{7}{party}{8}{tell}}
+#VARIABLE         {channelBuffer}  {{0}{all}{1}{cowsay}{2}{empire}{3}{music}{4}{ooc}{5}{say}{6}{party}{7}{tell}}
 #variable {channelBufferIndex} {0}
 #VARIABLE         {allList}  {}
 #VARIABLE         {cowsayList}  {}
@@ -373,6 +373,7 @@ Add_Channel_Event all %0
 #VARIABLE         {gossipList}  {}
 #VARIABLE         {musicList}  {}
 #VARIABLE         {oocList}  {}
+#VARIABLE         {partyList}  {}
 #VARIABLE         {sayList}  {}
 #VARIABLE         {tellList}  {}
 #VARIABLE         {totalChannels}  {7}
