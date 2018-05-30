@@ -1,10 +1,37 @@
-#ACTION {Password:}
+#ALIAS {^mod{kill|load|reload} %S$}
 {
-	#if {&{password} && "$enteredPassword" == "false"}
+	CSAVE;
+	#nop {reload all modules};
+	#if {"%0" == "modreload all"}
 	{
-		$password;
-		#cr;
-		#variable {enteredPassword} {true}
+		#script {for module in modules/*.tin ; do if [[ "$module" != "modules/msdp.tin" ]];then echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename           "$module" .tin)} {read} {$module}";fi;done};
+		#showme {All modules except msdp reloaded.};
+		#showme {To reload msdp you must close tintin and relaunch it.}
+	};
+	#else
+	{
+		#nop {Kill, load, or reload a specified module.};
+		#if {"%2" != "msdp"}
+		{
+			#if {"%1" == "{kill|reload}"}
+			{
+				#class {%2} {kill};
+				#showme {Class %2 has been killed.}
+			};
+			#if {"%1" == "{load|reload}"}
+			{
+				#showme {Loading modules/%2.tin};
+				#class {%2} {read} {modules/%2.tin}
+			}
+		};
+		#else
+		{
+			#showme {Refusing to touch msdp. To reload msdp you must close and reopen tintin.}
+		}
+	};
+	#if {"$MSDP_CHARACTER_NAME" != ""}
+	{
+		#class {$MSDP_CHARACTER_NAME} {open}
 	}
 }
 {9}
@@ -19,106 +46,6 @@
 	{
 		#showme {Huh?}
 	}
-}
-{8}
-
-#ALIAS {^bot{kill|load|reload} %S$}
-{
-	#nop {Kill, load, or reload a specified bot.};
-	#if {"%1" == "{kill|reload}"}
-	{
-		#class {%2} {kill};
-		#showme {Bot %2 has been killed.}
-	};
-	#if {"%1" == "{load|reload}"}
-	{
-		#showme {Loading bot %2.tin};
-		#class {%2} {read} {modules/bots/%2.tin};
-		#class {gameData} {open}
-	}
-}
-{9}
-
-#ALIAS {^mod{kill|load|reload} %S$}
-{
-	#nop {reload all modules};
-	#if {"%0" == "modreload all"}
-	{
-		#script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename           "$module" .tin)} {read} {$module}";done}
-	};
-	#else
-	{
-		#nop {Kill, load, or reload a specified module.};
-		#if {"%1" == "{kill|reload}"}
-		{
-			#class {%2} {kill};
-			#showme {Class %2 has been killed.}
-		};
-		#if {"%1" == "{load|reload}"}
-		{
-			#showme {Loading modules/%2.tin};
-			#class {%2} {read} {modules/%2.tin};
-			#class {gameData} {open}
-		}
-	}
-}
-{9}
-
-#ALIAS {^set{a|b|c|d|e|f|g|h|n|q|r|s|t|v|w|x|y|z} %2}
-{
-	#macro {\e%1} {%2};
-	#showme {alt+%1 has been set to %2.}
-}
-{9}
-
-#ALIAS {^set{a|b|c|d|e|f|g|h|n|q|r|s|t|v|w|x|y|z}$}
-{
-	#macro {\e%1}
-}
-{9}
-
-#ALIAS {^unset %S}
-{
-	#if {"${%1}" == "true"}
-	{
-		#unvariable {%1};
-		#showme {%1 unset}
-	};
-	#else
-	{
-		#showme {%1 not found.}
-	}
-}
-{9}
-
-#ALIAS {^{em|login}%s%w$}
-{
-	Initialize_Settings %3;
-	#if {"$connected" == "false"}
-	{
-		#session {$mudSessionName} {$mudAddress} {$mudPort}
-	};
-	#else
-	{
-		#showme {Huh?}
-	}
-}
-{9}
-
-#ALIAS {^{quit|logoff}$}
-{
-	#script {if [[ "$musicPID" =~ [0-9].* ]] ; then kill $musicPID;echo "#unticker {backgroundMusic}";fi};
-	#system {if [ -f ".backgroundMusicPID" ] ; then rm ".backgroundMusicPID" &> /dev/null;fi};
-	#class {gameData} {write} {$gameDataPath};
-	#if {&{name}}
-	{
-		#history {write} {$historyPath}
-	};
-	#if {${mineCounter.total} > 0}
-	{
-		post ${name} discovered ${mineCounter.copper} copper, ${mineCounter.gold} gold, ${mineCounter.imperium} imperium, ${mineCounter.iron} iron, ${mineCounter.nocturnium} nocturnium and ${mineCounter.silver} silver mines for a total of ${mineCounter.total}\.
-	};
-	#send {quit}
 }
 {9}
 
@@ -178,18 +105,6 @@
 	#script {logFileName} {date +'%I_%M%p.log'};
 	#system {mkdir -p $logFilePath};
 	#log {overwrite} {${logFilePath}${logFileName[1]}}
-}
-
-#EVENT {SESSION DISCONNECTED}
-{
-	#unvariable {connected};
-	#nop {Make sure background music is disabled when the program closes.};
-	#script {tileSoundFilePID} {if [ -f ".tileSoundFilePID" ] ; then echo "$(cat ".tileSoundFilePID")";else echo "false";fi;echo "false" > .tileSoundFilePID};
-	#variable {tileSoundFilePID} {${tileSoundFilePID[1]}};
-	#if {"$tileSoundFilePID" != "false"}
-	{
-		#system {kill $tileSoundFilePID}
-	}
 }
 
 #VARIABLE         {connected}  {false}

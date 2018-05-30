@@ -38,7 +38,7 @@
 #VARIABLE         {tellSendSound}  {"|sox -np synth pl E3 pl E4 pl D3 pl D4 pl G2 pl G3 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -6 tempo 1.8"}
 #VARIABLE         {warningSound}  {"|sox -np synth pl C3 pl E3 pl G3 fade 0 .25 .1" "|sox -np synth pl C3 pl E3 pl G3 fade l 0 .75 1" remix -}
 #VARIABLE {IMMORTALChannelSound} {"|sox -np synth sine 840 sine 660 sine 450 sine 660 sine 330 sine 420 delay 0 0 .1 .1 .2 .2 remix - fade 0 0.35"}
-VARIABLE         {TellChannel}  {"|sox -np synth pl G2 pl G3 pl D3 pl D4 pl E3 pl E4 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -10 tempo 1.8"}
+#VARIABLE         {TellChannel}  {"|sox -np synth pl G2 pl G3 pl D3 pl D4 pl E3 pl E4 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -10 tempo 1.8"}
 #VARIABLE         {cannot_go_down}  {"|sox -np synth 0.5 tri 200:100 tri 500:300 remix - fade 0 0.2 0.5"}
 #VARIABLE         {cannot_go_east}  {"|sox -np synth 0.5 tri 400:300 tri 700:500 remix - fade 0 0.2 0.5" remix v0.3 v0.9}
 #VARIABLE         {cannot_go_north}  {"|sox -np synth 0.5 tri 300:400 tri 500:700 remix - fade 0 0.2 0.5"}

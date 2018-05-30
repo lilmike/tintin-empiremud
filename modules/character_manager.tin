@@ -107,7 +107,20 @@
 
 #EVENT {SESSION DISCONNECTED}
 {
-	CSAVE
+	CSAVE;
+	#unvariable {connected};
+	#nop {Make sure background music is disabled when the program closes.};
+	#script {tileSoundFilePID} {if [ -f ".tileSoundFilePID" ] ; then echo "$(cat ".tileSoundFilePID")";else echo "false";fi;echo "false" > .tileSoundFilePID};
+	#variable {tileSoundFilePID} {${tileSoundFilePID[1]}};
+	#if {"$tileSoundFilePID" != "false"}
+	{
+		#system {kill $tileSoundFilePID};
+		#system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" &> /dev/null;fi}
+	};
+	#if {${mineCounter.total} > 0}
+	{
+		post ${name} discovered ${mineCounter.copper} copper, ${mineCounter.gold} gold, ${mineCounter.imperium} imperium, ${mineCounter.iron} iron, ${mineCounter.nocturnium} nocturnium and ${mineCounter.silver} silver mines for a total of ${mineCounter.total}\.
+	}
 }
 
 #EVENT {VARIABLE UPDATE MSDP_CHARACTER_NAME}
