@@ -160,3 +160,4 @@
 #VARIABLE         {OLD_MSDP}  {}
 #VARIABLE         {characterName}  {}
 #VARIABLE         {characterPosition}  {}
+#VARIABLE         {hook}  {}

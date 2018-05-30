@@ -441,6 +441,7 @@
 #VARIABLE         {West}  {}
 #VARIABLE         {coordinateX}  {}
 #VARIABLE         {coordinateY}  {}
+#VARIABLE         {doorName}  {}
 #VARIABLE         {findTerrain}  {false}
 #VARIABLE         {findTerrainDirection}  {FALSE}
 #VARIABLE         {lastDirection}  {}
