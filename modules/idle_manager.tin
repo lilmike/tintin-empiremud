@@ -1,0 +1,40 @@
+#ALIAS {^idle %1}
+{
+	#list {idleList} {clear};
+	#list {idleList} {add} {@strip_braces{%1}};
+	idle
+}
+{9}
+
+#ALIAS {^idle$}
+{
+	#if {!&{idleList}}
+	{
+		#list {idleList} {add} {look}
+	};
+	#echo {Current commands to avoide the void are:};
+	#forall {${idleList[]}} {#echo {${idleList[&0]}}};
+	#echo {To set your idle commands, type idle follow by a list of commands enclosed in braces and separated by semi-colons.}
+}
+{9}
+
+#EVENT {MINUTE}
+{
+	#script {idle.time} {date '+%s'};
+	#variable {idle.time} {${idle.time[1]}};
+	#math {idle.seconds} {${idle.time} - ${idle.lastUse}};
+	#if {${idle.seconds} > 120}
+	{
+		#if {!&{idleList}}
+		{
+			#list {idleList} {add} {look}
+		};
+		${idleList[@list_rand{idleList}]}
+	}
+}
+
+#EVENT {SEND OUTPUT}
+{
+	#script {idle.lastUse} {date '+%s'};
+	#variable {idle.lastUse} {${idle.lastUse[1]}}
+}
