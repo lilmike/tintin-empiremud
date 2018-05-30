@@ -16,7 +16,7 @@
 				#variable {audioprompt.oldHealth} {${audioprompt.health}}
 			}
 		}
-	};
+	}
 }
 
 #EVENT {VARIABLE UPDATE MSDP_MANA}
@@ -36,19 +36,6 @@
 				}
 			}
 		}
-	}
-}
-
-#EVENT {VARIABLE UPDATE MSDP_OPPONENT_HEALTH}
-{
-	#if {!&{character.beeps}}
-	{
-		#variable {character.beeps} {1}
-	};
-	#if {%1 != 0 && ${character.beeps} && ${MSP.SOUND}}
-	{
-		#math {enemyConditionTone} {%1 * 10 + 200};
-		#system {play -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.09 gain ${MSP[VOLUME]}&}
 	}
 }
 
@@ -72,4 +59,18 @@
 	}
 }
 
+#EVENT {VARIABLE UPDATE MSDP_OPPONENT_HEALTH}
+{
+	#if {!&{character.beeps}}
+	{
+		#variable {character.beeps} {1}
+	};
+	#if {%1 != 0 && ${character.beeps} && ${MSP.SOUND}}
+	{
+		#math {enemyConditionTone} {%1 * 10 + 200};
+		#system {play -q -V0 -n synth 0.06 tri $enemyConditionTone fade 0.01 0.09 gain ${MSP[VOLUME]}&}
+	}
+}
+
 #VARIABLE         {audioprompt}  {{oldHealth}{0}{oldMana}{0}{oldMovement}{0}}
+#VARIABLE         {enemyConditionTone}  {}
