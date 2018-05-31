@@ -75,6 +75,7 @@
 #VARIABLE         {DO}  {ý}
 #VARIABLE         {DONT}  {þ}
 #VARIABLE         {IAC}  {ÿ}
+#VARIABLE         {MSDP_ACCOUNT_NAME}  {}
 #VARIABLE         {MSDP_AFFECTS}  {}
 #VARIABLE         {MSDP_ANSI_COLORS}  {}
 #VARIABLE         {MSDP_AREA_NAME}  {}
@@ -87,7 +88,7 @@
 #VARIABLE         {MSDP_BONUS_MAGICAL}  {}
 #VARIABLE         {MSDP_BONUS_PHYSICAL}  {}
 #VARIABLE         {MSDP_CHA}  {}
-#VARIABLE         {MSDP_CHARACTER_NAME}  {}
+#VARIABLE         {MSD_CHARACTER_NAME}  {}
 #VARIABLE         {MSDP_CHA_PERM}  {}
 #VARIABLE         {MSDP_CLASS}  {}
 #VARIABLE         {MSDP_CLIENT_ID}  {}

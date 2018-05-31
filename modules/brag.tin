@@ -1,7 +1,7 @@
 #ACTION {^ end paste$}
 {
 	#line {gag};
-	#replace {pasteText} {< $MSDP_CHARACTER_NAME |%*>} {};
+	#replace {pasteText} {< $MSD_ACCOUNT_NAME |%*>} {};
 	${pasteText};
 	#variable {pasteText} {}
 }
