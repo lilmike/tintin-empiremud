@@ -1,13 +1,13 @@
 #ALIAS {^CSAVE$}
 {
-	#if {"$MSD_ACCOUNT_NAME" != ""}
+	#if {"$MSDP_ACCOUNT_NAME" != ""}
 	{
-		#variable {historyPath} {${HOME}/${MSD_ACCOUNT_NAME}\.history};
+		#variable {historyPath} {${HOME}/${MSDP_ACCOUNT_NAME}\.history};
 		#replace {historyPath} {\\} {};
 		#history {write} {$historyPath};
 		#unvariable {historyPath};
-		#class {${MSD_ACCOUNT_NAME}} {write} {${HOME}/${MSD_ACCOUNT_NAME}};
-		#class {${MSD_ACCOUNT_NAME}} {open}
+		#class {${MSDP_ACCOUNT_NAME}} {write} {${HOME}/${MSDP_ACCOUNT_NAME}};
+		#class {${MSDP_ACCOUNT_NAME}} {open}
 	}
 }
 {9}
@@ -15,7 +15,7 @@
 #ALIAS {^bot{kill|load} %S$}
 {
 	#nop {character bot path};
-	#variable {modpath} {${HOME}/${MSD_ACCOUNT_NAME}\.bots};
+	#variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}\.bots};
 	#replace {modpath} {\\} {};
 	#nop {Kill, load, or reload a specified bot.};
 	#if {"%1" == "kill"}
@@ -28,13 +28,13 @@
 		#unticker {%*bot%*};
 		#unvariable {%*bot%*};
 		#class {bot_%2} {kill};
-		#class {$MSD_ACCOUNT_NAME} {open};
+		#class {$MSDP_ACCOUNT_NAME} {open};
 		#showme {bot %2 has been killed.}
 	};
 	#if {"%1" == "load"}
 	{
 		#showme {Loading bot %2.tin};
-		#class {$MSD_ACCOUNT_NAME} {close};
+		#class {$MSDP_ACCOUNT_NAME} {close};
 		#class {bot_%2} {read} {$modpath/%2.tin};
 		#if {&{bot.%1}}
 		{
@@ -49,7 +49,7 @@
 {
 	CSAVE;
 	#nop {character module path};
-	#variable {modpath} {${HOME}/${MSD_ACCOUNT_NAME}\.modules};
+	#variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}\.modules};
 	#replace {modpath} {\\} {};
 	#nop {reload all modules};
 	#if {"%0" == "cmodreload all"}
@@ -70,7 +70,7 @@
 		{
 			#showme {Loading character module %2.tin};
 			#script {if [[ -r "$HOME/modules/%2.tin" ]]; then echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";elif [[ -r "$modpath/%2.tin" ]]; then echo "#class {character_%2} {read} {$modpath/%2.tin}";else echo "#echo {Character module %2.tin not found.}";fi};
-			#class {$MSD_ACCOUNT_NAME} {open}
+			#class {$MSDP_ACCOUNT_NAME} {open}
 		}
 	};
 	#unvariable {modpath}
@@ -123,26 +123,26 @@
 	}
 }
 
-#EVENT {VARIABLE UPDATE MSD_ACCOUNT_NAME}
+#EVENT {VARIABLE UPDATE MSDP_ACCOUNT_NAME}
 {
 	#nop {Hook name: characterName};
 	#nop {Hook args: character name.};
-	#if {"${OLD_MSD_ACCOUNT_NAME}" != "" && "$OLD_MSD_ACCOUNT_NAME" != "%1"}
+	#if {"${OLD_MSDP_ACCOUNT_NAME}" != "" && "$OLD_MSDP_ACCOUNT_NAME" != "%1"}
 	{
-		#variable {historyPath} {${HOME}/${OLD_MSD_ACCOUNT_NAME}\.history};
+		#variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.history};
 		#replace {historyPath} {\\} {};
 		#history {write} {$historyPath};
 		#unvariable {historyPath};
-		#class {${OLD_MSD_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSD_ACCOUNT_NAME}};
-		#class {${OLD_MSD_ACCOUNT_NAME}} {kill};
+		#class {${OLD_MSDP_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}};
+		#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
 		#nop {unload any old character classes};
-		#variable {modpath} {${HOME}/${OLD_MSD_ACCOUNT_NAME}\.modules};
+		#variable {modpath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.modules};
 		#replace {modpath} {\\} {};
 		#script {for module in $modpath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {kill}";done}
 	};
 	#nop {Make sure the character file exists so there's no error on read.};
 	#system {if ! [[ -f "$HOME/%1" ]]; then if [[ "%1" != "" ]]; then mkdir -p "$HOME/%1.modules";cp modules/config.txt "$HOME/%1.modules/config.tin";echo "#nop" > "$HOME/%1";fi;fi};
-	#variable {OLD_MSD_ACCOUNT_NAME} {%1};
+	#variable {OLD_MSDP_ACCOUNT_NAME} {%1};
 	#history {read} {${HOME}/%1.history};
 	#nop {clear out old sound settings};
 	#unvariable {MSP};
@@ -169,7 +169,7 @@
 	}
 }
 
-#TICKER           {csave}  {#if {"$MSD_ACCOUNT_NAME" == "$OLD_MSD_ACCOUNT_NAME"}{CSAVE}}                                          {90}
+#TICKER           {csave}  {#if {"$MSDP_ACCOUNT_NAME" == "$OLD_MSDP_ACCOUNT_NAME"}{CSAVE}}                                          {90}
 #VARIABLE         {OLD_MSDP}  {}
 #VARIABLE         {characterName}  {}
 #VARIABLE         {characterPosition}  {}
