@@ -280,7 +280,7 @@
 {
 	#if {!&{channel.music}}
 	{
-		#variable {channel.music} {music}
+		#variable {channel.music} {/music}
 	};
 	mpost ${channel.music}
 }
