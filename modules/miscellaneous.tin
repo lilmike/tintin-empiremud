@@ -66,7 +66,7 @@ stand
 #list {commandHistory} {add} {%0}
 }
 
-#MACRO {\e }
+#MACRO {\e/}
 {
 	#if {"$bufferLock" == "off"}
 	{
