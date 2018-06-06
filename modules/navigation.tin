@@ -247,54 +247,6 @@
 }
 {9}
 
-#ALIAS {^{sca|scan}%s%w$}
-{
-	#switch {"%3"}
-	{
-		#case {"{d|do|dow|down}"}
-		{
-			#echo {$Down}
-		};
-		#case {"{e|ea|eas|east}"}
-		{
-			#echo {$East}
-		};
-		#case {"{n|no|nor|nort|north}"}
-		{
-			#echo {$North}
-		};
-		#case {"{ne|northe|northea|northeas|northeast}"}
-		{
-			#echo {$Northeast}
-		};
-		#case {"{nw|northw|northwe|northwes|northwest}"}
-		{
-			#echo {$Northwest}
-		};
-		#case {"{s|so|sou|sout|south}"}
-		{
-			#echo {$South}
-		};
-		#case {"{se|southe|southea|southeas|southeast}"}
-		{
-			#echo {$Southeast}
-		};
-		#case {"{sw|southw|southwe|southwes|southwest}"}
-		{
-			#echo {$Southwest}
-		};
-		#case {"{u|up}"}
-		{
-			#echo {$Up}
-		};
-		#case {"{w|we|wes|west}"}
-		{
-			#echo {$West}
-		}
-	}
-}
-{9}
-
 #ALIAS {^{wherei|whereis} %2}
 {
 	#list {rememberedCoordinatesList} {find} {%*%2%*} {listIndex};
