@@ -44,7 +44,7 @@
 }
 {9}
 
-#ACTION {^It splits open!$}
+#ACTION {%* splits open!$}
 {
 	PLAY skills/split_rock
 }
@@ -363,7 +363,7 @@
 }
 {9}
 
-#ACTION {^You knead the skin with a foul-smelling mixture...$}
+#ACTION {^You knead %* with a foul-smelling mixture...$}
 {
 	PLAY skills/tan_kneed
 }
@@ -427,7 +427,7 @@
 }
 {9}
 
-#ACTION {^You pull a pile of clay from the ground!$}
+#ACTION {^You pull a lump of clay from the ground!$}
 {
 	PLAY get/clay
 }
@@ -451,7 +451,7 @@
 }
 {9}
 
-#ACTION {^You scrape the skin clean...$}
+#ACTION {^You scrape %* clean...$}
 {
 	PLAY skills/tan_scrape
 }
@@ -642,7 +642,7 @@
 }
 {9}
 
-#ACTION {^You {begin to chip at a handaxe|begin to chip at a chipped rock|begin to chip at a rock|chip away at the piece of rock\.\.}.$}
+#ACTION {^You {begin to chip at a handaxe|begin to chip at a chipped rock|begin to chip at a rock|chip away at .+\.\.}.$}
 {
 	PLAY skills/chip_rock
 }
@@ -660,7 +660,7 @@
 }
 {9}
 
-#ACTION {^You {brush|soak|stretch} the {raw leather|skin}...$}
+#ACTION {^You {brush|soak|stretch} %*...$}
 {
 	PLAY skills/tan_%1
 }
