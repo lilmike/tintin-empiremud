@@ -159,11 +159,7 @@
 			#variable {lastDirection} {%0}
 		}
 	};
-	#if {"$sailmode" == "true"}
-	{
-		sail %0
-	};
-	#elseif {"$autosneak" == "true"}
+	#if {"$autosneak" == "true"}
 	{
 		#send {sneak %0}
 	};
@@ -215,21 +211,6 @@
 	{
 		#unvariable {quicknav};
 		#showme {Exit information will be displayed normally.}
-	}
-}
-{9}
-
-#ALIAS {^{nos|s}ail{m|mo|mod|mode}$}
-{
-	#if {"%0" == "sail{m|mo|mod|mode}"}
-	{
-		#variable {sailmode} {true};
-		#showme {Sail mode enabled.}
-	};
-	#else
-	{
-		#variable {sailmode} {false};
-		#showme {Sail mode disabled.}
 	}
 }
 {9}

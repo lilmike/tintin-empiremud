@@ -127,49 +127,52 @@
 {
 	#nop {Hook name: characterName};
 	#nop {Hook args: character name.};
-	#if {"${OLD_MSDP_ACCOUNT_NAME}" != "" && "$OLD_MSDP_ACCOUNT_NAME" != "%1"}
+	#if {"%1" != ""}
 	{
-		#variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.history};
-		#replace {historyPath} {\\} {};
-		#history {write} {$historyPath};
-		#unvariable {historyPath};
-		#class {${OLD_MSDP_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}};
-		#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
-		#nop {unload any old character classes};
-		#variable {modpath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.modules};
-		#replace {modpath} {\\} {};
-		#script {for module in $modpath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {kill}";done}
-	};
-	#nop {Make sure the character file exists so there's no error on read.};
-	#system {if ! [[ -f "$HOME/%1" ]]; then if [[ "%1" != "" ]]; then mkdir -p "$HOME/%1.modules";cp modules/config.txt "$HOME/%1.modules/config.tin";echo "#nop" > "$HOME/%1";fi;fi};
-	#variable {OLD_MSDP_ACCOUNT_NAME} {%1};
-	#history {read} {${HOME}/%1.history};
-	#nop {clear out old sound settings};
-	#unvariable {MSP};
-	#nop {clear out old leader settings};
-	#unvariable {leader};
-	#nop {clear old hooks.};
-	#variable {hook} {};
-	#class {%1} {read} {${HOME}/%1};
-	#nop {Load common personal modules.};
-	#script {if [[ -d "$HOME/modules" ]]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-	#nop {Load personal modules.};
-	#script {if [[ -d "$HOME/%1.modules" ]]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-	#if {"$bgm" == "true"}
-	{
-		#variable {tileSoundFile} {none};
-		Tile_Play $tileSoundFile;
-		look
-	};
-	#class {%1} {open};
-	#list {hook[characterName]} {size} {i};
-	#if {$i > 0}
-	{
-		#forall {${hook[characterName][]}} {@${hook[characterName][&0]}{%1}}
+		#if {"${OLD_MSDP_ACCOUNT_NAME}" != "" && "$OLD_MSDP_ACCOUNT_NAME" != "%1"}
+		{
+			#variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.history};
+			#replace {historyPath} {\\} {};
+			#history {write} {$historyPath};
+			#unvariable {historyPath};
+			#class {${OLD_MSDP_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}};
+			#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
+			#nop {unload any old character classes};
+			#variable {modpath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.modules};
+			#replace {modpath} {\\} {};
+			#script {for module in $modpath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {kill}";done}
+		};
+		#nop {Make sure the character file exists so there's no error on read.};
+		#system {if ! [[ -f "$HOME/%1" ]]; then if [[ "%1" != "" ]]; then mkdir -p "$HOME/%1.modules";cp modules/config.txt "$HOME/%1.modules/config.tin";echo "#nop" > "$HOME/%1";fi;fi};
+		#variable {OLD_MSDP_ACCOUNT_NAME} {%1};
+		#history {read} {${HOME}/%1.history};
+		#nop {clear out old sound settings};
+		#unvariable {MSP};
+		#nop {clear out old leader settings};
+		#unvariable {leader};
+		#nop {clear old hooks.};
+		#variable {hook} {};
+		#class {%1} {read} {${HOME}/%1};
+		#nop {Load common personal modules.};
+		#script {if [[ -d "$HOME/modules" ]]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+		#nop {Load personal modules.};
+		#script {if [[ -d "$HOME/%1.modules" ]]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+		#if {"$bgm" == "true"}
+		{
+			#variable {tileSoundFile} {none};
+			Tile_Play $tileSoundFile;
+			look
+		};
+		#class {%1} {open};
+		#list {hook[characterName]} {size} {i};
+		#if {$i > 0}
+		{
+			#forall {${hook[characterName][]}} {@${hook[characterName][&0]}{%1}}
+		}
 	}
 }
 
-#TICKER           {csave}  {#if {"$MSDP_ACCOUNT_NAME" == "$OLD_MSDP_ACCOUNT_NAME"}{CSAVE}}                                          {90}
+#TICKER           {csave}  {#if {"$MSDP_ACCOUNT_NAME" == "$OLD_MSDP_ACCOUNT_NAME"}{CSAVE}}                                      {90}
 #VARIABLE         {OLD_MSDP}  {}
 #VARIABLE         {characterName}  {}
 #VARIABLE         {characterPosition}  {}
