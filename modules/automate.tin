@@ -47,16 +47,6 @@
 }
 {9}
 
-#ACTION {^You are rescued by %1!$}
-{
-	#regexp {%1} {{.*} {.*}} {assist &1};
-	#else
-	{
-		assist %1
-	}
-}
-{9}
-
 #ACTION {^You pull the last of %* blood from {her|his|its} veins, and {he|it|she} falls limply to the ground!$}
 {
 	#variable {feeding} {false};
