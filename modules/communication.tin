@@ -333,7 +333,7 @@
 	};
 	display_channel $channelBuffer[$channelBufferIndex] $messageIndex;
 	#undelay {resetMessageIndex};
-	#delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {5}
+	#delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {10}
 }
 
 #MACRO {\e0}
@@ -399,7 +399,7 @@
 	display_channel $channelBuffer[$channelBufferIndex] $messageIndex;
 	#unvariable {i};
 	#undelay {resetMessageIndex};
-	#delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {5}
+	#delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {10}
 }
 
 #MACRO {\e@}
