@@ -178,6 +178,7 @@
 }
 {9}
 
+#nop {need these keys for buffers
 #MACRO {\e+}
 {
 	#nop {Increase music player volume};
@@ -210,6 +211,7 @@
 			#system {cmus-remote -v +5%}
 		}
 	}
+}
 }
 
 #MACRO {\eB}
@@ -498,6 +500,7 @@
 	}
 }
 
+#nop {need these keys for buffers
 #MACRO {\e_}
 {
 	#nop {Music player volume down.};
@@ -530,6 +533,7 @@
 			#system {cmus-remote -v -5%}
 		}
 	}
+}
 }
 
 #TICKER           {autotitle}  {#if {${auto.title}}{Get_Music_Message_String;#if {"${music.newAutoTitleString}" != "${music.oldAutoTitleString}"}{#variable {music.oldAutoTitleString} {${music.newAutoTitleString}};#var {settingTitle} {1};title ${music.newAutoTitleString}}}}                                                                                                                                                                                                                         {1.50}
