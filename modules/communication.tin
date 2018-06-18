@@ -167,7 +167,7 @@
 }
 {9}
 
-#ACTION {^[ %1 has {left|quit} the game ]$}
+#ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
 {
 	#if {"$channelSending" != "true"}
 	{

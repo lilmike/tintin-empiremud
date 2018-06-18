@@ -18,4 +18,4 @@
 #SUBSTITUTE       {{'| |^}:{-\x28|\x28}{'| |$}}  { *frown* }  {9}
 #SUBSTITUTE       {{'| |^}:{-\x29|\x29}{'| |$}}  { *smile* }  {9}
 #SUBSTITUTE       {{'| |^}QQ{ |'}{'| |$}}  { *cry* }  {9}
-#substitute {{'| |^}{:/|:-/}{ |'}} { *perplexed* } {9}
+#substitute {{'| |^}{:/|:-/}{ |'|$}} { *perplexed* } {9}
