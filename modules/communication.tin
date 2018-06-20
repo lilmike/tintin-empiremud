@@ -11,7 +11,7 @@
 }
 {8}
 
-#ACTION {^You %1, '%2'$}
+#ACTION {^You {say|tell .+|shout}, '%2'$}
 {
 	#if {"$channelSending" != "true"}
 	{
@@ -29,15 +29,9 @@
 				Add_Channel_Event all %0;
 				Add_Channel_Event tell %0
 			};
-			#case {"tell the party"}
+			#case {"shout"}
 			{
-				SYNTH_PLAY grouptellSendSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event party %0
-			};
-			#default
-			{
-				SYNTH_PLAY defaultSendSound;
+				SYNTH_PLAY shoutChannelSound;
 				Add_Channel_Event all %0
 			}
 		}
@@ -45,7 +39,7 @@
 }
 {8}
 
-#ACTION {^%* {says|tells you|tells the party}, '%3'$}
+#ACTION {^%* {says|tells you|shouts}, '%3'$}
 {
 	#if {"$channelSending" != "true"}
 	{
@@ -63,11 +57,10 @@
 				Add_Channel_Event all %0;
 				Add_Channel_Event tell %0
 			};
-			#case {"tells the party"}
+			#case {"shouts"}
 			{
-				SYNTH_PLAY grouptellReceiveSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event party %0
+				SYNTH_PLAY shoutChannelSound;
+				Add_Channel_Event all %0
 			}
 		}
 	}
@@ -182,9 +175,16 @@
 {
 	#if {"$channelSending" != "true"}
 	{
-		SYNTH_PLAY %1ChannelSound;
+		#if {&$%1ChannelSound}
+		{
+			SYNTH_PLAY %1ChannelSound
+		};
+		#else
+		{
+			SYNTH_PLAY defaultChannelSound
+		};
 		Add_Channel_Event all %0;
-		#if {"%1" == "{cowsay|music|ooc|say|tell}"}
+		#if {"%1" == "{cowsay|music|ooc}"}
 		{
 			Add_Channel_Event %1 %0
 		}
