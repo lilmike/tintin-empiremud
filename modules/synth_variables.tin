@@ -4,33 +4,16 @@
 #variable {foundTerrainSound} {"|sox -np synth sine 480 sine 660 remix - fade 0 0.1 delay 0.1"}
 #VARIABLE         {attention}  {"|sox -np synth .5 saw B5 saw F#6" fade 0 .5 .1 remix - repeat}
 #VARIABLE         {newbieChannelSound}  {"|sox -np synth .4 tri F2 tri C3" remix - phaser norm}
-#VARIABLE         {auctionSendSound}  {"|sox -np synth .2 tri C4 tri F3" "|sox -np synth .55 tri C3 tri F2" remix - phaser}
 #VARIABLE         {devChannelSound}  {"|sox -np synth pl E2 pl B2 delay 0 .05 remix - fade h 0 .5 .25 phaser overdrive 99 norm -18"}
 #VARIABLE         {oocChannelSound}  {"|sox -np synth .35 pl E2 pl G2" remix - flanger reverse vol 0.5}
 #VARIABLE         {EMPIREChannelSound}  {"|sox -np synth .2 saw D4 pl G3" "|sox -np synth .55 saw D4 pl G3" remix - phaser}
 #VARIABLE         {recruitChannelSound}  {"|sox -np synth .1 white" vol 0.5}
-#VARIABLE         {chatSendSound}  {"|sox -np synth .1 pink" vol 0.5}
 #VARIABLE         {connectedSound}  {"|sox -np synth tri C6 fade 0 0.02 0.01" repeat 6}
 #VARIABLE         {cowsayChannelSound}  {"|sox -np synth .2 pl C2 pl C3" "|sox -np synth .55 pl E2 pl G2" remix - flanger vol 0.5}
-#VARIABLE         {gossipReceiveSound}  {"|sox -np synth .1 pink pl G3 pl A3" remix - reverse}
-#VARIABLE         {gossipSendSound}  {"|sox -np synth .1 pink pl G3 pl A3" remix -}
 #VARIABLE         {defaultReceiveSound}  {"|sox -np synth .2 pl D2 pl A2" "|sox -np synth .55 pl D3 pl A3" remix - phaser}
 #VARIABLE         {defaultSendSound}  {"|sox -np synth .2 pl A3 pl D3" "|sox -np synth .55 pl A2 pl D2" remix - phaser}
 #VARIABLE         {gsayChannelSound}   {"|sox -np synth .5t sq E2 tri B2" remix - phaser}
-#VARIABLE         {groupWarnSound}  {"|sox -np synth .15 sq E2:E5" "|sox -np synth .15 sq E5:E2" vol 0.2}
-#variable {crippled} {"|sox -np synth sq C#5 sq D#5 sq F#5 sq A5 sq C#6" remix - fade 0 5.5 5 remix v0.9 v0.4}
-#VARIABLE         {mauled}  {"|sox -np synth sq D#3 sq B3 sq C#4 sq F4 sq A4 remix - fade p 0 .7 .4" remix v0.9 v0.4}
-#VARIABLE         {hurt}  {"|sox -np synth tri C#3 tri E3 tri A3 remix - fade p 0 .7 .4" remix v0.9 v0.4}
-#VARIABLE         {wounded}  {"|sox -np synth sq C#5 sq D#5 sq F#5 sq A5 sq C#6 remix - fade p 0 .7 .4" remix v0.9 v0.4}
-#variable {injured} {"|sox -np synth tri C#2 tri E2 tri A2" remix - fade 0 5.5 5 remix v0.9 v0.4}
-#VARIABLE         {bruised}  {"|sox -np synth tri D5 tri F5 tri G#5 tri A5 tri C6 remix - fade p 0 .7 .4" remix v0.9 v0.4}
-#VARIABLE         {lots of mana}  {"|sox -np synth pl D2 pl A3 pl D3 pl F#3 delay 0 .05 .1 .15 remix - fade 0 0.55" remix v0.4 v0.9}
-#VARIABLE         {half mana}  {"|sox -np synth pl C3 pl E3 pl G3 pl C4 pl E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.55" remix v0.4 v0.9}
-#VARIABLE         {low mana}  {"|sox -np synth pl G2 pl B2 pl D3 pl G3 pl D4 pl F4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 0.55" remix v0.4 v0.9}
 #VARIABLE         {musicChannelSound}  {"|sox -np synth pl A2 pl E3 pl A3 pl C4 pl E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.5 .1 flanger norm -1 vol 0.4"}
-#VARIABLE         {going strong}  {"|sox -np synth pl A2 sq E3 tri A3 pl C#4 sq E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.55"}
-#VARIABLE         {tiring}  {"|sox -np synth pl F2 sq C3 tri F3 pl A3 sq B3 tri E4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 0.55"}
-#VARIABLE         {nearly dead}  {"|sox -np synth pl E2 sq B2 tri E3 pl G3 sq B3 tri E4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 0.55"}
 #VARIABLE         {newVolumeSound}  {"|sox -np synth .05 sq B5" vol 0.5}
 #VARIABLE         {sayReceiveSound}  {"|sox -np synth pl E1 pl B1 remix - vol 0.6 fade 0 0.2 0.5"}
 #VARIABLE         {saySendSound}  {"|sox -np synth pl E1 sq B1 remix - vol 0.6 fade 0 0.2 0.5"}
@@ -39,18 +22,6 @@
 #VARIABLE         {warningSound}  {"|sox -np synth pl C3 pl E3 pl G3 fade 0 .25 .1" "|sox -np synth pl C3 pl E3 pl G3 fade l 0 .75 1" remix -}
 #VARIABLE {IMMORTALChannelSound} {"|sox -np synth sine 840 sine 660 sine 450 sine 660 sine 330 sine 420 delay 0 0 .1 .1 .2 .2 remix - fade 0 0.35"}
 #VARIABLE         {TellChannel}  {"|sox -np synth pl G2 pl G3 pl D3 pl D4 pl E3 pl E4 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -10 tempo 1.8"}
-#VARIABLE         {cannot_go_down}  {"|sox -np synth 0.5 tri 200:100 tri 500:300 remix - fade 0 0.2 0.5"}
-#VARIABLE         {cannot_go_east}  {"|sox -np synth 0.5 tri 400:300 tri 700:500 remix - fade 0 0.2 0.5" remix v0.3 v0.9}
-#VARIABLE         {cannot_go_north}  {"|sox -np synth 0.5 tri 300:400 tri 500:700 remix - fade 0 0.2 0.5"}
-#VARIABLE         {cannot_go_south}  {"|sox -np synth 0.5 tri 400:300 tri 700:500 remix - fade 0 0.2 0.5"}
-#VARIABLE         {cannot_go_up}  {"|sox -np synth 0.5 tri 500:600 tri 700:900 remix - fade 0 0.2 0.5"}
-#VARIABLE         {cannot_go_west}  {"|sox -np synth 0.5 tri 400:300 tri 700:500 remix - fade 0 0.2 0.5" remix v0.9 v0.3}
-#VARIABLE         {doorDown}  {"|sox -np synth 0.5 sine 1600-100 synth 0.6 tri amod 200-1400 tempo 2.5 pitch -600"}
-#VARIABLE         {doorEast}  {"|sox -np synth 0.5 sine 1600-100 synth 0.6 tri amod 200-1400 tempo 2.5 pitch -200 reverse remix v0.4 v0.9"}
-#VARIABLE         {doorNorth}  {"|sox -np synth 0.5 sine 1600-100 synth 0.6 tri amod 200-1400 tempo 2.5 pitch -200 reverse"}
-#VARIABLE         {doorSouth}  {"|sox -np synth 0.5 sine 1600-100 synth 0.6 tri amod 200-1400 tempo 2.5 pitch -200"}
-#VARIABLE         {doorUp}  {"|sox -np synth 0.5 sine 1600-100 synth 0.6 tri amod 200-1400 tempo 2.5 pitch 600 reverse"}
-#VARIABLE         {doorWest}  {"|sox -np synth 0.5 sine 1600-100 synth 0.6 tri amod 200-1400 tempo 2.5 pitch -200 reverse remix v0.9 v0.4"}
 #VARIABLE         {health0}  {"|sox -np synth sq C#5 sq D#5 sq F#5 sq A5 sq C#6" remix - fade 0 5.5 5 remix v0.9 v0.4 pitch -400}
 #VARIABLE         {health10}  {"|sox -np synth sq D#3 sq B3 sq C#4 sq F4 sq A4 remix - fade p 0 .7 .4" remix v0.9 v0.4}
 #VARIABLE         {health20}  {"|sox -np synth sq C#5 sq D#5 sq F#5 sq A5 sq C#6 remix - fade p 0 .7 .4" remix v0.9 v0.4}
@@ -78,5 +49,4 @@
 #VARIABLE         {movement60}  {"|sox -np synth pl A2 sq E3 tri A3 pl C#4 sq E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.55" remix v0.4 v0.9 pitch -300}
 #VARIABLE         {movement70}  {"|sox -np synth pl A2 sq E3 tri A3 pl C#4 sq E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.55" remix v0.4 v0.9}
 #VARIABLE         {movement80}  {"|sox -np synth pl A2 sq E3 tri A3 pl C#4 sq E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.55" remix v0.4 v0.9 pitch 300}
-#VARIABLE         {newVolumeSound}  {"|sox -np synth .05 sq B5" gain -5}
 #VARIABLE         {notificationSound}  {"|sox -np synth sin 900 sin 1100 delay 0 .1 fade h 0 .25 .2"}
