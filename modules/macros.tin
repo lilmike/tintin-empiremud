@@ -54,4 +54,4 @@
 }
 {9}
 
-#forall {a;b;c;d;e;f;g;h;n;q;r;s;t;v;w;x;y;z;A;D;F;H;Q;W;E} {#macro {\e&0} {$keyProfile[${keySetName}][&0]}}
+#forall {a;b;c;d;e;f;g;h;n;q;r;s;t;v;w;x;y;z;A;D;F;H;Q;W;E} {#macro {\e&0} {#if {&keyProfile[${keySetName}][&0]}{$keyProfile[${keySetName}][&0]}}}
