@@ -4,36 +4,30 @@
 	#script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
 	#variable {unencryptedMessage} {${unencryptedMessage[1]}};
 	#echo {%1${unencryptedMessage}'};
-	#if {"$channelSending" != "true"}
-	{
-		PLAY cryptmsg
-	}
+	PLAY cryptmsg
 }
 {8}
 
 #ACTION {^You {say|tell .+|shout}, '%2'$}
 {
-	#if {"$channelSending" != "true"}
+	#switch {"%1"}
 	{
-		#switch {"%1"}
+		#case {"say"}
 		{
-			#case {"say"}
-			{
-				SYNTH_PLAY saySendSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event say %0
-			};
-			#case {"tell %*"}
-			{
-				SYNTH_PLAY tellSendSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event tell %0
-			};
-			#case {"shout"}
-			{
-				SYNTH_PLAY shoutChannelSound;
-				Add_Channel_Event all %0
-			}
+			SYNTH_PLAY saySendSound;
+			Add_Channel_Event all %0;
+			Add_Channel_Event say %0
+		};
+		#case {"tell %*"}
+		{
+			SYNTH_PLAY tellSendSound;
+			Add_Channel_Event all %0;
+			Add_Channel_Event tell %0
+		};
+		#case {"shout"}
+		{
+			SYNTH_PLAY shoutChannelSound;
+			Add_Channel_Event all %0
 		}
 	}
 }
@@ -41,27 +35,24 @@
 
 #ACTION {^%* {says|tells you|shouts}, '%3'$}
 {
-	#if {"$channelSending" != "true"}
+	#switch {"%2"}
 	{
-		#switch {"%2"}
+		#case {"says"}
 		{
-			#case {"says"}
-			{
-				SYNTH_PLAY sayReceiveSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event say %0
-			};
-			#case {"tells you"}
-			{
-				SYNTH_PLAY tellReceiveSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event tell %0
-			};
-			#case {"shouts"}
-			{
-				SYNTH_PLAY shoutChannelSound;
-				Add_Channel_Event all %0
-			}
+			SYNTH_PLAY sayReceiveSound;
+			Add_Channel_Event all %0;
+			Add_Channel_Event say %0
+		};
+		#case {"tells you"}
+		{
+			SYNTH_PLAY tellReceiveSound;
+			Add_Channel_Event all %0;
+			Add_Channel_Event tell %0
+		};
+		#case {"shouts"}
+		{
+			SYNTH_PLAY shoutChannelSound;
+			Add_Channel_Event all %0
 		}
 	}
 }
@@ -83,133 +74,103 @@
 
 #ACTION {^You improve your {Battle|Empire|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to %d.$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		#format {i} {%l} {%1};
-		#replace {i} { } {_};
-		PLAY improve/$i;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	#format {i} {%l} {%1};
+	#replace {i} { } {_};
+	PLAY improve/$i;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^Your daily quests and bonus experience have reset!$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		PLAY skills/reset;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	PLAY skills/reset;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
-#ACTION {^[ %* has switched to %* ]$}
+#ACTION {^[ %* {has switched to|used alternate to switch to} %* ]$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		SYNTH_PLAY switchCharacterSound;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	SYNTH_PLAY switchCharacterSound;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[ %1 has been {demote|promote}d to %* ]$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		PLAY miscellaneous/%2;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	PLAY miscellaneous/%2;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[ %1 has been {executed|killed} by %* ]$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		PLAY miscellaneous/death;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	PLAY miscellaneous/death;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[ %1 has died at %* ]$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		PLAY miscellaneous/death;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	PLAY miscellaneous/death;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[ %1 has entered the game ]$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		PLAY miscellaneous/player_enter;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	PLAY miscellaneous/player_enter;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
 {
-	#if {"$channelSending" != "true"}
-	{
-		PLAY miscellaneous/player_leave;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+	PLAY miscellaneous/player_leave;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[/%S{]| }%*}
 {
-	#if {"$channelSending" != "true"}
+	#if {&%1ChannelSound}
 	{
-		#if {&$%1ChannelSound}
-		{
-			SYNTH_PLAY %1ChannelSound
-		};
-		#else
-		{
-			SYNTH_PLAY defaultChannelSound
-		};
-		Add_Channel_Event all %0;
-		#if {"%1" == "{cowsay|music|ooc}"}
-		{
-			Add_Channel_Event %1 %0
-		}
+		SYNTH_PLAY %1ChannelSound
+	};
+	#else
+	{
+		SYNTH_PLAY defaultChannelSound
+	};
+	Add_Channel_Event all %0;
+	#if {"%1" == "{cowsay|music|ooc}"}
+	{
+		Add_Channel_Event %1 %0
 	}
 }
 {9}
 
 #ACTION {^[{EMPIRE|gsay|IMMORTAL}%*}
 {
-	#if {"$channelSending" != "true"}
+	SYNTH_PLAY %1ChannelSound;
+	Add_Channel_Event all %0;
+	#if {"%1" == "gsay"}
 	{
-		SYNTH_PLAY %1ChannelSound;
-		Add_Channel_Event all %0;
-		#if {"%1" == "gsay"}
-		{
-			Add_Channel_Event party %0
-		};
-		#elseif {"%1" == "IMMORTAL"}
-		{
-			Add_Channel_Event immortal %0
-		};
-		#else
-		{
-			Add_Channel_Event empire %0
-		}
+		Add_Channel_Event party %0
+	};
+	#elseif {"%1" == "IMMORTAL"}
+	{
+		Add_Channel_Event immortal %0
+	};
+	#else
+	{
+		Add_Channel_Event empire %0
 	}
 }
 {9}
@@ -254,9 +215,7 @@
 
 #ALIAS {^display_channel %w %d}
 {
-	#variable {channelSending} {true};
-	#showme {${%1List[%2]}};
-	#variable {channelSending} {false}
+	#echo {%s} {${%1List[%2]}}
 }
 {9}
 
@@ -441,7 +400,6 @@
 #VARIABLE         {awayMessage}  {false}
 #VARIABLE         {channelBuffer}  {{0}{all}{1}{cowsay}{2}{empire}{3}{immortal}{4}{misc}{5}{music}{6}{ooc}{7}{say}{8}{party}{9}{tell}}
 #VARIABLE         {channelBufferIndex}  {0}
-#VARIABLE         {channelSending}  {false}
 #VARIABLE         {cowsayList}  {}
 #VARIABLE         {empireList}  {}
 #VARIABLE         {immortalList}  {}
