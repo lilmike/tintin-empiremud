@@ -83,31 +83,7 @@
 		#variable {rebootConfirmed} {false}
 	}
 }
-{9}
-
-#ACTION {^{\[|\(}%*IDLE]%*}
-{
-	#switch {1d4}
-	{
-		#case {1}
-		{
-			l
-		};
-		#case {2}
-		{
-			lo
-		};
-		#case {3}
-		{
-			loo
-		};
-		#default
-		{
-			look
-		}
-	}
-}
-{9}
+{8}
 
 #ALIAS {^autodo {add|remove} %w$}
 {

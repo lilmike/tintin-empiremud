@@ -33,7 +33,7 @@ stand
 {
 	#history {insert} {#cr}
 }
-{9}
+{8}
 
 #ACTION {^Press return to continue...$}
 {

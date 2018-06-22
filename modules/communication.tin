@@ -33,6 +33,54 @@
 }
 {8}
 
+#ACTION {^[ %* {has switched to|used alternate to switch to} %* ]$}
+{
+	SYNTH_PLAY switchCharacterSound;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[ %1 has been {demote|promote}d to %* ]$}
+{
+	PLAY miscellaneous/%2;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[ %1 has been {executed|killed} by %* ]$}
+{
+	PLAY miscellaneous/death;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[ %1 has died at %* ]$}
+{
+	PLAY miscellaneous/death;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[ %1 has entered the game ]$}
+{
+	PLAY miscellaneous/player_enter;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
+{
+	PLAY miscellaneous/player_leave;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
 #ACTION {^%* {says|tells you|shouts}, '%3'$}
 {
 	#switch {"%2"}
@@ -90,49 +138,8 @@
 }
 {9}
 
-#ACTION {^[ %* {has switched to|used alternate to switch to} %* ]$}
+#ACTION {^[ %* ]$}
 {
-	SYNTH_PLAY switchCharacterSound;
-	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
-}
-{9}
-
-#ACTION {^[ %1 has been {demote|promote}d to %* ]$}
-{
-	PLAY miscellaneous/%2;
-	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
-}
-{9}
-
-#ACTION {^[ %1 has been {executed|killed} by %* ]$}
-{
-	PLAY miscellaneous/death;
-	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
-}
-{9}
-
-#ACTION {^[ %1 has died at %* ]$}
-{
-	PLAY miscellaneous/death;
-	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
-}
-{9}
-
-#ACTION {^[ %1 has entered the game ]$}
-{
-	PLAY miscellaneous/player_enter;
-	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
-}
-{9}
-
-#ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
-{
-	PLAY miscellaneous/player_leave;
 	Add_Channel_Event all %0;
 	Add_Channel_Event misc %0
 }
