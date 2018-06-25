@@ -1,3 +1,5 @@
+#VARIABLE         {damageTypes}  {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}
+
 #ACTION {{You wince in pain as poison courses through your blood!|You burn from the inside out as poison flows through your veins!}}
 {
 	#if {"$cspam" == "true"}
@@ -51,10 +53,14 @@
 			REV_PLAY combat/hit/%1
 		}
 	};
-	#list {autoDo} {find} {%1} {i};
-	#if {$i > 0}
+	#list {autoDo} {size} {i};
+	#loop {1} {$i} {x}
 	{
-		%1
+		#if {"%1" == "${autoDo[$x]}%*"}
+		{
+			%1;
+			#break
+		}
 	}
 }
 {8}
@@ -488,5 +494,3 @@
 	RPLAY combat/fatal/decapitate
 }
 {9}
-
-#VARIABLE         {damageTypes}  {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}

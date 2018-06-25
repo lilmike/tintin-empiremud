@@ -73,10 +73,16 @@
 #ACTION {^Your %w cooldown has ended.$}
 {
 	REV_PLAY magic/%1;
-	#list {autoDo} {find} {%1} {i};
-	#if {$i > 0}
+	#list {autoDo} {size} {i};
+	#loop {1} {$i} {x}
 	{
-		%1
+		#if {"%1" == "${autoDo[$x]}%*"}
+		{
+			%1;
+			#break
+		}
 	}
 }
 {9}
+
+#VARIABLE         {x}  {}
