@@ -72,7 +72,7 @@
 
 #ACTION {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to {reboot|shutdown} faster) ]$}
 {
-	PLAY system/%1 system/%2;
+	PLAY system/%1 system/%2-minute;
 	#if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
 	{
 		#variable {rebootConfirmed} {true};
