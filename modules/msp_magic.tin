@@ -74,12 +74,15 @@
 {
 	REV_PLAY magic/%1;
 	#list {autoDo} {size} {i};
-	#loop {1} {$i} {x}
+	#if {$i > 0}
 	{
-		#if {"%1" == "${autoDo[$x]}%*"}
+		#loop {1} {$i} {x}
 		{
-			%1;
-			#break
+			#if {"%1" == "${autoDo[$x]}%*"}
+			{
+				%1;
+				#break
+			}
 		}
 	}
 }

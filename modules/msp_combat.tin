@@ -54,12 +54,15 @@
 		}
 	};
 	#list {autoDo} {size} {i};
-	#loop {1} {$i} {x}
+	#if {$i > 0}
 	{
-		#if {"%1" == "${autoDo[$x]}%*"}
+		#loop {1} {$i} {x}
 		{
-			%1;
-			#break
+			#if {"%1" == "${autoDo[$x]}%*"}
+			{
+				%1;
+				#break
+			}
 		}
 	}
 }
@@ -347,16 +350,6 @@
 }
 {9}
 
-#ACTION {^You try to {$damageTypes} %2, but {he|it|she} blocks.$}
-{
-	#if {"$cspam" == "true"}
-	{
-		#line {gag}
-	};
-	RPLAY combat/shield_block
-}
-{9}
-
 #ACTION {^You try to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %* but miss by a mile.$}
 {
 	#if {"$cspam" == "true"}
@@ -364,6 +357,16 @@
 		#line {gag}
 	};
 	PLAY combat/miss/miss
+}
+{9}
+
+#ACTION {^You try to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %2, but {he|it|she} blocks.$}
+{
+	#if {"$cspam" == "true"}
+	{
+		#line {gag}
+	};
+	RPLAY combat/shield_block
 }
 {9}
 
