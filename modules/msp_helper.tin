@@ -115,7 +115,7 @@
 }
 {9}
 
-#ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore} falls from the wall!$}
+#ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore|imperium ore} falls from the wall!$}
 {
 	PLAY get/iron_ore
 }
