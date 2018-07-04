@@ -55,7 +55,7 @@
 	#if {"%0" == "cmodreload all"}
 	{
 		#script {for module in $modpath/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
-		#script {if [[ -d "$HOME/modules" ]]; then for module in $HOME/modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+		#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 		#echo {All character modules reloaded}
 	};
 	#else
@@ -69,7 +69,7 @@
 		#if {"%1" == "{load|reload}"}
 		{
 			#showme {Loading character module %2.tin};
-			#script {if [[ -r "$HOME/modules/%2.tin" ]]; then echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";elif [[ -r "$modpath/%2.tin" ]]; then echo "#class {character_%2} {read} {$modpath/%2.tin}";else echo "#echo {Character module %2.tin not found.}";fi};
+			#script {if [ -r "$HOME/modules/%2.tin" ]; then echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";elif [ -r "$modpath/%2.tin" ]; then echo "#class {character_%2} {read} {$modpath/%2.tin}";else echo "#echo {Character module %2.tin not found.}";fi};
 			#class {$MSDP_ACCOUNT_NAME} {open}
 		}
 	};
@@ -143,7 +143,7 @@
 			#script {for module in $modpath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {kill}";done}
 		};
 		#nop {Make sure the character file exists so there's no error on read.};
-		#system {if ! [[ -f "$HOME/%1" ]]; then if [[ "%1" != "" ]]; then mkdir -p "$HOME/%1.modules";cp modules/config.txt "$HOME/%1.modules/config.tin";echo "#nop" > "$HOME/%1";fi;fi};
+		#system {if ! [ -f "$HOME/%1" ]; then if [ "%1" != "" ]; then mkdir -p "$HOME/%1.modules";cp modules/config.txt "$HOME/%1.modules/config.tin";echo "#nop" > "$HOME/%1";fi;fi};
 		#variable {OLD_MSDP_ACCOUNT_NAME} {%1};
 		#history {read} {${HOME}/%1.history};
 		#nop {clear out old sound settings};
@@ -154,9 +154,9 @@
 		#variable {hook} {};
 		#class {%1} {read} {${HOME}/%1};
 		#nop {Load common personal modules.};
-		#script {if [[ -d "$HOME/modules" ]]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+		#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 		#nop {Load personal modules.};
-		#script {if [[ -d "$HOME/%1.modules" ]]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+		#script {if [ -d "$HOME/%1.modules" ]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 		#if {"$bgm" == "true"}
 		{
 			#variable {tileSoundFile} {none};

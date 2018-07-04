@@ -4,7 +4,7 @@
 	#nop {reload all modules};
 	#if {"%0" == "modreload all"}
 	{
-		#script {for module in modules/*.tin ; do if [[ "$module" != "modules/msdp.tin" ]];then echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename           "$module" .tin)} {read} {$module}";fi;done};
+		#script {for module in modules/*.tin ; do if [ "$module" != "modules/msdp.tin" ];then echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename           "$module" .tin)} {read} {$module}";fi;done};
 		#showme {All modules except msdp reloaded.};
 		#showme {To reload msdp you must close tintin and relaunch it.}
 	};
