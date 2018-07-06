@@ -105,6 +105,21 @@
 }
 {9}
 
+#ALIAS {^{nom|m}sp$}
+{
+	#if {"%1" == "nom"}
+	{
+		#variable {MSP[SOUND]} {0};
+		#showme {Sound disabled.}
+	};
+	#else
+	{
+		#variable {MSP[SOUND]} {1};
+		#showme {Sound enabled.}
+	}
+}
+{9}
+
 #ALIAS {{L|R}PLAY %S}
 {
 	#if {!&{MSP[VOLUME]}}
@@ -170,7 +185,7 @@
 #VARIABLE         {PROTOCOL}  {{MSP}{0}}
 #VARIABLE         {lChannel}  {}
 #VARIABLE         {rChannel}  {}
-#variable {soundFileName} {}
+#VARIABLE         {soundFileName}  {}
 #VARIABLE         {sounds}  {}
 #VARIABLE         {tmp}  {}
 #VARIABLE         {tmp3}  {}
