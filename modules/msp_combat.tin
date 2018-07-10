@@ -53,15 +53,30 @@
 			REV_PLAY combat/hit/%1
 		}
 	};
-	#list {autoDo} {size} {i};
-	#if {$i > 0}
+	#if {!&{autoDoPaused}}
 	{
-		#loop {1} {$i} {x}
+		#variable {autoDoPaused} {0}
+	};
+	#if {!${autoDoPaused}}
+	{
+		#if {"$MSDP_OPPONENT_NAME" == ""}
 		{
-			#if {"%1" == "${autoDo[$x]}%*"}
+			#variable {autodotype} {all}
+		};
+		#else
+		{
+			#variable {autodotype} {combat}
+		};
+		#list {autoDo[$autodotype]} {size} {i};
+		#if {$i > 0}
+		{
+			#loop {1} {$i} {x}
 			{
-				%1;
-				#break
+				#if {"%1" == "${autoDo[$autodotype][$x]}%*"}
+				{
+					%1;
+					#break
+				}
 			}
 		}
 	}
