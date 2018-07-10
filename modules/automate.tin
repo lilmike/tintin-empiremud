@@ -77,7 +77,15 @@
 
 #ACTION {^Your counterspell {goes off!|expires\.}$}
 {
-	#list {autoDo} {find} {counterspell} {i};
+	#if {"$MSDP_OPPONENT_NAME" == ""}
+	{
+		#variable {autodotype} {all}
+	};
+	#else
+	{
+		#variable {autodotype} {combat}
+	};
+	#list {autoDo[$autodotype]} {find} {counterspell} {i};
 	#if {$i > 0}
 	{
 		counterspell
