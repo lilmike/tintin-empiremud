@@ -85,6 +85,27 @@
 }
 {9}
 
+#ALIAS {^autodo all$}
+{
+	#if {"$MSDP_OPPONENT_NAME" == ""}
+	{
+		#variable {autodotype} {all}
+	};
+	#else
+	{
+		#variable {autodotype} {combat}
+	};
+	#list {autoDo[$autodotype]} {size} {i};
+	#if {$i > 0}
+	{
+		#loop {1} {$i} {x}
+		{
+			${autoDo[$autodotype][$x]}
+		}
+	}
+}
+{1}
+
 #ALIAS {^autodo {pause|resume}$}
 {
 	#if {"%1" == "pause"}
