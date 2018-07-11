@@ -1,4 +1,4 @@
-#ACTION {^Sparkling blue wings made of pure mana erupt from your back!$}
+#ACTION {^You concentrate for a moment and sparkling blue wings made of pure mana erupt from your back!$}
 {
 	PLAY magic/fly;
 	Remove_Spell fly;
