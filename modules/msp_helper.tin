@@ -20,6 +20,12 @@
 }
 {8}
 
+#ACTION {%* splits open!$}
+{
+	PLAY skills/split_rock
+}
+{9}
+
 #ACTION {%1 runs toward you!$}
 {
 	PLAY move/enemy_run
@@ -41,12 +47,6 @@
 #ACTION {^As you chant, {a mighty tree springs from the ground|the plants around you grow with amazing speed}!$}
 {
 	PLAY ambiance/grow
-}
-{9}
-
-#ACTION {%* splits open!$}
-{
-	PLAY skills/split_rock
 }
 {9}
 
@@ -765,3 +765,42 @@
 	PLAY fail/nothing
 }
 {9}
+
+#ALIAS {^{noc|c}lock$}
+{
+	#if {"%1" == "c"}
+	{
+		#variable {character[clock]} {1};
+		#showme {Clock chimes enabled.}
+	};
+	#else
+	{
+		#variable {character[clock]} {0};
+		#showme {Clock chimes disabled.}
+	}
+}
+{1}
+
+#EVENT {VARIABLE UPDATE MSDP_WORLD_TIME}
+{
+	#if {&{character[clock]} && ${character[clock]}}
+	{
+		#math {tmp} {%1 % 12};
+		#if {$tmp == 0}
+		{
+			#variable {tmp} {12}
+		};
+		#variable {playChimes} {};
+		#loop {1} {$tmp} {x}
+		{
+			#if {$x > 1}
+			{
+				#variable {playChimes} {$playChimes }
+			};
+			#variable {playChimes} {${playChimes}ambiance/clock}
+		};
+		PLAY $playChimes
+	}
+}
+
+#VARIABLE         {playChimes}  {}
