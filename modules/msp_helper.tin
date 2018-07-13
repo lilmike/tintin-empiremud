@@ -783,7 +783,11 @@
 
 #EVENT {VARIABLE UPDATE MSDP_WORLD_TIME}
 {
-	#if {&{character[clock]} && ${character[clock]}}
+	#if {!&{character[clock]}}
+	{
+		#variable {character[clock]} {0}
+	};
+	#if {${character[clock]}}
 	{
 		#math {tmp} {%1 % 12};
 		#if {$tmp == 0}
