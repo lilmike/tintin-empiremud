@@ -726,7 +726,7 @@
 }
 {9}
 
-#ACTION {^You%* {drink|eat} %*.$}
+#ACTION {^You {drink|eat} %*.$}
 {
 	PLAY health/%2
 }
