@@ -57,7 +57,7 @@
 }
 {8}
 
-#ACTION {^[/death]: %1 has died at %*$}
+#ACTION {^[/death]: %1 has {died|been slain} at %*$}
 {
 	PLAY miscellaneous/death;
 	Add_Channel_Event all %0;
