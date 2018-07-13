@@ -783,27 +783,30 @@
 
 #EVENT {VARIABLE UPDATE MSDP_WORLD_TIME}
 {
-	#if {!&{character[clock]}}
+	#if {"%1" != ""}
 	{
-		#variable {character[clock]} {0}
-	};
-	#if {${character[clock]}}
-	{
-		#math {tmp} {%1 % 12};
-		#if {$tmp == 0}
+		#if {!&{character[clock]}}
 		{
-			#variable {tmp} {12}
+			#variable {character[clock]} {0}
 		};
-		#variable {playChimes} {};
-		#loop {1} {$tmp} {x}
+		#if {${character[clock]}}
 		{
-			#if {$x > 1}
+			#math {tmp} {%1 % 12};
+			#if {$tmp == 0}
 			{
-				#variable {playChimes} {$playChimes }
+				#variable {tmp} {12}
 			};
-			#variable {playChimes} {${playChimes}ambiance/clock}
-		};
-		PLAY $playChimes
+			#variable {playChimes} {};
+			#loop {1} {$tmp} {x}
+			{
+				#if {$x > 1}
+				{
+					#variable {playChimes} {$playChimes }
+				};
+				#variable {playChimes} {${playChimes}ambiance/clock}
+			};
+			PLAY $playChimes
+		}
 	}
 }
 
