@@ -1,3 +1,9 @@
+#ACTION {^The mine is depleted.$}
+{
+	PLAY skills/work_complete
+}
+{1}
+
 #ACTION {^You are starving!$}
 {
 	PLAY miscellaneous/vampire_starving
@@ -701,6 +707,12 @@
 }
 {9}
 
+#ACTION {^You {drink|eat} %*.$}
+{
+	PLAY health/%2
+}
+{9}
+
 #ACTION {^You {find|store} a {basket of peaches|bunch of apples}{\.|!}}
 {
 	#if {"%1" == "find"}
@@ -723,12 +735,6 @@
 #ACTION {^You {heave a huge stone block into place|put down a layer of bricks}.$}
 {
 	PLAY craft/stone
-}
-{9}
-
-#ACTION {^You {drink|eat} %*.$}
-{
-	PLAY health/%2
 }
 {9}
 
