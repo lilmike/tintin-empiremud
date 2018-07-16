@@ -789,6 +789,8 @@
 
 #EVENT {VARIABLE UPDATE MSDP_WORLD_TIME}
 {
+	#nop {Hook name: worldTime};
+	#nop {Hook arguments: time in 24 hour format};
 	#if {"%1" != ""}
 	{
 		#if {!&{character[clock]}}
@@ -812,6 +814,11 @@
 				#variable {playChimes} {${playChimes}ambiance/clock}
 			};
 			PLAY $playChimes
+		};
+		#list {hook[worldTime]} {size} {i};
+		#if {$i > 0}
+		{
+			#forall {${hook[worldTime][]}} {@${hook[worldTime][&0]}{%1}}
 		}
 	}
 }
