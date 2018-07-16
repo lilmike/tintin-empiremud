@@ -1,16 +1,18 @@
-#ACTION {^You concentrate for a moment and sparkling blue wings made of pure mana erupt from your back!$}
-{
-	PLAY magic/fly;
-	Remove_Spell fly;
-	Recast
-}
-{9}
-
 #ACTION {^You concentrate and veins of red mana streak down your skin.$}
 {
 	PLAY magic/hasten;
 	Remove_Spell hasten;
-	Recast
+	#undelay {recast};
+	#delay {recast} {Recast} {10}
+}
+{9}
+
+#ACTION {^You concentrate for a moment and sparkling blue wings made of pure mana erupt from your back!$}
+{
+	PLAY magic/fly;
+	Remove_Spell fly;
+	#undelay {recast};
+	#delay {recast} {Recast} {10}
 }
 {9}
 
@@ -18,7 +20,8 @@
 {
 	PLAY magic/foresight;
 	Remove_Spell foresight;
-	Recast
+	#undelay {recast};
+	#delay {recast} {Recast} {10}
 }
 {9}
 
@@ -26,7 +29,8 @@
 {
 	PLAY magic/manashield;
 	Remove_Spell manashield;
-	Recast
+	#undelay {recast};
+	#delay {recast} {Recast} {10}
 }
 {9}
 
@@ -34,7 +38,8 @@
 {
 	PLAY magic/eartharmor;
 	Remove_Spell eartharmor;
-	Recast
+	#undelay {recast};
+	#delay {recast} {Recast} {10}
 }
 {9}
 
@@ -110,7 +115,7 @@
 		#if {$recastListIndex == 0 && "%1" == "Add"}
 		{
 			#list {recastList} {add} {%2};
-			Recast
+			%2
 		}
 	}
 }
