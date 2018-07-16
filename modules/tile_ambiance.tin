@@ -87,11 +87,7 @@
 		#variable {oldCoordinates} {${tmp[COORDS][X]},${tmp[COORDS][Y]}}
 	};
 	#variable {coordinateX} {${tmp[COORDS][X]}};
-	#variable {coordinateY} {${tmp[COORDS][Y]}};
-	#if {"$autoclaim" == "true"}
-	{
-		claim
-	}
+	#variable {coordinateY} {${tmp[COORDS][Y]}}
 }
 
 #VARIABLE         {oldCoordinates}  {}

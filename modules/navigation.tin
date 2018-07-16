@@ -167,6 +167,10 @@
 	{
 		#send {%0}
 	};
+	#if {"$autoclaim" == "true"}
+	{
+		claim
+	};
 	#variable {reverse} {@get_reverse{$lastDirection}}
 }
 {9}
