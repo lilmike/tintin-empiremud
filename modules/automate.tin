@@ -35,7 +35,9 @@
 	#if {%2 == 1}
 	{
 		#variable {rebootConfirmed} {false}
-	}
+	};
+        Add_Channel_Event all %0;
+        Add_Channel_Event misc %0
 }
 {8}
 
