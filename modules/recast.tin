@@ -80,10 +80,16 @@
 
 #ALIAS {^Recast$}
 {
-	#list {recastList} {size} {recastListSize};
-	#if {$recastListSize > 0}
+	#format {tmp} {%T} {};
+	#math {tmp} {$tmp-10};
+	#if {$tmp >= $lastRecast}
 	{
-		${recastList[1]}
+		#list {recastList} {size} {recastListSize};
+		#if {$recastListSize > 0}
+		{
+			${recastList[1]};
+			#format {lastRecast} {%T} {}
+		}
 	}
 }
 {9}
@@ -115,7 +121,8 @@
 		#if {$recastListIndex == 0 && "%1" == "Add"}
 		{
 			#list {recastList} {add} {%2};
-			%2
+			%2;
+			#format {lastRecast} {%T} {}
 		}
 	}
 }
@@ -136,6 +143,8 @@
 }
 {9}
 
+#TICKER           {recast}  {Recast}  {1}
+#VARIABLE         {lastRecast}  {0}
 #VARIABLE         {recastList}  {}
 #VARIABLE         {recastListIndex}  {1}
 #VARIABLE         {recastListSize}  {0}
