@@ -49,6 +49,22 @@
 }
 {8}
 
+#ACTION {^[ %1 has entered the game ]$}
+{
+	PLAY miscellaneous/player_enter;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
+{
+	PLAY miscellaneous/player_leave;
+	Add_Channel_Event all %0;
+	Add_Channel_Event misc %0
+}
+{8}
+
 #ACTION {^[/death]: %1 has been {executed|killed} by %*$}
 {
 	PLAY miscellaneous/death;
@@ -65,21 +81,13 @@
 }
 {8}
 
-#ACTION {^[ %1 has entered the game ]$}
+#ACTION {%* whispers to you, '%*'$}
 {
-	PLAY miscellaneous/player_enter;
+	SYNTH_PLAY sayReceiveSound;
 	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
+	Add_Channel_Event say %0
 }
-{8}
-
-#ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
-{
-	PLAY miscellaneous/player_leave;
-	Add_Channel_Event all %0;
-	Add_Channel_Event misc %0
-}
-{8}
+{9}
 
 #ACTION {^%* {says|tells you|shouts}, '%3'$}
 {
@@ -127,6 +135,14 @@
 	PLAY improve/$i;
 	Add_Channel_Event all %0;
 	Add_Channel_Event misc %0
+}
+{9}
+
+#ACTION {^You whisper to %*, '%*'$}
+{
+	SYNTH_PLAY saySendSound;
+	Add_Channel_Event all %0;
+	Add_Channel_Event say %0
 }
 {9}
 
@@ -387,6 +403,13 @@
 	};
 	#variable {messageIndex} {1};
 	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e)}
+{
+        #variable {channelBufferIndex} {9};
+        #variable {messageIndex} {1};
+        #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e^}
