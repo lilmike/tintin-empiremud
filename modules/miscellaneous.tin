@@ -1,10 +1,10 @@
-#action {^Your light burns out.$}
+#action {%* burns out.$}
 {
 PLAY miscellaneous/burnout
 }
 {9}
 
-#action {^Your light begins to flicker and fade.$}
+#action {%* begins to flicker and fade.$}
 {
 PLAY miscellaneous/flicker
 }
