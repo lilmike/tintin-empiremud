@@ -16,6 +16,10 @@
 				#variable {audioprompt.oldBlood} {${audioprompt.blood}}
 			}
 		}
+	};
+	#elseif {${audioprompt.oldBlood} != 100}
+	{
+		#variable {audioprompt.oldBlood} {100}
 	}
 }
 
@@ -37,6 +41,10 @@
 				#variable {audioprompt.oldHealth} {${audioprompt.health}}
 			}
 		}
+	};
+	#elseif {${audioprompt.oldHealth} != 100}
+	{
+		#variable {audioprompt.oldHealth} {100}
 	}
 }
 
@@ -57,6 +65,10 @@
 				}
 			}
 		}
+	};
+	#elseif {${audioprompt.oldMana} != 100}
+	{
+		#variable {audioprompt.oldMana} {100}
 	}
 }
 
@@ -77,6 +89,10 @@
 				}
 			}
 		}
+	};
+	#elseif {${audioprompt.oldMovement} != 100}
+	{
+		#variable {audioprompt.oldMovement} {100}
 	}
 }
 
