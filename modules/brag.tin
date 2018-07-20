@@ -7,7 +7,7 @@
 }
 {9}
 
-#ALIAS {^boast %S %2}
+#ALIAS {^brag %S %2}
 {
 	#format {tmp} {%u} {%1};
 	#if {&{MSDP_${tmp}}}
