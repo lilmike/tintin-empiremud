@@ -3,6 +3,15 @@
 #VARIABLE         {TellChannel}  {"|sox -np synth pl G2 pl G3 pl D3 pl D4 pl E3 pl E4 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -10 tempo 1.8"}
 #VARIABLE         {alternateCooldownSound}    {"|sox -np synth pl C3 pl E3 pl G3 fade 0 .25 .1" "|sox -np synth pl C3 pl E3 pl G3 fade l 0 .75 1" remix - reverse}
 #VARIABLE         {attention}  {"|sox -np synth .5 saw B5 saw F#6" fade 0 .5 .1 remix - repeat}
+#VARIABLE         {blood0}  {"|sox -np synth .08 sin B2:F#1 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood10}  {"|sox -np synth .08 sin D#3:A#1 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood20}  {"|sox -np synth .08 sin G3:D2 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood30}  {"|sox -np synth .08 sin B3:F#2 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood40}  {"|sox -np synth .08 sin D#4:A#2 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood50}  {"|sox -np synth .08 sin G4:D3 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood60}  {"|sox -np synth .08 sin B4:F#3 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood70}  {"|sox -np synth .08 sin D#5:A#3 pad .05 repeat pad .1 repeat"}
+#VARIABLE         {blood80}  {"|sox -np synth .08 sin G5:D4 pad .05 repeat pad .1 repeat"}
 #VARIABLE         {connectedSound}  {"|sox -np synth tri C6 fade 0 0.02 0.01" repeat 6}
 #VARIABLE         {cowsayChannelSound}  {"|sox -np synth .2 pl C2 pl C3" "|sox -np synth .55 pl E2 pl G2" remix - flanger vol 0.5}
 #VARIABLE         {defaultChannelSound}  {"|sox -np synth .2 pl D2 pl A2" "|sox -np synth .55 pl D3 pl A3" remix - phaser}
