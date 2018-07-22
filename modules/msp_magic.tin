@@ -16,6 +16,15 @@
 }
 {9}
 
+#ACTION {^You are healed!$}
+{
+	#if {"$cspam" == "true"}
+	{
+		#line {gag}
+	}
+}
+{9}
+
 #ACTION {^You feel the weight of the world lift from your shoulders!$}
 {
 	PLAY magic/ritual_of_burdens
@@ -28,9 +37,33 @@
 }
 {9}
 
+#ACTION {^You healed %1 for %d (%d/%d health).$}
+{
+	#if {"$cspam" == "true"}
+	{
+		#line {gag};
+		#math {tmppercent} {(%3/%4)*100.0};
+		#echo {%1: $tmppercent}
+	}
+}
+{9}
+
 #ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
 {
-	LPLAY magic/heal_friend
+	LPLAY magic/heal_friend;
+	#if {"$cspam" == "true"}
+	{
+		#line {gag}
+	}
+}
+{9}
+
+#ACTION {^You muster up as much mana as you can and send out a shockwave, healing the entire party!$}
+{
+	#if {"$cspam" == "true"}
+	{
+		#line {gag}
+	}
 }
 {9}
 
@@ -48,7 +81,11 @@
 
 #ACTION {^You swirl your mana around your body to heal your wounds.$}
 {
-	LPLAY magic/heal_self
+	LPLAY magic/heal_self;
+	#if {"$cspam" == "true"}
+	{
+		#line {gag}
+	}
 }
 {9}
 
@@ -104,4 +141,5 @@
 {9}
 
 #VARIABLE         {autodotype}  {}
+#VARIABLE         {tmppercent}  {}
 #VARIABLE         {x}  {}
