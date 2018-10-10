@@ -738,6 +738,12 @@
 }
 {9}
 
+#ACTION {^Your portal sickness has ended.$}
+{
+	REV_PLAY miscellaneous/portal
+}
+{9}
+
 #ACTION {^Yo{u|ur} {begin to transform|body warps and distorts painfully}!$}
 {
 	PLAY skills/morph
