@@ -49,7 +49,11 @@
 #ALIAS {^show %S$}
 {
 	#format {tmp} {%u} {%1};
-	#if {&{MSDP_${tmp}}}
+	#if {"$tmp" == "{EMPIRE_TERRITORY|TERRITORY}" && &{MSDP_EMPIRE_TERRITORY}}
+	{
+		#variable {msg} {Territory: ${MSDP_EMPIRE_TERRITORY_OUTSIDE}/${MSDP_EMPIRE_TERRITORY_OUTSIDE_MAX} outskirts, ${MSDP_EMPIRE_TERRITORY_FRONTIER}/${MSDP_EMPIRE_TERRITORY_FRONTIER_MAX} frontier, ${MSDP_EMPIRE_TERRITORY}/${MSDP_EMPIRE_TERRITORY_MAX} total}
+	};
+	#elseif {&{MSDP_${tmp}}}
 	{
 		#variable {msg} {${MSDP_${tmp}} %1};
 		#if {&{MSDP_${tmp}_PERM}}
@@ -74,10 +78,10 @@
 {
 	#switch {"%0"}
 	{
-#case {"bp"}
-{
-show blood
-};
+		#case {"bp"}
+		{
+			show blood
+		};
 		#case {"cash"}
 		{
 			#echo {Gold: $MSDP_MONEY}
