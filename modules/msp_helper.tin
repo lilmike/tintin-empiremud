@@ -345,6 +345,12 @@
 }
 {9}
 
+#ACTION {^You have mail waiting.$}
+{
+	PLAY miscellaneous/email
+}
+{9}
+
 #ACTION {^You have successfully created an iron ingot!$}
 {
 	PLAY get/iron_ingot
