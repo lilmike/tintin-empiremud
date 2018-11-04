@@ -121,7 +121,7 @@
 }
 {9}
 
-#ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore|imperium ore} falls from the wall!$}
+#ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore|imperium ore|tin ore} falls from the wall!$}
 {
 	PLAY get/iron_ore
 }
@@ -311,9 +311,11 @@
 }
 {9}
 
-#ACTION {^You have become $name%*!$}
+#ACTION {^You have become %*!$}
 {
+#if {"%1" == "$MSDP_ACCOUNT_NAME%*"} {
 	PLAY skills/form_normal
+}
 }
 {9}
 
@@ -323,15 +325,14 @@
 }
 {9}
 
-#ACTION {^You have crafted a handaxe!$}
+#ACTION {^You get {a stone spear head|a handaxe}.$}
 {
-	PLAY craft/handaxe
-}
-{9}
-
-#ACTION {^You have crafted a stone spear head!$}
-{
+#if {"%1" == "a stone spear head"} {
 	PLAY craft/spear_head
+};
+#elseif {"%1" == "a handaxe"} {
+        PLAY craft/handaxe
+}
 }
 {9}
 
@@ -570,7 +571,7 @@
 }
 {9}
 
-#ACTION {^You swing back your %* and prepare to chop...$}
+#ACTION {^You swing back %* and prepare to chop...$}
 {
 	PLAY skills/ready_axe
 }
@@ -636,7 +637,7 @@
 }
 {9}
 
-#ACTION {^You {begin scraping|scrape at} a large tree{\.\.\.|\.}$}
+#ACTION {^You {begin scraping|scrape at} %*{\.\.\.|\.}$}
 {
 	PLAY skills/tree_scrape
 }
@@ -654,7 +655,7 @@
 }
 {9}
 
-#ACTION {^You {begin to chip at a handaxe|begin to chip at a chipped rock|begin to chip at a rock|chip away at .+\.\.}.$}
+#ACTION {^You {begin to chip at .+|chip away at .+\.\.}.$}
 {
 	PLAY skills/chip_rock
 }
