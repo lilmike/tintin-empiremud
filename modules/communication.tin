@@ -114,6 +114,13 @@
 }
 {9}
 
+#ACTION {^A tiny voice booms across the hills, '%*'$}
+{
+	SYNTH_PLAY shoutChannelSound;
+	Add_Channel_Event all %0
+}
+{9}
+
 #ACTION {^Welcome to your EmpireMUD!%sPrepare to face your destiny!$}
 {
 	/join cowsay;
@@ -135,6 +142,12 @@
 	PLAY improve/$i;
 	Add_Channel_Event all %0;
 	Add_Channel_Event misc %0
+}
+{9}
+
+#ACTION {^You sense that it came from %*'s mini-Mike.$}
+{
+	Add_Channel_Event all %0
 }
 {9}
 
