@@ -1,0 +1,84 @@
+#ALIAS {^cmark clear -f$}
+{
+	#unvariable {cmarks};
+	#showme {Marks cleared.}
+}
+{8}
+
+#ALIAS {^cmark clear}
+{
+	#showme {You must write "cmark clear -f" to clear all your cmarks.}
+}
+{9}
+
+#ALIAS {^cmark {add|remove|readd} %*}
+{
+	#switch {"%1"}
+	{
+		#case {"add"}
+		{
+			#if {&{cmarks[%2]}}
+			{
+				#showme {This mark already exists, to recreate try "cmark readd %2"}
+			};
+			#else
+			{
+				#if {&{MSDP_ROOM[COORDS][X]} && &{MSDP_ROOM[COORDS][Y]}}
+				{
+					#variable {cmarks[%2]} {{x}{${MSDP_ROOM[COORDS][X]}}{y}{${MSDP_ROOM[COORDS][Y]}}};
+					#showme {Mark set at ${cmarks[%2][x]}, ${cmarks[%2][y]} with name "%2"}
+				};
+				#else
+				{
+					#showme {Can't find coordinates for your current room. If you recently relogged in, try moving rooms before trying again.}
+				}
+			}
+		};
+		#case {"remove"}
+		{
+			#if {&{cmarks[%2]}}
+			{
+				#unvariable {cmarks[%2]};
+				#showme {mark "%2" removed.}
+			};
+			#else
+			{
+				#showme {Mark "%2" not found.}
+			}
+		};
+		#case {"readd"}
+		{
+			#if {&{MSDP_ROOM[COORDS][X]} && &{MSDP_ROOM[COORDS][Y]}}
+			{
+				#variable {cmarks[%2]} {{x}{${MSDP_ROOM[COORDS][X]}}{y}{${MSDP_ROOM[COORDS][Y]}}};
+				#showme {Mark set at ${cmarks[%2][x]}, ${cmarks[%2][y]} with name "%2"}
+			};
+			#else
+			{
+				#showme {Can't find coordinates for your current room. If you recently relogged in, try moving rooms before trying again.}
+			}
+		}
+	}
+}
+{9}
+
+#ALIAS {^cmark {show|list}$}
+{
+	#if {&{cmarks}}
+	{
+		#list {cmarks} {size} {i};
+		#if {$i > 0}
+		{
+			#forall {${cmarks[]}} {#showme {Mark "&0" is at ${cmarks[&0][x]}, ${cmarks[&0][y]}\.}}
+		};
+		#else
+		{
+			#showme {No marks set.}
+		}
+	};
+	#else
+	{
+		#showme {No marks set.}
+	}
+}
+{9}
