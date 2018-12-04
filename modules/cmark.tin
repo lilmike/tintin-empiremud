@@ -11,7 +11,7 @@
 }
 {9}
 
-#ALIAS {^cmark {add|remove|readd} %*}
+#ALIAS {^cmark {add|remove|readd|distance} %*}
 {
 	#switch {"%1"}
 	{
@@ -56,6 +56,17 @@
 			#else
 			{
 				#showme {Can't find coordinates for your current room. If you recently relogged in, try moving rooms before trying again.}
+			}
+		};
+		#case {"distance"}
+		{
+			#if {&{cmarks[%2]}}
+			{
+				distance ${cmarks[%2][x]},${cmarks[%2][y]}
+			};
+			#else
+			{
+				#showme {Mark %2 not found.}
 			}
 		}
 	}
