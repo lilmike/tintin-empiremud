@@ -54,6 +54,7 @@
 	#nop {Set the home directory variable.};
 	#script {HOME} {if [ -z "$XDG_CONFIG_HOME" ] ; then if ! [ -d "$HOME/.config/tintin-empiremud/" ] ; then mkdir -p "$HOME/.config/tintin-empiremud";fi;echo -n "$HOME/.config/tintin-empiremud";else if ! [ -d "$XDG_CONFIG_HOME/tintin-empiremud/" ] ; then mkdir -p "$XDG_CONFIG_HOME/tintin-empiremud/";fi;echo -n "$XDG_CONFIG_HOME/tintin-empiremud";fi};
 	#variable {HOME} {${HOME[1]}};
+#replace {HOME} {-n } {};
 	#nop {Load all the .tin files in the modules directory in classes named after the module name.};
 	#script {for i in modules/*.tin ; do echo "#class {$(basename "$i" .tin)} {read} {$i}";done};
 	#nop {Get the date as a number, e.g. 1225 is Christmas day. Then PLAY intros based on the date.};
