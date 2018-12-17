@@ -1,3 +1,15 @@
+#ACTION {^You ready a counterspell.$}
+{
+	Remove_Spell counterspell
+}
+{5}
+
+#ACTION {^Your counterspell {goes off!|expires\.}$}
+{
+	Add_Spell counterspell
+}
+{5}
+
 #ACTION {^You concentrate and veins of red mana streak down your skin.$}
 {
 	PLAY magic/hasten;
@@ -128,7 +140,7 @@
 }
 {9}
 
-#ALIAS {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield}$}
+#ALIAS {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield|counterspell}$}
 {
 	#if {"%1" == "auto"}
 	{

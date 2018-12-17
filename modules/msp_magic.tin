@@ -48,6 +48,17 @@
 }
 {9}
 
+#ACTION {^You healed %1 for %d (%d\% health).$}
+{
+	#if {"$cspam" == "true"}
+	{
+		#line {gag};
+		#variable {tmpPercent} {%3};
+		#echo {%1: $tmppercent}
+	}
+}
+{9}
+
 #ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
 {
 	LPLAY magic/heal_friend;
