@@ -11,7 +11,7 @@
 }
 {9}
 
-#ALIAS {^cmark {add|remove|readd|distance} %*}
+#ALIAS {^cmark {add|remove|readd|distance|list} %*}
 {
 	#switch {"%1"}
 	{
@@ -63,6 +63,17 @@
 			#if {&{cmarks[%2]}}
 			{
 				distance ${cmarks[%2][x]},${cmarks[%2][y]}
+			};
+			#else
+			{
+				#showme {Mark %2 not found.}
+			}
+		};
+		#case {"list"}
+		{
+			#if {&{cmarks[%2]}}
+			{
+				#showme {Cmark %2 is at ${cmarks[%2][x]}, ${cmarks[%2][y]}\.}
 			};
 			#else
 			{

@@ -1,25 +1,3 @@
-#ACTION {^You are at: %1 (%d, %d)$}
-{
-	#if {"$rememberCoordinates" == "true"}
-	{
-		#format {location} {%l} {%1 (%2, %3)};
-		#list {rememberedCoordinatesList} {find} {%*%2%*} {listIndex};
-		#if {$listIndex == 0}
-		{
-			#list {rememberedCoordinatesList} {add} {$location}
-		};
-		#variable {rememberCoordinates} {false}
-	}
-}
-{8}
-
-#ACTION {%1 \x28%d, %d\x29$}
-{
-	#variable {coordinateX} {%2};
-	#variable {coordinateY} {%3}
-}
-{9}
-
 #ACTION {%1 {are|is} closed.$}
 {
 	#regexp {%1} {{.*} {.*}} {#variable {doorName} {&2}}
@@ -77,17 +55,6 @@
 	}
 }
 {9}
-
-#ALIAS {^forget %1}
-{
-	#list {rememberedCoordinatesList} {find} {%*%1%*} {listIndex};
-	#if {$listIndex != 0}
-	{
-		#list {rememberedCoordinatesList} {delete} {$listIndex};
-		#showme {Forgot location %2.}
-	}
-}
-{8}
 
 #ALIAS {^{fin|find} {d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west} %3}
 {
@@ -219,30 +186,9 @@
 }
 {9}
 
-#ALIAS {^{reme|remem|rememb|remembe|remember}$}
-{
-	#variable {rememberCoordinates} {true};
-	whereami
-}
-{9}
-
 #ALIAS {^{sca|scan}$}
 {
 	#echo {$North\n $South\n $East\n $West\n $Northwest\n $Northeast\n $Southwest\n $Southeast}
-}
-{9}
-
-#ALIAS {^{wherei|whereis} %2}
-{
-	#list {rememberedCoordinatesList} {find} {%*%2%*} {listIndex};
-	#if {$listIndex != 0}
-	{
-		#echo {${rememberedCoordinatesList[$listIndex]}}
-	};
-	#else
-	{
-		#showme {Coordinates not found.}
-	}
 }
 {9}
 
@@ -384,5 +330,4 @@
 #VARIABLE         {lastDirection}  {}
 #VARIABLE         {listIndex}  {}
 #VARIABLE         {location}  {}
-#VARIABLE         {rememberCoordinates}  {false}
 #VARIABLE         {reverse}  {}
