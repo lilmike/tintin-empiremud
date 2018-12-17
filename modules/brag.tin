@@ -1,3 +1,4 @@
+#nop {
 #ACTION {^ end paste$}
 {
 	#line {gag};
@@ -6,6 +7,7 @@
 	#variable {pasteText} {}
 }
 {9}
+}
 
 #ALIAS {^brag %S %2}
 {
@@ -38,6 +40,7 @@
 }
 {9}
 
+#nop {
 #ALIAS {^paste %1 > %2}
 {
 	#variable {pasteText} {%2};
@@ -45,6 +48,7 @@
 	localecho end paste
 }
 {9}
+}
 
 #ALIAS {^show %S$}
 {
@@ -102,12 +106,14 @@
 }
 {9}
 
+#nop {
 #EVENT {RECEIVED LINE}
 {
 	#if {"${pasteText}" != "" && "%1" != " end paste"}
 	{
 		#variable {pasteText} {${pasteText} %1}
 	}
+}
 }
 
 #VARIABLE         {pasteText}  {}

@@ -299,6 +299,19 @@
 }
 {9}
 
+#ACTION {^You get {a stone spear head|a handaxe}.$}
+{
+	#if {"%1" == "a stone spear head"}
+	{
+		PLAY craft/spear_head
+	};
+	#elseif {"%1" == "a handaxe"}
+	{
+		PLAY craft/handaxe
+	}
+}
+{9}
+
 #ACTION {^You give the plug drill one final swing and pry loose %1 stone block!$}
 {
 	PLAY get/stone
@@ -313,26 +326,16 @@
 
 #ACTION {^You have become %*!$}
 {
-#if {"%1" == "$MSDP_ACCOUNT_NAME%*"} {
-	PLAY skills/form_normal
-}
+	#if {"%1" == "$MSDP_ACCOUNT_NAME%*"}
+	{
+		PLAY skills/form_normal
+	}
 }
 {9}
 
 #ACTION {^You have become a {black|brown|cloud of swirling|horrid|sage|savage|towering} {bat|mist|monstrosity|werewolf|wolf}!$}
 {
 	PLAY skills/animal_form_%2
-}
-{9}
-
-#ACTION {^You get {a stone spear head|a handaxe}.$}
-{
-#if {"%1" == "a stone spear head"} {
-	PLAY craft/spear_head
-};
-#elseif {"%1" == "a handaxe"} {
-        PLAY craft/handaxe
-}
 }
 {9}
 
@@ -794,7 +797,7 @@
 	};
 	#else
 	{
-		#variable {character[clock]} {0};
+		#unvariable {character[clock]};
 		#showme {Clock chimes disabled.}
 	}
 }
@@ -806,11 +809,7 @@
 	#nop {Hook arguments: time in 24 hour format};
 	#if {"%1" != ""}
 	{
-		#if {!&{character[clock]}}
-		{
-			#variable {character[clock]} {0}
-		};
-		#if {${character[clock]}}
+		#if {&{character[clock]}}
 		{
 			#math {tmp} {%1 % 12};
 			#if {$tmp == 0}

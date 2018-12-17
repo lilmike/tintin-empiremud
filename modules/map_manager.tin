@@ -1,0 +1,28 @@
+#ALIAS {^{nom|m}apmode$}
+{
+	#if {"%1" == "m"}
+	{
+		#showme {Sighted map (split) mode activated.};
+		#variable {mapMode} {1}
+	};
+	#else
+	{
+		#showme {Sighted map (split) mode deactivated.};
+		#unvariable {mapMode}
+	}
+}
+{9}
+
+#EVENT {RECEIVED LINE}
+{
+	#if {&{mapMode}}
+	{
+		#regexp {%0} {^{\+-+\+}$} {#line {gag};#math {mapFound} {$mapFound+1};#if {${mapFound} >= 2} {#list {mapText} {size} {i};#math {j} {$i+1};#split {$j};#loop {1} {$i} {x} {#showme {${mapText[$x]}} {-$x}};#showme {%0} {-$j};#var {mapFound} {0};#var {mapText} {}}} {#if {${mapFound} == 1} {#line {gag};#list {mapText} {add} {%0}}}
+	}
+}
+
+#VARIABLE         {i}  {}
+#VARIABLE         {j}  {}
+#VARIABLE         {mapFound}  {0}
+#VARIABLE         {mapText}  {}
+#VARIABLE         {x}  {}
