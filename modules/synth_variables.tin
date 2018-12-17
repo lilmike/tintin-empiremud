@@ -1,6 +1,5 @@
 #VARIABLE         {EMPIREChannelSound}  {"|sox -np synth .2 saw D4 pl G3" "|sox -np synth .55 saw D4 pl G3" remix - phaser}
 #VARIABLE         {IMMORTALChannelSound}  {"|sox -np synth sine 840 sine 660 sine 450 sine 660 sine 330 sine 420 delay 0 0 .1 .1 .2 .2 remix - fade 0 0.35"}
-#VARIABLE         {TellChannel}  {"|sox -np synth pl G2 pl G3 pl D3 pl D4 pl E3 pl E4 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -10 tempo 1.8"}
 #VARIABLE         {alternateCooldownSound}    {"|sox -np synth pl C3 pl E3 pl G3 fade 0 .25 .1" "|sox -np synth pl C3 pl E3 pl G3 fade l 0 .75 1" remix - reverse}
 #VARIABLE         {attention}  {"|sox -np synth .5 saw B5 saw F#6" fade 0 .5 .1 remix - repeat}
 #VARIABLE         {blood0}  {"|sox -np synth .08 sin B2:F#1 pad .05 repeat pad .1 repeat"}
