@@ -164,11 +164,7 @@
 			look
 		};
 		#class {%1} {open};
-		#list {hook[characterName]} {size} {i};
-		#if {$i > 0}
-		{
-			#forall {${hook[characterName][]}} {@${hook[characterName][&0]}{%1}}
-		}
+		@do_hook{characterName;%1}
 	}
 }
 

@@ -827,11 +827,7 @@
 			};
 			PLAY $playChimes
 		};
-		#list {hook[worldTime]} {size} {i};
-		#if {$i > 0}
-		{
-			#forall {${hook[worldTime][]}} {@${hook[worldTime][&0]}{%1}}
-		}
+		@do_hook{worldtime;%1}
 	}
 }
 

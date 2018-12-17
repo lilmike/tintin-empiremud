@@ -1,0 +1,16 @@
+#FUNCTION {do_hook}
+{
+	#nop {Note: Hook names cannot have the semicolon character in them.};
+	#list {hook[%1]} {size} {i};
+	#if {$i > 0}
+	{
+		#regexp {%0} {{[^;]+};%*} {#var {hookArgs} {&2}};
+		#else
+		{
+			#variable {hookArgs} {}
+		};
+		#forall {${hook[%1][]}} {@${hook[%1][&0]}{${hookArgs}}};
+		#unvariable {hookArgs}
+	};
+	#return #nop
+}
