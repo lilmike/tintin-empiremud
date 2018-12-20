@@ -1,98 +1,32 @@
 #EVENT {VARIABLE UPDATE MSDP_BLOOD}
 {
-	#if {!&{character.audioprompt}}
+	#if {"%1" != ""}
 	{
-		#variable {character.audioprompt} {1}
-	};
-	#math {audioprompt.blood} {(%1 / $MSDP_BLOOD_MAX) *100.0};
-	#if {${audioprompt.blood} < 100}
-	{
-		#format {audioprompt.blood} {%d} {${audioprompt.blood} - ${audioprompt.blood} % 10};
-		#if {${audioprompt.blood} != ${audioprompt.oldBlood} && ${character.audioprompt} && ${MSP.SOUND}}
-		{
-			#if {&{blood${audioprompt.blood}}}
-			{
-				SYNTH_PLAY blood${audioprompt.blood};
-				#variable {audioprompt.oldBlood} {${audioprompt.blood}}
-			}
-		}
-	};
-	#elseif {${audioprompt.oldBlood} != 100}
-	{
-		#variable {audioprompt.oldBlood} {100}
+		#delay {0.25} {#if {!&{character.audioprompt}}{#variable {character.audioprompt} {1}};#math {audioprompt.blood} {(%1 / $MSDP_BLOOD_MAX) *100.0};#if {${audioprompt.blood} < 100}{#format {audioprompt.blood} {%d} {${audioprompt.blood} - ${audioprompt.blood} % 10};#if {${audioprompt.blood} != ${audioprompt.oldBlood} && ${character.audioprompt} && ${MSP.SOUND}}{#if {&{blood${audioprompt.blood}}}{SYNTH_PLAY blood${audioprompt.blood};#variable {audioprompt.oldBlood} {${audioprompt.blood}}}}};#elseif {${audioprompt.oldBlood} != 100}{#variable {audioprompt.oldBlood} {100}}}
 	}
 }
 
 #EVENT {VARIABLE UPDATE MSDP_HEALTH}
 {
-	#if {!&{character.audioprompt}}
+	#if {"%1" != ""}
 	{
-		#variable {character.audioprompt} {1}
-	};
-	#math {audioprompt.health} {(%1 / $MSDP_HEALTH_MAX) *100.0};
-	#if {${audioprompt.health} < 100}
-	{
-		#format {audioprompt.health} {%d} {${audioprompt.health} - ${audioprompt.health} % 10};
-		#if {${audioprompt.health} != ${audioprompt.oldHealth} && ${character.audioprompt} && ${MSP.SOUND}}
-		{
-			#if {&{health${audioprompt.health}}}
-			{
-				SYNTH_PLAY health${audioprompt.health};
-				#variable {audioprompt.oldHealth} {${audioprompt.health}}
-			}
-		}
-	};
-	#elseif {${audioprompt.oldHealth} != 100}
-	{
-		#variable {audioprompt.oldHealth} {100}
+		#delay {0.25} {#if {!&{character.audioprompt}}{#variable {character.audioprompt} {1}};#math {audioprompt.health} {(%1 / $MSDP_HEALTH_MAX) *100.0};#if {${audioprompt.health} < 100}{#format {audioprompt.health} {%d} {${audioprompt.health} - ${audioprompt.health} % 10};#if {${audioprompt.health} != ${audioprompt.oldHealth} && ${character.audioprompt} && ${MSP.SOUND}}{#if {&{health${audioprompt.health}}}{SYNTH_PLAY health${audioprompt.health};#variable {audioprompt.oldHealth} {${audioprompt.health}}}}};#elseif {${audioprompt.oldHealth} != 100}{#variable {audioprompt.oldHealth} {100}}}
 	}
 }
 
 #EVENT {VARIABLE UPDATE MSDP_MANA}
 {
-	#math {audioprompt.mana} {(%1 / $MSDP_MANA_MAX) *100.0};
-	#if {${audioprompt.mana} < 100}
+	#if {"%1" != ""}
 	{
-		#format {audioprompt.mana} {%d} {${audioprompt.mana} - ${audioprompt.mana} % 10};
-		#if {${audioprompt.mana} != ${audioprompt.oldMana}}
-		{
-			#if {${character.audioprompt} && ${MSP.SOUND}}
-			{
-				#if {&{mana${audioprompt.mana}}}
-				{
-					SYNTH_PLAY mana${audioprompt.mana};
-					#variable {audioprompt.oldMana} {${audioprompt.mana}}
-				}
-			}
-		}
-	};
-	#elseif {${audioprompt.oldMana} != 100}
-	{
-		#variable {audioprompt.oldMana} {100}
+		#delay {0.25} {#if {!&{character.audioprompt}}{#variable {character.audioprompt} {1}};#math {audioprompt.mana} {(%1 / $MSDP_MANA_MAX) *100.0};#if {${audioprompt.mana} < 100}{#format {audioprompt.mana} {%d} {${audioprompt.mana} - ${audioprompt.mana} % 10};#if {${audioprompt.mana} != ${audioprompt.oldMana}}{#if {${character.audioprompt} && ${MSP.SOUND}}{#if {&{mana${audioprompt.mana}}}{SYNTH_PLAY mana${audioprompt.mana};#variable {audioprompt.oldMana} {${audioprompt.mana}}}}}};#elseif {${audioprompt.oldMana} != 100}{#variable {audioprompt.oldMana} {100}}}
 	}
 }
 
 #EVENT {VARIABLE UPDATE MSDP_MOVEMENT}
 {
-	#math {audioprompt.movement} {(%1 / $MSDP_MOVEMENT_MAX) *100.0};
-	#if {${audioprompt.movement} < 100}
+	#if {"%1" != ""}
 	{
-		#format {audioprompt.movement} {%d} {${audioprompt.movement} - ${audioprompt.movement} % 10};
-		#if {${audioprompt.movement} != ${audioprompt.oldMovement}}
-		{
-			#if {${character.audioprompt} && ${MSP.SOUND}}
-			{
-				#if {&{movement${audioprompt.movement}}}
-				{
-					SYNTH_PLAY movement${audioprompt.movement};
-					#variable {audioprompt.oldMovement} {${audioprompt.movement}}
-				}
-			}
-		}
-	};
-	#elseif {${audioprompt.oldMovement} != 100}
-	{
-		#variable {audioprompt.oldMovement} {100}
+		#delay {0.25} {#if {!&{character.audioprompt}}{#variable {character.audioprompt} {1}};#math {audioprompt.movement} {(%1 / $MSDP_MOVEMENT_MAX) *100.0};#if {${audioprompt.movement} < 100}{#format {audioprompt.movement} {%d} {${audioprompt.movement} - ${audioprompt.movement} % 10};#if {${audioprompt.movement} != ${audioprompt.oldMovement}}{#if {${character.audioprompt} && ${MSP.SOUND}}{#if {&{movement${audioprompt.movement}}}{SYNTH_PLAY movement${audioprompt.movement};#variable {audioprompt.oldMovement} {${audioprompt.movement}}}}}};#elseif {${audioprompt.oldMovement} != 100}{#variable {audioprompt.oldMovement} {100}}}
 	}
 }
 
