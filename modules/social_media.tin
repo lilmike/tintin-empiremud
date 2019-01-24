@@ -38,8 +38,8 @@ post $empireName established %1 %2 with %3!
 #action {^You discover that this area is {a|a deep} {copper|gold|imperium|iron|nocturnium|silver} mine{\.|!}$}
 {
 PLAY skills/prospect_%2;
-#math {mineCounter.%2} {${mineCounter.%2} + 1};
-#math {mineCounter.total} {${mineCounter.total} + 1}
+#math {mineCounter[%2]} {${mineCounter[%2]} + 1};
+#math {mineCounter[total]} {${mineCounter[total]} + 1}
 }
 {9}
 
@@ -131,10 +131,10 @@ post $name has specialized in %1.
 #showme {Now posting to GNU Social as %1@%2.}
 }
 {9}
-#variable {mineCounter.copper} {0}
-#variable {mineCounter.gold} {0}
-#variable {mineCounter.imperium} {0}
-#variable {mineCounter.iron} {0}
-#variable {mineCounter.nocturnium} {0}
-#variable {mineCounter.silver} {0}
-#variable {mineCounter.total} {0}
+#variable {mineCounter[copper]} {0}
+#variable {mineCounter[gold]} {0}
+#variable {mineCounter[imperium]} {0}
+#variable {mineCounter[iron]} {0}
+#variable {mineCounter[nocturnium]} {0}
+#variable {mineCounter[silver]} {0}
+#variable {mineCounter[total]} {0}

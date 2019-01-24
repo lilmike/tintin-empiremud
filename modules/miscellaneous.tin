@@ -1,39 +1,26 @@
-#action {%* burns out.$}
-{
-PLAY miscellaneous/burnout
-}
-{9}
-
-#action {%* begins to flicker and fade.$}
-{
-PLAY miscellaneous/flicker
-}
-{9}
-
-#action {^Roster of %1:$}
-{
-#variable {empireName} {%1}
-}
-{9}
-
-#action {^You awaken, and sit up.$}
-{
-#line {gag};
-stand
-}
-{9}
-
-#alias {^%ddo %2}
-{
-#regexp {%2} {{.*} {.*}} {#loop {1} {%1} {i} {&1 $i\.&2}} {#loop {1} {%1} {i} {$i\.%2}}
-}
-{9}
-
 #ACTION {^[ Return to continue, (q)uit, (r)efresh, (b)ack, or page number (%d/%d) ]$}
 {
 	#history {insert} {#cr}
 }
 {8}
+
+#ACTION {%* begins to flicker and fade.$}
+{
+	PLAY miscellaneous/flicker
+}
+{9}
+
+#ACTION {%* burns out.$}
+{
+	PLAY miscellaneous/burnout
+}
+{9}
+
+#ACTION {^*** Press ENTER:$}
+{
+	#history {insert} {#cr}
+}
+{9}
 
 #ACTION {^Press return to continue...$}
 {
@@ -41,9 +28,41 @@ stand
 }
 {9}
 
-#action {^*** Press ENTER:$}
+#ACTION {^Roster of %1:$}
 {
-        #history {insert} {#cr}
+	#variable {empireName} {%1}
+}
+{9}
+
+#ACTION {^You awaken, and sit up.$}
+{
+	#line {gag};
+	stand
+}
+{9}
+
+#ALIAS {^%ddo %2}
+{
+	#regexp {%2} {{.*} {.*}} {#loop {1} {%1} {i} {&1 $i\.&2}};
+	#else
+	{
+		#loop {1} {%1} {i}
+		{
+			$i\.%2
+		}
+	}
+}
+{9}
+
+#ALIAS {^{dro|drop|g|ge|get|gi|giv|give|p|pu|put|ret|retr|retri|retrie|retriev|retrieve|sto|stor|store} %2}
+{
+	#variable {item} {%2};
+	#replace {item} {,} {;};
+	#local {i} {};
+	#foreach {$item} {i}
+	{
+		#send {%1 $i}
+	}
 }
 {9}
 
@@ -53,17 +72,9 @@ stand
 }
 {9}
 
-#ALIAS {^{dro|drop|g|ge|get|gi|giv|give|p|pu|put|ret|retr|retri|retrie|retriev|retrieve|sto|stor|store} %2}
+#EVENT {RECEIVED INPUT}
 {
-	#variable {item} {%2};
-	#replace {item} {,} {;};
-	#forall {$item} {#send {%1 &0}}
-}
-{9}
-
-#event {RECEIVED INPUT}
-{
-#list {commandHistory} {add} {%0}
+	#list {commandHistory} {add} {%0}
 }
 
 #MACRO {\e/}
@@ -81,6 +92,6 @@ stand
 }
 
 #VARIABLE         {bufferLock}  {off}
+#VARIABLE         {commandHistory}  {{1}{#write miscellaneous.tin}}
 #VARIABLE         {item}  {}
 #VARIABLE         {msg}  {}
-#variable {commandHistory} {}

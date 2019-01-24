@@ -9,8 +9,13 @@
 		{
 			#variable {hookArgs} {}
 		};
-		#forall {${hook[%1][]}} {@${hook[%1][&0]}{${hookArgs}}};
+		#local {i} {};
+		#foreach {${hook[%1][]}} {i}
+		{
+			@${hook[%1][$i]}{${hookArgs}}
+		};
 		#unvariable {hookArgs}
 	};
 	#return #nop
 }
+

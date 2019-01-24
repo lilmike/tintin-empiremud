@@ -91,7 +91,11 @@
 		#list {cmarks} {size} {i};
 		#if {$i > 0}
 		{
-			#forall {${cmarks[]}} {#showme {Mark "&0" is at ${cmarks[&0][x]}, ${cmarks[&0][y]}\.}}
+			#local {i} {};
+			#foreach {${cmarks[]}} {i}
+			{
+				#showme {Mark "$i" is at ${cmarks[$i][x]}, ${cmarks[$i][y]}\.}
+			}
 		};
 		#else
 		{
@@ -104,3 +108,4 @@
 	}
 }
 {9}
+

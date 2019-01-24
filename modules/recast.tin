@@ -112,7 +112,11 @@
 	#if {$recastListSize > 0}
 	{
 		#showme {Missing spells:};
-		#forall {${recastList[]}} {#showme {${recastList[&0]}}}
+		#local {i} {};
+		#foreach {${recastList[]}} {i}
+		{
+			#showme {${recastList[$i]}}
+		}
 	};
 	#else
 	{

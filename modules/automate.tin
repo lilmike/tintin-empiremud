@@ -162,7 +162,11 @@
 		#if {$i > 0}
 		{
 			#echo {combat autodo:};
-			#forall {${autoDo[combat][]}}{#echo {${autoDo[combat][&0]}}}
+			#local {i} {};
+			#foreach {${autoDo[combat][]}} {i}
+			{
+				#echo {${autoDo[combat][$i]}}
+			}
 		};
 		#else
 		{
@@ -179,7 +183,11 @@
 		#if {$i > 0}
 		{
 			#echo {always autodo:};
-			#forall {${autoDo[all][]}}{#echo {${autoDo[all][&0]}}}
+			#local {i} {};
+			#foreach {${autoDo[all][]}} {i}
+			{
+				#echo {${autoDo[all][$i]}}
+			}
 		};
 		#else
 		{

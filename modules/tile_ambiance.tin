@@ -1,9 +1,9 @@
 #ALIAS {^Tile_Play}
 {
-        #if {!&{MSP[VOLUME]}}
-        {
-                #variable {MSP[VOLUME]} {0}
-        };
+	#if {!&{MSP[VOLUME]}}
+	{
+		#variable {MSP[VOLUME]} {0}
+	};
 	#if {"$bgm" == "true"}
 	{
 		#if {"${oldSoundFile}" != "${tileSoundFile}"}
@@ -14,7 +14,7 @@
 				#variable {tileSoundFilePID} {false}
 			};
 			#variable {oldSoundFile} {$tileSoundFile};
-			#SCRIPT {bash -c 'if [ -f "sounds/terrain/$tileSoundFile" ] ; then play -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain ${MSP[VOLUME]} &> /dev/null&echo "$!" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";else echo "false" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";fi'}
+			#script {bash -c 'if [ -f "sounds/terrain/$tileSoundFile" ] ; then play -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain ${MSP[VOLUME]} &> /dev/null&echo "$!" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";else echo "false" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";fi'}
 		}
 	}
 }
@@ -44,7 +44,7 @@
 
 #EVENT {VARIABLE UPDATE MSDP_ROOM}
 {
-#var {tmp} {%1};
+	#variable {tmp} {%1};
 	#if {"${tmp[NAME]}" != "{$tileNames}"}
 	{
 		#variable {tileSoundFile} {none}
@@ -92,7 +92,7 @@
 
 #VARIABLE         {oldCoordinates}  {}
 #VARIABLE         {oldSoundFile}  {}
-#VARIABLE         {tmp}  {}
 #VARIABLE         {tileNames}  {A Bridge Over the River|A Carrot Patch|A Field of .*|(A|An) .*Forest|A Foundry|A Garden Made of Rafts|A Hot Forge|A Lake|A Large Tomb|A Mine Shaft|A Murky Swamp|A Patch of Ripe Blackberries|A Potter's Hut|A Rice Paddy|A River|A Seeded Field|A Shady Garden|A Terraced Garden|(A|An) .* Orchard|An Estuary Garden|The City Center|The Open Plains|On a Mountain|On a Road|The Carpenter|The Docks|The Glass Blower|The Jungle|The Ocean}
 #VARIABLE         {tileSoundFile}  {}
 #VARIABLE         {tileSoundFilePID}  {false}
+#VARIABLE         {tmp}  {}

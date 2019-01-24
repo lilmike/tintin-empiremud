@@ -13,7 +13,11 @@
 		#list {idleList} {add} {look}
 	};
 	#echo {Current commands to avoide the void are:};
-	#forall {${idleList[]}} {#echo {${idleList[&0]}}};
+	#local {i} {};
+	#foreach {${idleList[]}} {i}
+	{
+		#echo {${idleList[$i]}}
+	};
 	#echo {To set your idle commands, type idle follow by a list of commands enclosed in braces and separated by semi-colons.}
 }
 {9}
@@ -38,3 +42,4 @@
 	#script {idle.lastUse} {date '+%s'};
 	#variable {idle.lastUse} {${idle.lastUse[1]}}
 }
+

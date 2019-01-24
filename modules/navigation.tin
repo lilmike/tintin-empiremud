@@ -152,7 +152,12 @@
 
 #ALIAS {^{l|lo|loo|look} all$}
 {
-	#forall {north;south;east;west;northwest;northeast;southwest;southeast}{#showme {&0};look &0}
+	#local {i} {};
+	#foreach {north;south;east;west;northwest;northeast;southwest;southeast} {i}
+	{
+		#showme {$i};
+		look $i
+	}
 }
 {9}
 

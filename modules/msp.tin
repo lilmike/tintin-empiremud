@@ -1,15 +1,15 @@
 #ACTION {^!!SOUND(%1)$}
 {
-	#variable {MSP.LAST} {%1};
+	#variable {MSP[LAST]} {%1};
 	PLAY %1
 }
 {9}
 
 #ACTION {^Audible sound is {ON|OFF}.$}
 {
-	#variable {MSP.SOUND} {%1};
-	#replace {MSP.SOUND} {ON} {1};
-	#replace {MSP.SOUND} {OFF} {0};
+	#variable {MSP[SOUND]} {%1};
+	#replace {MSP[SOUND]} {ON} {1};
+	#replace {MSP[SOUND]} {OFF} {0};
 	CSAVE
 }
 {9}
@@ -37,7 +37,7 @@
 	{
 		#variable {MSP[VOLUME]} {0}
 	};
-	#if {!&{MSP.SOUND}}
+	#if {!&{MSP[SOUND]}}
 	{
 		#variable {MSP[SOUND]} {1}
 	};
@@ -61,7 +61,7 @@
 	{
 		#variable {MSP[VOLUME]} {0}
 	};
-	#if {!&{MSP.SOUND}}
+	#if {!&{MSP[SOUND]}}
 	{
 		#variable {MSP[SOUND]} {1}
 	};
@@ -91,11 +91,11 @@
 	{
 		#variable {MSP[VOLUME]} {0}
 	};
-	#if {!&{MSP.SOUND}}
+	#if {!&{MSP[SOUND]}}
 	{
-		#variable {MSP.SOUND} {1}
+		#variable {MSP[SOUND]} {1}
 	};
-	#if {${MSP.SOUND}}
+	#if {${MSP[SOUND]}}
 	{
 		#if {&{%1}}
 		{
@@ -126,7 +126,7 @@
 	{
 		#variable {MSP[VOLUME]} {0}
 	};
-	#if {!&{MSP.SOUND}}
+	#if {!&{MSP[SOUND]}}
 	{
 		#variable {MSP[SOUND]} {1}
 	};
@@ -150,7 +150,7 @@
 #EVENT {IAC WILL MSP}
 {
 	#send {\xFF\xFD\x5A\};
-	#variable {MSP.PROTOCOL} {enabled}
+	#variable {MSP[PROTOCOL]} {enabled}
 }
 
 #GAG              {^!!SOUND%*}

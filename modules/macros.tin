@@ -1,4 +1,8 @@
-#nop {note: When modifying this file, if writing with tintin, copy the last line, currently the forall loop. It will not be written properly with the forall, but will instead write each macro otherwise.}
+#ALIAS {^CREATE_MACRO %.$}
+{
+	#macro {\e%1} {#if {&keyProfile[${keySetName}][%1]}{$keyProfile[${keySetName}][%1]}}
+}
+{9}
 
 #ALIAS {^set{a|b|c|d|e|f|g|h|n|q|r|s|t|v|w|x|y|z|A|D|F|H|Q|W|E} %2}
 {
@@ -54,4 +58,29 @@
 }
 {9}
 
-#forall {a;b;c;d;e;f;g;h;n;q;r;s;t;v;w;x;y;z;A;D;F;H;Q;W;E} {#macro {\e&0} {#if {&keyProfile[${keySetName}][&0]}{$keyProfile[${keySetName}][&0]}}}
+#FUNCTION {generate_macros}
+{
+	#local {i} {};
+	#foreach {a;b;c;d;e;f;g;h;n;q;r;s;t;v;w;x;y;z;A;D;F;H;Q;W;E} {i}
+	{
+		CREATE_MACRO $i
+	};
+	#return #nop
+}
+
+#MACRO {\cc}
+{
+	breakout
+}
+
+#MACRO {\e[2~}
+{
+	#buffer {home}
+}
+
+#MACRO {\e[3~}
+{
+	#buffer {end}
+}
+
+@generate_macros{}
