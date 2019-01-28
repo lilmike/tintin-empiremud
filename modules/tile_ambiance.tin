@@ -44,50 +44,53 @@
 
 #EVENT {VARIABLE UPDATE MSDP_ROOM}
 {
-	#variable {tmp} {%1};
-	#if {"${tmp[NAME]}" != "{$tileNames}"}
+	#if {"%1" != "${msdpOldList[ROOM]}"}
 	{
-		#variable {tileSoundFile} {none}
-	};
-	#else
-	{
-		#if {"${tmp[NAME]}" == "A Field of {.*}}
+		#variable {tmp} {%1};
+		#if {"${tmp[NAME]}" != "{$tileNames}"}
 		{
-			#variable {tileSoundFile} {field}
-		};
-		#elseif {"${tmp[NAME]}" == "%*Forest"}
-		{
-			#variable {tileSoundFile} {forest}
-		};
-		#elseif {"${tmp[NAME]}" == "%*Orchard"}
-		{
-			#variable {tileSoundFile} {orchard}
+			#variable {tileSoundFile} {none}
 		};
 		#else
 		{
-			#format {tileSoundFile} {%l} {${tmp[NAME]}};
-			#replace {tileSoundFile} {'} {};
-			#replace {tileSoundFile} { } {_}
-		}
-	};
-	#if {"${tmp[COORDS][X]},${tmp[COORDS][Y]}" != "$oldCoordinates"}
-	{
-		#if {"$tileSoundFile" == "none"}
-		{
-			Tile_Play $tileSoundFile;
-			PLAY move/default_step
+			#if {"${tmp[NAME]}" == "A Field of {.*}}
+			{
+				#variable {tileSoundFile} {field}
+			};
+			#elseif {"${tmp[NAME]}" == "%*Forest"}
+			{
+				#variable {tileSoundFile} {forest}
+			};
+			#elseif {"${tmp[NAME]}" == "%*Orchard"}
+			{
+				#variable {tileSoundFile} {orchard}
+			};
+			#else
+			{
+				#format {tileSoundFile} {%l} {${tmp[NAME]}};
+				#replace {tileSoundFile} {'} {};
+				#replace {tileSoundFile} { } {_}
+			}
 		};
-		#else
+		#if {"${tmp[COORDS][X]},${tmp[COORDS][Y]}" != "$oldCoordinates"}
 		{
-			PLAY move/$tileSoundFile;
-			#variable {tileSoundFile} {$tileSoundFile\.opus};
-			#replace {tileSoundFile} {\\} {};
-			Tile_Play $tileSoundFile
+			#if {"$tileSoundFile" == "none"}
+			{
+				Tile_Play $tileSoundFile;
+				PLAY move/default_step
+			};
+			#else
+			{
+				PLAY move/$tileSoundFile;
+				#variable {tileSoundFile} {$tileSoundFile\.opus};
+				#replace {tileSoundFile} {\\} {};
+				Tile_Play $tileSoundFile
+			};
+			#variable {oldCoordinates} {${tmp[COORDS][X]},${tmp[COORDS][Y]}}
 		};
-		#variable {oldCoordinates} {${tmp[COORDS][X]},${tmp[COORDS][Y]}}
-	};
-	#variable {coordinateX} {${tmp[COORDS][X]}};
-	#variable {coordinateY} {${tmp[COORDS][Y]}}
+		#variable {coordinateX} {${tmp[COORDS][X]}};
+		#variable {coordinateY} {${tmp[COORDS][Y]}}
+	}
 }
 
 #VARIABLE         {oldCoordinates}  {}

@@ -807,7 +807,7 @@
 {
 	#nop {Hook name: worldTime};
 	#nop {Hook arguments: time in 24 hour format};
-	#if {"%1" != ""}
+	#if {"%1" != "" && "%1" != "${msdpOldList[WORLD_TIME]}"}
 	{
 		#if {&{character[clock]}}
 		{

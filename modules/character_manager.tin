@@ -6,7 +6,13 @@
 		#replace {historyPath} {\\} {};
 		#history {write} {$historyPath};
 		#unvariable {historyPath};
-		#class {${MSDP_ACCOUNT_NAME}} {write} {${HOME}/${MSDP_ACCOUNT_NAME}};
+		#unvariable {MSDP_%*};
+		#class {${msdpOldList[ACCOUNT_NAME]}} {write} {${HOME}/${msdpOldList[ACCOUNT_NAME]}};
+		#local {i} {};
+		#foreach {${msdpOldList[]}} {i}
+		{
+			#variable {MSDP_$i} {${msdpOldList[$i]}}
+		};
 		#class {${MSDP_ACCOUNT_NAME}} {open}
 	}
 }
@@ -127,7 +133,7 @@
 {
 	#nop {Hook name: characterName};
 	#nop {Hook args: character name.};
-	#if {"%1" != ""}
+	#if {"%1" != "" && "%1" != "${msdpOldList[ACCOUNT_NAME]}"}
 	{
 		#if {"${OLD_MSDP_ACCOUNT_NAME}" != "" && "$OLD_MSDP_ACCOUNT_NAME" != "%1"}
 		{
