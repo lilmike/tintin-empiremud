@@ -8,6 +8,7 @@
 		#unvariable {historyPath};
 		#unvariable {MSDP_%*};
 		#class {${msdpOldList[ACCOUNT_NAME]}} {write} {${HOME}/${msdpOldList[ACCOUNT_NAME]}};
+		#class {${msdpOldList[CHARACTER_NAME]}} {close};
 		#local {i} {};
 		#foreach {${msdpOldList[]}} {i}
 		{
