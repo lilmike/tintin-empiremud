@@ -1,6 +1,6 @@
 #ALIAS {^CSAVE$}
 {
-	#if {"$MSDP_ACCOUNT_NAME" != ""}
+	#if {"$MSDP_ACCOUNT_NAME" != "" && "$MSDP_ACCOUNT_NAME" != "\$MSDP_ACCOUNT_NAME"}
 	{
 		#variable {historyPath} {${HOME}/${MSDP_ACCOUNT_NAME}\.history};
 		#replace {historyPath} {\\} {};
