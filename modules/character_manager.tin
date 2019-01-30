@@ -9,11 +9,13 @@
 		#unvariable {MSDP_%*};
 		#class {${msdpOldList[ACCOUNT_NAME]}} {write} {${HOME}/${msdpOldList[ACCOUNT_NAME]}};
 		#class {${msdpOldList[CHARACTER_NAME]}} {close};
+		#variable {copying} {1};
 		#local {i} {};
 		#foreach {${msdpOldList[]}} {i}
 		{
 			#variable {MSDP_$i} {${msdpOldList[$i]}}
 		};
+		#variable {copying} {0};
 		#class {${MSDP_ACCOUNT_NAME}} {open}
 	}
 }
@@ -134,7 +136,7 @@
 {
 	#nop {Hook name: characterName};
 	#nop {Hook args: character name.};
-	#if {"%1" != "" && "%1" != "${msdpOldList[ACCOUNT_NAME]}"}
+	#if {"%1" != "" && !$copying}
 	{
 		#if {"${OLD_MSDP_ACCOUNT_NAME}" != "" && "$OLD_MSDP_ACCOUNT_NAME" != "%1"}
 		{
@@ -179,4 +181,5 @@
 #VARIABLE         {OLD_MSDP}  {}
 #VARIABLE         {characterName}  {}
 #VARIABLE         {characterPosition}  {}
+#VARIABLE         {copying}  {0}
 #VARIABLE         {hook}  {}

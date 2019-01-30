@@ -44,7 +44,7 @@
 
 #EVENT {VARIABLE UPDATE MSDP_ROOM}
 {
-	#if {"%1" != "${msdpOldList[ROOM]}"}
+	#if {!$copying}
 	{
 		#variable {tmp} {%1};
 		#if {"${tmp[NAME]}" != "{$tileNames}"}
