@@ -144,8 +144,16 @@
 			#replace {historyPath} {\\} {};
 			#history {write} {$historyPath};
 			#unvariable {historyPath};
+			#unvariable {MSDP_%*};
 			#class {${OLD_MSDP_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}};
 			#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
+			#variable {copying} {1};
+			#local {i} {};
+			#foreach {${msdpOldList[]}} {i}
+			{
+				#variable {MSDP_$i} {${msdpOldList[$i]}}
+			};
+			#variable {copying} {0};
 			#nop {unload any old character classes};
 			#variable {modpath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.modules};
 			#replace {modpath} {\\} {};
