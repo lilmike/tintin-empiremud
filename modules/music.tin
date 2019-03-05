@@ -9,7 +9,7 @@
 
 #ACTION {^Sorry, titles can't be longer than 80 characters.$}
 {
-	#if {${auto.title} && $settingTitle}
+	#if {${auto[title]} && $settingTitle}
 	{
 		#line {gag};
 		#variable {settingTitle} {0}
@@ -136,12 +136,12 @@
 	#if {"%0" == "autotitle"}
 	{
 		#echo {Your title will automatically change to currently playing song.};
-		#variable {auto.title} {1}
+		#variable {auto[title]} {1}
 	};
 	#else
 	{
 		#echo {Your title will no longer be automatically set.};
-		#variable {auto.title} {0}
+		#variable {auto[title]} {0}
 	}
 }
 {9}
@@ -536,6 +536,6 @@
 }
 }
 
-#TICKER           {autotitle}  {#if {${auto.title}}{Get_Music_Message_String;#if {"${music[newAutoTitleString]}" != "${music[oldAutoTitleString]}"}{#variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};#var {settingTitle} {1};title ${music[newAutoTitleString]}}}}                                                                                                                                                                                                                         {1.50}
+#TICKER           {autotitle}  {#if {${auto[title]}}{Get_Music_Message_String;#if {"${music[newAutoTitleString]}" != "${music[oldAutoTitleString]}"}{#variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};#var {settingTitle} {1};title ${music[newAutoTitleString]}}}}                                                                                                                                                                                                                         {1.50}
 #VARIABLE         {msg}  {}
 #VARIABLE         {settingTitle}  {0}
