@@ -1,7 +1,11 @@
 #ACTION {^You are hungry.$}
 {
 	PLAY health/hungry;
-	#if {"$autoforage" == "true"}
+	#if {&{auto[eat]}}
+	{
+		eat ${auto[eat]}
+	};
+	#elseif {"$autoforage" == "true"}
 	{
 		forage
 	}
@@ -64,6 +68,16 @@
 #ACTION {^No-one by that name here.$}
 {
 	#variable {feeding} {false}
+}
+{9}
+
+#ACTION {^You are thirsty.$}
+{
+	PLAY health/thirsty;
+	#if {&{auto[drink]}}
+	{
+		drink ${auto[drink]}
+	}
 }
 {9}
 
@@ -219,6 +233,21 @@
 {
 	#showme {Autoshield disabled.};
 	#unvariable {autoshield}
+}
+{9}
+
+#ALIAS {^{auto|noauto}{eat|drink}{.*}}
+{
+	#if {"%1" == "noauto"}
+	{
+		#showme {Auto%2 disabled.};
+		#unvariable {auto[%2]}
+	};
+	#else
+	{
+		#showme {You will now %2 %3 when hungry or thirsty.};
+		#variable {auto[%2]} {%3}
+	}
 }
 {9}
 
