@@ -124,7 +124,7 @@
 		#variable {music[links[longUrl]]} {https://www.youtube.com/results?search_query=${music[newAutoTitleString]}};
 		#replace {music[links[longUrl]]} { } {+};
 		#replace {music[links[longUrl]]} {&} {%%26};
-		#script {i} {curl -s --data "signature=${music[links[apiKey]]}" --data "action=shorturl" --data "format=text" --data-urlencode "url=${music[links[longUrl]]}" ${music[links[apiUrl]]}};
+		#script {i} {curl --connect-timeout 10 -s --data "signature=${music[links[apiKey]]}" --data "action=shorturl" --data "format=text" --data-urlencode "url=${music[links[longUrl]]}" ${music[links[apiUrl]]}};
 		#variable {music[links[shortUrl]]} {${i[1]}};
 		%2 Now playing: $msg via ${music[player]}\. ${music[links[shortUrl]]}
 	}

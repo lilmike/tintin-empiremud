@@ -277,7 +277,7 @@
 
 #ALIAS {^pimptell %S %2}
 {
-	#script {echo -n "tell %1 "; curl -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+	#script {echo -n "tell %1 "; curl --connect-timeout 10 -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
 }
 {8}
 
@@ -323,7 +323,7 @@
 
 #ALIAS {^pimp%+ %2}
 {
-	#script {echo -n "%1"; curl -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+	#script {echo -n "%1"; curl --connect-timeout 10 -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
 }
 {9}
 

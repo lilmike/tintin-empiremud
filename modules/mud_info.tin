@@ -1,5 +1,5 @@
-#VARIABLE         {MOTDURL}  {http://stormdragon.tk/scripts/emotd.ogg}
+#VARIABLE         {MOTDURL}  {https://michaels.world/emotd.opus}
 #VARIABLE         {mudAddress}  {empiremud.net}
-#VARIABLE         {mudIntroMessage}  {Thanks for using tintin-empiremud, brought to you by Storm Dragon.\nVisit me on the web at http://stormdragon.tk. If you enjoy this package, feel free to leave a tip in the tip jar on the site.\nIf you have questions or feed back, you can post on the cowsay channel by typing /cowsay followed by your message, E.g. /cowsay hello.}
+#VARIABLE         {mudIntroMessage}  {Thanks for using tintin empire mud, brought to you by Michael "Lilmike" Taboada and originally created by storm dragon.\nVisit me on the web at https://michaels.world.\nIf you enjoy this tintin package feel free to leave a tip on my site. You can also provide feedback by contacting lilmike in game, or emailing michael@michaels.world. Suggestions welcome!}
 #VARIABLE         {mudPort}  {4000}
 #VARIABLE         {mudSessionName}  {Empire Mud}

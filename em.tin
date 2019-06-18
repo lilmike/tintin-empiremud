@@ -78,7 +78,7 @@
 	#nop {This is the only time we need the date number, so may as well clear it.};
 	#unvariable {introDate};
 	#nop {Get the last modified date of the news file.};
-	#script {motd} {curl -sI "$MOTDURL"};
+	#script {motd} {curl --connect-timeout 10 -sI "$MOTDURL"};
 	#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}};
 	#regexp {${motd[4]}} {Last-Modified: {.*}} {#variable {motdTime} {News updated &1}};
 	#nop {DisPLAY intro message.};

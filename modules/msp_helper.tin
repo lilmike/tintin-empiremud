@@ -127,12 +127,6 @@
 }
 {9}
 
-#ACTION {^You are thirsty.$}
-{
-	PLAY health/thirsty
-}
-{9}
-
 #ACTION {^You begin harvesting %*.$}
 {
 	PLAY skills/harvest

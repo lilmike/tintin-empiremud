@@ -80,7 +80,7 @@ post $name has specialized in %1.
 {
 #variable {gnuSocialMudGroup} {muds}
 };
-		#system {curl -s -u "$gusername:$gpassword" -d status="$(echo -e "%1") #EmpireMUD !$gnuSocialMudGroup" -d source="tintin-empiremud" $gurl/api/statuses/update.xml &> /dev/null&}
+		#system {curl --connect-timeout 10 -s -u "$gusername:$gpassword" -d status="$(echo -e "%1") #EmpireMUD !$gnuSocialMudGroup" -d source="tintin-empiremud" $gurl/api/statuses/update.xml &> /dev/null&}
 	}
 }
 {9}
