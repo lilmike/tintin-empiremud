@@ -156,7 +156,7 @@
 #GAG              {^!!SOUND%*}
 #MACRO {\e>}
 {
-	#if {$volume <= -40}
+	#if {${MSP[VOLUME]} <= -40}
 	{
 		#variable {MSP[VOLUME]} {-40}
 	};
