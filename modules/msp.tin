@@ -50,7 +50,7 @@
 		{
 			#script {echo "#var {sounds} {$sounds \"$($shuf -n1 -e sounds/$tmp3*opus)\"}"}
 		};
-		#system {play -qV0 $sounds gain ${MSP[VOLUME]} &}
+		#system {play -qV0 $sounds gain ${MSP[VOLUME]} &> /dev/null&}
 	}
 }
 {9}
