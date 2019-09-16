@@ -4,11 +4,11 @@
 	{
 		#variable {MSP[VOLUME]} {0}
 	};
-	#if {"$bgm" == "true"}
+	#if {{$bgm} == {true}}
 	{
-		#if {"${oldSoundFile}" != "${tileSoundFile}"}
+		#if {{${oldSoundFile}} != {${tileSoundFile}}}
 		{
-			#if {"$tileSoundFilePID" != "false"}
+			#if {{$tileSoundFilePID} != {false}}
 			{
 				#system {kill $tileSoundFilePID;echo "false" > .tileSoundFilePID};
 				#variable {tileSoundFilePID} {false}
@@ -22,7 +22,7 @@
 
 #ALIAS {^{nobgm|bgm}$}
 {
-	#if {"%0" == "bgm"}
+	#if {{%0} == {bgm}}
 	{
 		#variable {bgm} {true};
 		#showme {Tile ambiance enabled.};
@@ -30,7 +30,7 @@
 	};
 	#else
 	{
-		#if {"$tileSoundFilePID" != "false"}
+		#if {{$tileSoundFilePID} != {false}}
 		{
 			#system {kill $tileSoundFilePID;echo "false" >.tileSoundFilePID };
 			#variable {tileSoundFilePID} {false}
@@ -47,21 +47,21 @@
 	#if {!$copying}
 	{
 		#variable {tmp} {%1};
-		#if {"${tmp[NAME]}" != "{$tileNames}"}
+		#if {{${tmp[NAME]}} != {{$tileNames}}}
 		{
 			#variable {tileSoundFile} {none}
 		};
 		#else
 		{
-			#if {"${tmp[NAME]}" == "A Field of {.*}}
+			#if {{${tmp[NAME]}}} == {A Field of {.*}}}
 			{
 				#variable {tileSoundFile} {field}
 			};
-			#elseif {"${tmp[NAME]}" == "%*Forest"}
+			#elseif {{${tmp[NAME]}} == {%*Forest}}
 			{
 				#variable {tileSoundFile} {forest}
 			};
-			#elseif {"${tmp[NAME]}" == "%*Orchard"}
+			#elseif {{${tmp[NAME]}} == {%*Orchard}}
 			{
 				#variable {tileSoundFile} {orchard}
 			};
@@ -72,9 +72,9 @@
 				#replace {tileSoundFile} { } {_}
 			}
 		};
-		#if {"${tmp[COORDS][X]},${tmp[COORDS][Y]}" != "$oldCoordinates"}
+		#if {{${tmp[COORDS][X]},${tmp[COORDS][Y]}} != {$oldCoordinates}}
 		{
-			#if {"$tileSoundFile" == "none"}
+			#if {{$tileSoundFile} == {none}}
 			{
 				Tile_Play $tileSoundFile;
 				PLAY move/default_step

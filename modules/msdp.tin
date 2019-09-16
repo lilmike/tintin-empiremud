@@ -55,13 +55,13 @@
 	#nop Save all variables in an MSDP list.;
 	#variable {MSDP_%0} {%1};
 	#variable {msdpOldList[%0]} {%1};
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"PLAY_SOUND"}
+		#case {{PLAY_SOUND}}
 		{
 			PLAY %1
 		};
-		#case {"REPORTABLE_VARIABLES"}
+		#case {{REPORTABLE_VARIABLES}}
 		{
 			MSDP_REPORT
 		}

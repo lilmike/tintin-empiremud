@@ -16,11 +16,11 @@
 	#variable {result} {};
 	#parse {${functionCut[string]}} {character}
 	{
-		#if {"$character" == "${functionCut[delimiter]}"}
+		#if {{$character} == {${functionCut[delimiter]}}}
 		{
 			#math {functionCut[fieldIndex]} {${functionCut[fieldIndex]} + 1}
 		};
-		#if {${functionCut[fieldIndex]} == ${functionCut[field]} && "${character}" != "${functionCut[delimiter]}"}
+		#if {${functionCut[fieldIndex]} == ${functionCut[field]} && {${character}} != {${functionCut[delimiter]}}}
 		{
 			#variable {result} {${result}${character}}
 		}
@@ -46,7 +46,7 @@
 #FUNCTION {separator}
 {
 	#nop {Takes 1 optional argument, the separator string. The default is -.};
-	#if {"%1" == ""}
+	#if {{%1} == {}}
 	{
 		#script {result} {for x in $(seq $(tput cols)) ; do echo -n "-";done}
 	};

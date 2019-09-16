@@ -79,7 +79,7 @@
 
 #MACRO {\e/}
 {
-	#if {"$bufferLock" == "off"}
+	#if {{$bufferLock} == {off}}
 	{
 		#variable {bufferLock} {on}
 	};

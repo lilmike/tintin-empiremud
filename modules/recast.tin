@@ -128,13 +128,13 @@
 #ALIAS {^{Add|Remove}_Spell %2}
 {
 	#list {recastList} {find} {%2} {recastListIndex};
-	#if {$recastListIndex > 0 && "%1" == "Remove"}
+	#if {$recastListIndex > 0 && {%1} == {Remove}}
 	{
 		#list {recastList} {delete} {$recastListIndex}
 	};
-	#if {"$%2" == "true"}
+	#if {{$%2} == {true}}
 	{
-		#if {$recastListIndex == 0 && "%1" == "Add"}
+		#if {$recastListIndex == 0 && {%1} == {Add}}
 		{
 			#list {recastList} {add} {%2};
 			%2;
@@ -146,7 +146,7 @@
 
 #ALIAS {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield|counterspell}$}
 {
-	#if {"%1" == "auto"}
+	#if {{%1} == {auto}}
 	{
 		#variable {%3} {true};
 		#showme {%3 will automatically recast.}

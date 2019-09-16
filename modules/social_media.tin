@@ -15,7 +15,7 @@ post $name sold %1 for %2 %3 coins on the trading post.
 #variable {tmp} {%1};
 #replace {tmp} { } {};
 #variable {empireName} {%1};
-#if {"$mp" == "%1"}
+#if {{$mp} == {%1}}
 {
 post $name is now a member of %1!
 };
@@ -57,15 +57,15 @@ post $name has specialized in %1.
 
 #ALIAS {^post %1}
 {
-	#if {"$pump" == "true"}
+	#if {{$pump} == {true}}
 	{
 		#system {p post note --to followers --cc public --title "Alter Aeon - http://alteraeon.com" "%1" &> /dev/null&}
 	};
-	#if {"$twitter" == "true"}
+	#if {{$twitter} == {true}}
 	{
 		#system {ttytter -silent -norc -status="%1" &> /dev/null&}
 	};
-	#if {"$gnusocial" == "true"}
+	#if {{$gnusocial} == {true}}
 	{
 #if {!&{gusername} || !&{gpassword}}
 {
@@ -87,34 +87,34 @@ post $name has specialized in %1.
 
 #ALIAS {^{gnusocial|pump.io|twitter|nofacebook|nognusocial|nopump.io|notwitter}$}
 {
-#switch {"%0"}
+#switch {{%0}}
 {
-#case {"gnusocial"}
+#case {{gnusocial}}
 {
 	#variable {gnusocial} {true};
 	#showme {Achievements will now be posted to GNU Social. Remember to set your webfinger and password with ginfo webfinger password.}
 };
-#case {"nognusocial"}
+#case {{nognusocial}}
 {
 	#unvariable {gnusocial};
 	#showme {Achievements will no longer be posted to GNU Social.}
 };
-#case {"pump.io"}
+#case {{pump.io}}
 {
 	#variable {pump} {true};
 	#showme {Achievements will now be posted to Pump.io.}
 };
-#case {"nopump.io"}
+#case {{nopump.io}}
 {
 	#unvariable {pump};
 	#showme {Achievements will no longer be posted to Pump.io.}
 };
-#case {"twitter"}
+#case {{twitter}}
 {
 	#variable {twitter} {true};
 	#showme {Achievements will now be posted to Twitter.}
 };
-#case {"notwitter"}
+#case {{notwitter}}
 {
 	#unvariable {twitter};
 	#showme {Achievements will no longer be posted to Twitter.}
