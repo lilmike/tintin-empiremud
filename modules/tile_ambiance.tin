@@ -53,7 +53,7 @@
 		};
 		#else
 		{
-			#if {{${tmp[NAME]}}} == {A Field of {.*}}}
+			#if {{${tmp[NAME]}} == {A Field of {.*}}}
 			{
 				#variable {tileSoundFile} {field}
 			};
