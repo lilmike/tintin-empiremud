@@ -1,6 +1,6 @@
 #ALIAS {^{nom|m}apmode$}
 {
-	#if {"%1" == "m"}
+	#if {{%1} == {m}}
 	{
 		#showme {Sighted map (split) mode activated.};
 		#variable {mapMode} {1}

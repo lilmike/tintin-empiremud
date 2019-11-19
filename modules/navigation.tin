@@ -12,7 +12,7 @@
 
 #ACTION {^Obvious exits:$}
 {
-	#if {"$playerSummoner" != ""}
+	#if {{$playerSummoner} != {}}
 	{
 		follow $playerSummoner;
 		#variable {playerSummoner} {}
@@ -30,13 +30,13 @@
 {
 	#variable {%1} {%0};
 	#format {lastDirection} {%n} {$lastDirection};
-	#if {"$quicknav" == "true" && "%1" != "$lastDirection"}
+	#if {{$quicknav} == {true} && {%1} != {$lastDirection}}
 	{
 		#line {gag}
 	};
-	#if {"$findTerrain" != "false"}
+	#if {{$findTerrain} != {false}}
 	{
-		#if {"$findTerrainDirection" == "FALSE"}
+		#if {{$findTerrainDirection} == {FALSE}}
 		{
 			#regexp {%0} {{.*}$findTerrain} {#echo {You see $findTerrain to the %1.};SYNTH_PLAY foundTerrainSound}
 		};
@@ -47,7 +47,7 @@
 	};
 	#else
 	{
-		#if {"$playerSummoner != ""}
+		#if {{$playerSummoner} != {}}
 		{
 			follow $playerSummoner;
 			#variable {playerSummoner} {}
@@ -79,45 +79,45 @@
 
 #ALIAS {^{d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west}$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"{d|do|dow}"}
+		#case {{{d|do|dow}}}
 		{
 			#variable {lastDirection} {Down}
 		};
-		#case {"{e|ea|eas}"}
+		#case {{{e|ea|eas}}}
 		{
 			#variable {lastDirection} {East}
 		};
-		#case {"{n|no|nor|nort}"}
+		#case {{{n|no|nor|nort}}}
 		{
 			#variable {lastDirection} {North}
 		};
-		#case {"{ne|northe|northea|northeas}"}
+		#case {{{ne|northe|northea|northeas}}}
 		{
 			#variable {lastDirection} {Northeast}
 		};
-		#case {"{nw|northw|northwe|northwes}"}
+		#case {{{nw|northw|northwe|northwes}}}
 		{
 			#variable {lastDirection} {Northwest}
 		};
-		#case {"{s|so|sou|sout}"}
+		#case {{{s|so|sou|sout}}}
 		{
 			#variable {lastDirection} {South}
 		};
-		#case {"{se|southe|southea|southeas}"}
+		#case {{{se|southe|southea|southeas}}}
 		{
 			#variable {lastDirection} {Southeast}
 		};
-		#case {"{sw|southw|southwe|southwes}"}
+		#case {{{sw|southw|southwe|southwes}}}
 		{
 			#variable {lastDirection} {Southwest}
 		};
-		#case {"u"}
+		#case {{u}}
 		{
 			#variable {lastDirection} {Up}
 		};
-		#case {"{w|we|wes}"}
+		#case {{{w|we|wes}}}
 		{
 			#variable {lastDirection} {West}
 		};
@@ -126,7 +126,7 @@
 			#variable {lastDirection} {%0}
 		}
 	};
-	#if {"$autosneak" == "true"}
+	#if {{$autosneak} == {true}}
 	{
 		#send {sneak %0}
 	};
@@ -134,7 +134,7 @@
 	{
 		#send {%0}
 	};
-	#if {"$autoclaim" == "true"}
+	#if {{$autoclaim} == {true}}
 	{
 		claim
 	};
@@ -163,7 +163,7 @@
 
 #ALIAS {^{noauto|auto}{claim|sneak}$}
 {
-	#if {"%0" == "auto{claim|sneak}"}
+	#if {{%0} == {auto{claim|sneak}}}
 	{
 		#showme {Auto %2 enabled.};
 		#variable {auto%2} {true}
@@ -178,7 +178,7 @@
 
 #ALIAS {^{noquick|quick}nav$}
 {
-	#if {"%0" == "quicknav"}
+	#if {{%0} == {quicknav}}
 	{
 		#variable {quicknav} {true};
 		#showme {You will only see the exits in the same direction you are traveling.}
@@ -199,45 +199,45 @@
 
 #FUNCTION {get_reverse}
 {
-	#switch {"$lastDirection"}
+	#switch {{$lastDirection}}
 	{
-		#case {"down"}
+		#case {{down}}
 		{
 			#variable {result} {up}
 		};
-		#case {"east"}
+		#case {{east}}
 		{
 			#variable {result} {west}
 		};
-		#case {"north"}
+		#case {{north}}
 		{
 			#variable {result} {south}
 		};
-		#case {"northeast"}
+		#case {{northeast}}
 		{
 			#variable {result} {southwest}
 		};
-		#case {"northwest"}
+		#case {{northwest}}
 		{
 			#variable {result} {southeast}
 		};
-		#case {"south"}
+		#case {{south}}
 		{
 			#variable {result} {north}
 		};
-		#case {"southeast"}
+		#case {{southeast}}
 		{
 			#variable {result} {northwest}
 		};
-		#case {"southwest"}
+		#case {{southwest}}
 		{
 			#variable {result} {northeast}
 		};
-		#case {"west"}
+		#case {{west}}
 		{
 			#variable {result} {east}
 		};
-		#case {"up"}
+		#case {{up}}
 		{
 			#variable {result} {down}
 		}
@@ -267,7 +267,7 @@
 
 #MACRO {\eJ}
 {
-	#if {"$pathLoaded" == "true"}
+	#if {{$pathLoaded} == {true}}
 	{
 		#path {walk} {backward}
 	};

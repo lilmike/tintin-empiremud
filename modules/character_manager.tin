@@ -1,6 +1,6 @@
 #ALIAS {^CSAVE$}
 {
-	#if {"$MSDP_ACCOUNT_NAME" != "" && "$MSDP_ACCOUNT_NAME" != "\$MSDP_ACCOUNT_NAME"}
+	#if {{$MSDP_ACCOUNT_NAME} != {} && {$MSDP_ACCOUNT_NAME} != {\$MSDP_ACCOUNT_NAME}}
 	{
 		#variable {historyPath} {${HOME}/${MSDP_ACCOUNT_NAME}\.history};
 		#replace {historyPath} {\\} {};
@@ -11,7 +11,7 @@
 		#class {${msdpOldList[CHARACTER_NAME]}} {close};
 		#variable {copying} {1};
 		#local {i} {};
-		#foreach {${msdpOldList[]}} {i}
+		#foreach {*{msdpOldList[]}} {i}
 		{
 			#variable {MSDP_$i} {${msdpOldList[$i]}}
 		};
@@ -27,7 +27,7 @@
 	#variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}\.bots};
 	#replace {modpath} {\\} {};
 	#nop {Kill, load, or reload a specified bot.};
-	#if {"%1" == "kill"}
+	#if {{%1} == {kill}}
 	{
 		#if {&{bot.%1}}
 		{
@@ -40,7 +40,7 @@
 		#class {$MSDP_ACCOUNT_NAME} {open};
 		#showme {bot %2 has been killed.}
 	};
-	#if {"%1" == "load"}
+	#if {{%1} == {load}}
 	{
 		#showme {Loading bot %2.tin};
 		#class {$MSDP_ACCOUNT_NAME} {close};
@@ -61,7 +61,7 @@
 	#variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}\.modules};
 	#replace {modpath} {\\} {};
 	#nop {reload all modules};
-	#if {"%0" == "cmodreload all"}
+	#if {{%0} == {cmodreload all}}
 	{
 		#script {for module in $modpath/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
 		#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
@@ -70,12 +70,12 @@
 	#else
 	{
 		#nop {Kill, load, or reload a specified module.};
-		#if {"%1" == "{kill|reload}"}
+		#if {{%1} == {{kill|reload}}}
 		{
 			#class {character_%2} {kill};
 			#showme {Character module %2 has been killed.}
 		};
-		#if {"%1" == "{load|reload}"}
+		#if {{%1} == {{load|reload}}}
 		{
 			#showme {Loading character module %2.tin};
 			#script {if [ -r "$HOME/modules/%2.tin" ]; then echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";elif [ -r "$modpath/%2.tin" ]; then echo "#class {character_%2} {read} {$modpath/%2.tin}";else echo "#echo {Character module %2.tin not found.}";fi};
@@ -88,24 +88,24 @@
 
 #ALIAS {^{audioprompt|beeps|noaudioprompt|nobeeps}$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"audioprompt"}
+		#case {{audioprompt}}
 		{
 			#variable {character[audioprompt]} {1};
 			#echo {Audio prompt enabled.}
 		};
-		#case {"beeps"}
+		#case {{beeps}}
 		{
 			#variable {character[beeps]} {1};
 			#echo {Opponent condition beeps enabled.}
 		};
-		#case {"noaudioprompt"}
+		#case {{noaudioprompt}}
 		{
 			#variable {character[audioprompt]} {0};
 			#echo {Audio prompt disabled.}
 		};
-		#case {"nobeeps"}
+		#case {{nobeeps}}
 		{
 			#variable {character[beeps]} {0};
 			#echo {Opponent condition beeps disabled.}
@@ -121,7 +121,7 @@
 	#nop {Make sure background music is disabled when the program closes.};
 	#script {tileSoundFilePID} {if [ -f ".tileSoundFilePID" ] ; then echo "$(cat ".tileSoundFilePID")";else echo "false";fi;echo "false" > .tileSoundFilePID};
 	#variable {tileSoundFilePID} {${tileSoundFilePID[1]}};
-	#if {"$tileSoundFilePID" != "false"}
+	#if {{$tileSoundFilePID} != {false}}
 	{
 		#system {kill $tileSoundFilePID};
 		#system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" &> /dev/null;fi}
@@ -136,9 +136,9 @@
 {
 	#nop {Hook name: characterName};
 	#nop {Hook args: character name.};
-	#if {"%1" != "" && !$copying}
+	#if {{%1} != {} && !$copying}
 	{
-		#if {"${OLD_MSDP_ACCOUNT_NAME}" != "" && "$OLD_MSDP_ACCOUNT_NAME" != "%1"}
+		#if {{${OLD_MSDP_ACCOUNT_NAME}} != {} && {$OLD_MSDP_ACCOUNT_NAME} != {%1}}
 		{
 			#variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.history};
 			#replace {historyPath} {\\} {};
@@ -149,7 +149,7 @@
 			#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
 			#variable {copying} {1};
 			#local {i} {};
-			#foreach {${msdpOldList[]}} {i}
+			#foreach {*{msdpOldList[]}} {i}
 			{
 				#variable {MSDP_$i} {${msdpOldList[$i]}}
 			};
@@ -174,7 +174,7 @@
 		#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 		#nop {Load personal modules.};
 		#script {if [ -d "$HOME/%1.modules" ]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-		#if {"$bgm" == "true"}
+		#if {{$bgm} == {true}}
 		{
 			#variable {tileSoundFile} {none};
 			Tile_Play $tileSoundFile;
@@ -185,7 +185,7 @@
 	}
 }
 
-#TICKER           {csave}  {#if {"$MSDP_ACCOUNT_NAME" == "$OLD_MSDP_ACCOUNT_NAME"}{CSAVE}}                                      {90}
+#TICKER           {csave}  {#if {{$MSDP_ACCOUNT_NAME} == {$OLD_MSDP_ACCOUNT_NAME}}{CSAVE}}                                      {90}
 #VARIABLE         {OLD_MSDP}  {}
 #VARIABLE         {characterName}  {}
 #VARIABLE         {characterPosition}  {}

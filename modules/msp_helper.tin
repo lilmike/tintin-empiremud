@@ -18,7 +18,7 @@
 
 #ACTION {^Your shadowstep cooldown has ended.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -94,7 +94,7 @@
 
 #ACTION {^The sun {rises over|slowly disappears beneath} the horizon.$}
 {
-	#if {"%1" == "rises over"}
+	#if {{%1} == {rises over}}
 	{
 		PLAY ambiance/sunrise
 	};
@@ -108,7 +108,7 @@
 #ACTION {^There's nothing left here to chop.$}
 {
 	PLAY skills/work_complete;
-	#if {"$bgm" == "true"}
+	#if {{$bgm} == {true}}
 	{
 		look
 	}
@@ -159,13 +159,13 @@
 
 #ACTION {^You carefully place {a|an} %2 in the structure.$}
 {
-	#switch {"%2"}
+	#switch {{%2}}
 	{
-		#case {"iron ingot"}
+		#case {{iron ingot}}
 		{
 			PLAY craft/metal
 		};
-		#case {"rock"}
+		#case {{rock}}
 		{
 			PLAY craft/rock
 		};
@@ -252,7 +252,7 @@
 #ACTION {^You finish dismantling the building.$}
 {
 	PLAY skills/complete_dismantle;
-	#if {"$bgm" == "true"}
+	#if {{$bgm} == {true}}
 	{
 		look
 	}
@@ -268,7 +268,7 @@
 #ACTION {^You finish harvesting the crop!$}
 {
 	PLAY skills/work_complete;
-	#if {"$bgm" == "true"}
+	#if {{$bgm} == {true}}
 	{
 		look
 	}
@@ -295,11 +295,11 @@
 
 #ACTION {^You get {a stone spear head|a handaxe}.$}
 {
-	#if {"%1" == "a stone spear head"}
+	#if {{%1} == {a stone spear head}}
 	{
 		PLAY craft/spear_head
 	};
-	#elseif {"%1" == "a handaxe"}
+	#elseif {{%1} == {a handaxe}}
 	{
 		PLAY craft/handaxe
 	}
@@ -320,7 +320,7 @@
 
 #ACTION {^You have become %*!$}
 {
-	#if {"%1" == "$MSDP_ACCOUNT_NAME%*"}
+	#if {{%1} == {$MSDP_ACCOUNT_NAME%*}}
 	{
 		PLAY skills/form_normal
 	}
@@ -336,7 +336,7 @@
 #ACTION {^You have finished planting!$}
 {
 	PLAY skills/work_complete;
-	#if {"$bgm" == "true"}
+	#if {{$bgm} == {true}}
 	{
 		look
 	}
@@ -388,7 +388,7 @@
 #ACTION {^You lay a road here.$}
 {
 	PLAY craft/rock;
-	#if {"$bgm" == "true"}
+	#if {{$bgm} == {true}}
 	{
 		look
 	}
@@ -475,7 +475,7 @@
 
 #ACTION {^You sift through %1, looking for %2...$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#showme {You pan for %2.};
 		#line {gag}
@@ -685,7 +685,7 @@
 #ACTION {^You {complete|finish crafting} %*!$}
 {
 	PLAY skills/work_complete;
-	#if {"$bgm" == "true" && "%2" == "the construction"}
+	#if {{$bgm} == {true} && {%2} == {the construction}}
 	{
 		look
 	}
@@ -694,7 +694,7 @@
 
 #ACTION {^You {continue|finish} crafting {a|an|the} %*{\.\.\.|!}$}
 {
-	#if {"%1" == "finish"}
+	#if {{%1} == {finish}}
 	{
 		PLAY craft/complete_wood
 	};
@@ -719,7 +719,7 @@
 
 #ACTION {^You {find|store} a {basket of peaches|bunch of apples}{\.|!}}
 {
-	#if {"%1" == "find"}
+	#if {{%1} == {find}}
 	{
 		PLAY get/fruit
 	};
@@ -762,7 +762,7 @@
 
 #ACTION {^{Huh\?!\?|In your dreams, or what\?|There is no help on that word\.|You aren't using the proper tool for that\.|There is no room for more\.}$}
 {
-	#if {"%0" == "In your dreams, or what?"}
+	#if {{%0} == {In your dreams, or what?}}
 	{
 		#variable {rememberCoordinates} {false}
 	};
@@ -784,7 +784,7 @@
 
 #ALIAS {^{noc|c}lock$}
 {
-	#if {"%1" == "c"}
+	#if {{%1} == {c}}
 	{
 		#variable {character[clock]} {1};
 		#showme {Clock chimes enabled.}
@@ -801,7 +801,7 @@
 {
 	#nop {Hook name: worldTime};
 	#nop {Hook arguments: time in 24 hour format};
-	#if {"%1" != "" && !$copying}
+	#if {{%1} != {} && !$copying}
 	{
 		#if {&{character[clock]}}
 		{

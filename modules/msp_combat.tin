@@ -2,7 +2,7 @@
 
 #ACTION {{You wince in pain as poison courses through your blood!|You burn from the inside out as poison flows through your veins!}}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line gag
 	};
@@ -12,7 +12,7 @@
 
 #ACTION {^You {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %* {missing|missing {it|her|him}}!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -22,29 +22,29 @@
 
 #ACTION {^Your {bash|blind|disarm|howl|jab|kick|outrage|prick|sap|terrify} cooldown has ended.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
-	#switch {"%1"}
+	#switch {{%1}}
 	{
-		#case {"bash"}
+		#case {{bash}}
 		{
 			REV_PLAY combat/hit/bash_cooldown
 		};
-		#case {"blind"}
+		#case {{blind}}
 		{
 			REV_PLAY combat/blind
 		};
-		#case {"disarm"}
+		#case {{disarm}}
 		{
 			REV_PLAY combat/disarm_fail
 		};
-		#case {"howl"}
+		#case {{howl}}
 		{
 			REV_PLAY combat/howl
 		};
-		#case {"terrify"}
+		#case {{terrify}}
 		{
 			REV_PLAY combat/terrify
 		};
@@ -59,7 +59,7 @@
 	};
 	#if {!${autoDoPaused}}
 	{
-		#if {"$MSDP_OPPONENT_NAME" == ""}
+		#if {{$MSDP_OPPONENT_NAME} == {}}
 		{
 			#variable {autodotype} {all}
 		};
@@ -72,7 +72,7 @@
 		{
 			#loop {1} {$i} {x}
 			{
-				#if {"%1" == "${autoDo[$autodotype][$x]}%*"}
+				#if {{%1} == {${autoDo[$autodotype][$x]}%*}}
 				{
 					%1;
 					#break
@@ -85,7 +85,7 @@
 
 #ACTION {%* acts like {she's|he's|it's} burning from the inside as poison flows through {her|its|his} veins!$}
 {
-	#if {"${cspam}" == "true"}
+	#if {{${cspam}} == {true}}
 	{
 		#line {gag}
 	};
@@ -95,7 +95,7 @@
 
 #ACTION {%* le{t|ts} out a fearsome howl!$}
 {
-	#if {"${cspam}" == "true"}
+	#if {{${cspam}} == {true}}
 	{
 		#line {gag}
 	};
@@ -105,7 +105,7 @@
 
 #ACTION {%* looks ill as {it|she|he} is poisoned!$}
 {
-	#if {"${cspam}" == "true"}
+	#if {{${cspam}} == {true}}
 	{
 		#line {gag}
 	};
@@ -115,7 +115,7 @@
 
 #ACTION {%* tries to bite you but bites its tongue instead!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -125,7 +125,7 @@
 
 #ACTION {%* winces in pain as poison courses through {his|her|its} blood!$}
 {
-	#if {"${cspam}" == "true"}
+	#if {{${cspam}} == {true}}
 	{
 		#line {gag}
 	};
@@ -135,7 +135,7 @@
 
 #ACTION {%1 barely {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} you.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -151,7 +151,7 @@
 
 #ACTION {%1 snaps its teeth at you fiercely but misses.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -161,11 +161,11 @@
 
 #ACTION {%1 {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}s you%*{\.|!}$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
-	#if {"%2" == "{slash|slice}"}
+	#if {{%2} == {{slash|slice}}}
 	{
 		LPLAY combat/hit/slash
 	};
@@ -178,7 +178,7 @@
 
 #ACTION {%1 {tries to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}|{bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} at} you but misses by a {hair!|mile\.}$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -188,7 +188,7 @@
 
 #ACTION {^%1 engag{e|es} {her|him|it|you} in melee combat!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -214,7 +214,7 @@
 
 #ACTION {^There is a thud as your arrow jabs into %1.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -224,7 +224,7 @@
 
 #ACTION {^You aim %* and roast %* until it's fully cooked!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -234,7 +234,7 @@
 
 #ACTION {^You attempt to disarm %1, but fail.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -244,7 +244,7 @@
 
 #ACTION {^You beautifully slice %* into two parts -- both dead.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -254,7 +254,7 @@
 
 #ACTION {^You block %*.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -264,7 +264,7 @@
 
 #ACTION {^You grab {her|him|it} by the head and twist sharply!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -275,18 +275,18 @@
 #ACTION {^You have killed %1! R.I.P.$}
 {
 	#delay {0.9} {LPLAY combat/victory};
-	#if {"%1" != "someone"}
+	#if {{%1} != {someone}}
 	{
-		#if {"$autoloot" == "true"}
+		#if {{$autoloot} == {true}}
 		{
 			get all corpse
 		};
-		#if {"$autoskin" == "true"}
+		#if {{$autoskin} == {true}}
 		{
 			skin corpse
 		}
 	};
-	#if {"$feeding" == "true"}
+	#if {{$feeding} == {true}}
 	{
 		#variable {feeding} {false}
 	}
@@ -295,7 +295,7 @@
 
 #ACTION {^You jump out of the way in a panic as %* pounds at you!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -305,7 +305,7 @@
 
 #ACTION {^You miss %* by an inch, curse that brat!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -315,7 +315,7 @@
 
 #ACTION {^You quickly prick %* with poison!}
 {
-	#if {"${cspam}" == "true"}
+	#if {{${cspam}} == {true}}
 	{
 		#line {gag}
 	};
@@ -331,7 +331,7 @@
 
 #ACTION {^You shudder with ecstasy as you feed from %*!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -341,7 +341,7 @@
 
 #ACTION {^You skillfully disarm %1!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -357,7 +357,7 @@
 
 #ACTION {^You toss a handful of sand into %1's eyes!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -367,7 +367,7 @@
 
 #ACTION {^You try to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %* but miss by a mile.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -377,7 +377,7 @@
 
 #ACTION {^You try to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %2, but {he|it|she} blocks.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -387,11 +387,11 @@
 
 #ACTION {^You {OBLITERATE|ANNIHILATE|LIQUIDATE|massacre|maul} %* with your {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}{\.|!|!!}$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
-	#if {"%3" == "{slash|slice|deadly slash|deadly slice}"}
+	#if {{%3} == {{slash|slice|deadly slash|deadly slice}}}
 	{
 		RPLAY combat/hit/slash
 	};
@@ -408,11 +408,11 @@
 
 #ACTION {^You {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %*{\.|!}$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
-	#if {"%1" == "{slash|slice}"}
+	#if {{%1} == {{slash|slice}}}
 	{
 		RPLAY combat/hit/slash
 	};
@@ -425,7 +425,7 @@
 
 #ACTION {^Your arrow pierces %1's heart, killing {her|him|it}!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -435,7 +435,7 @@
 
 #ACTION {^Your arrow whistles past %1 harmlessly.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -445,7 +445,7 @@
 
 #ACTION {^Your bash at %* sends {her|him|it} sprawling!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -455,7 +455,7 @@
 
 #ACTION {^Your blood freezes as you hear %1's death cry.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -465,7 +465,7 @@
 
 #ACTION {^Your boots need polishing again -- blood all over them...$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -475,7 +475,7 @@
 
 #ACTION {^Your desperate %* at %* is easily avoided by {her|him|it}.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -485,7 +485,7 @@
 
 #ACTION {^Your hostile flag cooldown has ended.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -495,7 +495,7 @@
 
 #ACTION {^Your kick hits %* in the solar plexus!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};
@@ -505,7 +505,7 @@
 
 #ACTION {^Your powerful slash cleanly cuts off %* head, which rolls away with a look of horror on it.$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	};

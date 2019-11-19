@@ -2,7 +2,7 @@
 {
 	CSAVE;
 	#nop {reload all modules};
-	#if {"%0" == "modreload all"}
+	#if {{%0} == {modreload all}}
 	{
 		#script {for module in modules/*.tin ; do if [ "$module" != "modules/msdp.tin" ];then echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename           "$module" .tin)} {read} {$module}";fi;done};
 		#showme {All modules except msdp reloaded.};
@@ -11,14 +11,14 @@
 	#else
 	{
 		#nop {Kill, load, or reload a specified module.};
-		#if {"%2" != "msdp"}
+		#if {{%2} != {msdp}}
 		{
-			#if {"%1" == "{kill|reload}"}
+			#if {{%1} == {{kill|reload}}}
 			{
 				#class {%2} {kill};
 				#showme {Class %2 has been killed.}
 			};
-			#if {"%1" == "{load|reload}"}
+			#if {{%1} == {{load|reload}}}
 			{
 				#showme {Loading modules/%2.tin};
 				#class {%2} {read} {modules/%2.tin}
@@ -29,7 +29,7 @@
 			#showme {Refusing to touch msdp. To reload msdp you must close and reopen tintin.}
 		}
 	};
-	#if {"$MSDP_CHARACTER_NAME" != ""}
+	#if {{$MSDP_CHARACTER_NAME} != {}}
 	{
 		#class {$MSDP_CHARACTER_NAME} {open}
 	}
@@ -38,7 +38,7 @@
 
 #ALIAS {^{em|login}$}
 {
-	#if {"$connected" == "false"}
+	#if {{$connected} == {false}}
 	{
 		#session {$mudSessionName} {$mudAddress} {$mudPort}
 	};

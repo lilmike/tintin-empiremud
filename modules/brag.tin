@@ -29,7 +29,7 @@
 		#variable {msg} {Nothing to brag}
 	};
 	#variable {msg} {${msg}\.};
-	#if {"$msg" != "Nothing to brag\\."}
+	#if {{$msg} != {Nothing to brag\\.}}
 	{
 		#send {%2 $msg}
 	};
@@ -53,7 +53,7 @@
 #ALIAS {^show %S$}
 {
 	#format {tmp} {%u} {%1};
-	#if {"$tmp" == "{EMPIRE_TERRITORY|TERRITORY}" && &{MSDP_EMPIRE_TERRITORY}}
+	#if {{$tmp} == {{EMPIRE_TERRITORY|TERRITORY}} && &{MSDP_EMPIRE_TERRITORY}}
 	{
 		#variable {msg} {Territory: ${MSDP_EMPIRE_TERRITORY_OUTSIDE}/${MSDP_EMPIRE_TERRITORY_OUTSIDE_MAX} outskirts, ${MSDP_EMPIRE_TERRITORY_FRONTIER}/${MSDP_EMPIRE_TERRITORY_FRONTIER_MAX} frontier, ${MSDP_EMPIRE_TERRITORY}/${MSDP_EMPIRE_TERRITORY_MAX} total}
 	};
@@ -80,25 +80,25 @@
 
 #ALIAS {^{bp|cash|hp|mn|mv}$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"bp"}
+		#case {{bp}}
 		{
 			show blood
 		};
-		#case {"cash"}
+		#case {{cash}}
 		{
 			#echo {Gold: $MSDP_MONEY}
 		};
-		#case {"hp"}
+		#case {{hp}}
 		{
 			show health
 		};
-		#case {"mv"}
+		#case {{mv}}
 		{
 			show movement
 		};
-		#case {"mn"}
+		#case {{mn}}
 		{
 			show mana
 		}
@@ -109,7 +109,7 @@
 #nop {
 #EVENT {RECEIVED LINE}
 {
-	#if {"${pasteText}" != "" && "%1" != " end paste"}
+	#if {{${pasteText}} != {} && {%1} != { end paste}}
 	{
 		#variable {pasteText} {${pasteText} %1}
 	}

@@ -5,7 +5,7 @@
 	{
 		eat ${auto[eat]}
 	};
-	#elseif {"$autoforage" == "true"}
+	#elseif {{$autoforage} == {true}}
 	{
 		forage
 	}
@@ -15,7 +15,7 @@
 #ACTION {^You forage around %*}
 {
 	PAN_PLAY skills/search;
-	#if {"$autoforage" == "true"}
+	#if {{$autoforage} == {true}}
 	{
 		#regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})} {#&4 eat &3}
 	}
@@ -30,10 +30,10 @@
 
 #ACTION {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to {reboot|shutdown} faster) ]$}
 {
-	#if {"$channelSending" != "true"}
+	#if {{$channelSending} != {true}}
 	{
 		PLAY system/%1 system/%2-minute;
-		#if {"$autoconfirmreboots" == "true" && "$rebootConfirmed" != "true"}
+		#if {{$autoconfirmreboots} == {true} && {$rebootConfirmed} != {true}}
 		{
 			#variable {rebootConfirmed} {true};
 			confirm
@@ -51,7 +51,7 @@
 #ACTION {%* is {stunned, but will probably regain consciousness again|knocked unconscious|incapacitated and will slowly die, if not aided}{\.|!}$}
 {
 	PLAY combat/unconscious;
-	#if {"$autobite" == "true" && "$feeding" == "false"}
+	#if {{$autobite} == {true} && {$feeding} == {false}}
 	{
 		#regexp {%1} {{.*} {.*}} {bite &2};
 		#variable {feeding} {true}
@@ -96,7 +96,7 @@
 
 #ALIAS {^autodo all$}
 {
-	#if {"$MSDP_OPPONENT_NAME" == ""}
+	#if {{$MSDP_OPPONENT_NAME} == {}}
 	{
 		#variable {autodotype} {all}
 	};
@@ -117,13 +117,13 @@
 
 #ALIAS {^autodo {add|remove} {combat|all} %w$}
 {
-	#if {"%1" == "add"}
+	#if {{%1} == {add}}
 	{
 		#list {autoDo[%2]} {find} {%3} {i};
 		#if {$i == 0}
 		{
 			#list {autoDo[%2]} {add} {%3};
-			#if {"%2" == "combat"}
+			#if {{%2} == {combat}}
 			{
 				#echo {%3 added to auto do list for combat only}
 			};
@@ -155,7 +155,7 @@
 
 #ALIAS {^autodo {pause|resume}$}
 {
-	#if {"%1" == "pause"}
+	#if {{%1} == {pause}}
 	{
 		#variable {autoDoPaused} {1};
 		#echo {autodo paused}
@@ -238,7 +238,7 @@
 
 #ALIAS {^{auto|noauto}{eat|drink}{.*}}
 {
-	#if {"%1" == "noauto"}
+	#if {{%1} == {noauto}}
 	{
 		#showme {Auto%2 disabled.};
 		#unvariable {auto[%2]}
@@ -253,7 +253,7 @@
 
 #ALIAS {^{noauto|auto}bite$}
 {
-	#if {"%0" == "autobite"}
+	#if {{%0} == {autobite}}
 	{
 		#showme {autobite enabled};
 		#variable {autobite} {true}
@@ -268,7 +268,7 @@
 
 #ALIAS {^{noauto|auto}confirmreboots$}
 {
-	#if {"%0" == "autoconfirmreboots"}
+	#if {{%0} == {autoconfirmreboots}}
 	{
 		#showme {You will now automatically confirm reboots when asked by the game.};
 		#variable {autoconfirmreboots} {true}
@@ -283,7 +283,7 @@
 
 #ALIAS {^{noauto|auto}forage$}
 {
-	#if {"%0" == "autoforage"}
+	#if {{%0} == {autoforage}}
 	{
 		#echo {You will automatically forage for and eat food when you are hungry.};
 		#variable {autoforage} {true}
@@ -298,24 +298,24 @@
 
 #ALIAS {^{noauto|auto}{loot|skin}$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"autoloot"}
+		#case {{autoloot}}
 		{
 			#showme {autoloot is enabled.};
 			#variable {autoloot} {true}
 		};
-		#case {"noautoloot"}
+		#case {{noautoloot}}
 		{
 			#showme {autoloot is disabled.};
 			#variable {autoloot} {false}
 		};
-		#case {"autoskin"}
+		#case {{autoskin}}
 		{
 			#showme {autoskinning is enabled.};
 			#variable {autoskin} {true}
 		};
-		#case {"noautoskin"}
+		#case {{noautoskin}}
 		{
 			#showme {autoskinning is disabled.};
 			#variable {autoskin} {false}

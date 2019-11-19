@@ -10,7 +10,7 @@
 			#variable {hookArgs} {}
 		};
 		#local {i} {};
-		#foreach {${hook[%1][]}} {i}
+		#foreach {*{hook[%1][]}} {i}
 		{
 			@${hook[%1][$i]}{${hookArgs}}
 		};

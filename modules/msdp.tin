@@ -23,7 +23,7 @@
 {
 	#local {i} {};
 	#variable {result} {$IAC$SB$PROTOCOL_MSDP${VAR}REPORT};
-	#foreach {${MSDP_REPORTABLE_VARIABLES[]}} {i}
+	#foreach {*{MSDP_REPORTABLE_VARIABLES[]}} {i}
 	{
 		#variable {result} {${result}${VAL}${MSDP_REPORTABLE_VARIABLES[${i}]}}
 	};
@@ -55,13 +55,13 @@
 	#nop Save all variables in an MSDP list.;
 	#variable {MSDP_%0} {%1};
 	#variable {msdpOldList[%0]} {%1};
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"PLAY_SOUND"}
+		#case {{PLAY_SOUND}}
 		{
 			PLAY %1
 		};
-		#case {"REPORTABLE_VARIABLES"}
+		#case {{REPORTABLE_VARIABLES}}
 		{
 			MSDP_REPORT
 		}

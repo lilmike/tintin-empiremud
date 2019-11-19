@@ -18,7 +18,7 @@
 
 #ACTION {^You are healed!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	}
@@ -39,7 +39,7 @@
 
 #ACTION {^You healed %1 for %d (%d/%d health).$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag};
 		#math {tmppercent} {(%3/%4)*100.0};
@@ -50,7 +50,7 @@
 
 #ACTION {^You healed %1 for %d (%d\% health).$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag};
 		#variable {tmpPercent} {%3};
@@ -62,7 +62,7 @@
 #ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
 {
 	LPLAY magic/heal_friend;
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	}
@@ -71,7 +71,7 @@
 
 #ACTION {^You muster up as much mana as you can and send out a shockwave, healing the entire party!$}
 {
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	}
@@ -93,7 +93,7 @@
 #ACTION {^You swirl your mana around your body to heal your wounds.$}
 {
 	LPLAY magic/heal_self;
-	#if {"$cspam" == "true"}
+	#if {{$cspam} == {true}}
 	{
 		#line {gag}
 	}
@@ -127,7 +127,7 @@
 	};
 	#if {!${autoDoPaused}}
 	{
-		#if {"$MSDP_OPPONENT_NAME" == ""}
+		#if {{$MSDP_OPPONENT_NAME} == {}}
 		{
 			#variable {autodotype} {all}
 		};
@@ -140,7 +140,7 @@
 		{
 			#loop {1} {$i} {x}
 			{
-				#if {"%1" == "${autoDo[$autodotype][$x]}%*"}
+				#if {{%1} == {${autoDo[$autodotype][$x]}%*}}
 				{
 					%1;
 					#break
