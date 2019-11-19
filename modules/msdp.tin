@@ -23,7 +23,7 @@
 {
 	#local {i} {};
 	#variable {result} {$IAC$SB$PROTOCOL_MSDP${VAR}REPORT};
-	#foreach {${MSDP_REPORTABLE_VARIABLES[]}} {i}
+	#foreach {*{MSDP_REPORTABLE_VARIABLES[]}} {i}
 	{
 		#variable {result} {${result}${VAL}${MSDP_REPORTABLE_VARIABLES[${i}]}}
 	};

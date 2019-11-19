@@ -92,7 +92,7 @@
 		#if {$i > 0}
 		{
 			#local {i} {};
-			#foreach {${cmarks[]}} {i}
+			#foreach {*{cmarks[]}} {i}
 			{
 				#showme {Mark "$i" is at ${cmarks[$i][x]}, ${cmarks[$i][y]}\.}
 			}

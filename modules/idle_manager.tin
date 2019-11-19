@@ -14,7 +14,7 @@
 	};
 	#echo {Current commands to avoide the void are:};
 	#local {i} {};
-	#foreach {${idleList[]}} {i}
+	#foreach {*{idleList[]}} {i}
 	{
 		#echo {${idleList[$i]}}
 	};

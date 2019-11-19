@@ -11,7 +11,7 @@
 		#class {${msdpOldList[CHARACTER_NAME]}} {close};
 		#variable {copying} {1};
 		#local {i} {};
-		#foreach {${msdpOldList[]}} {i}
+		#foreach {*{msdpOldList[]}} {i}
 		{
 			#variable {MSDP_$i} {${msdpOldList[$i]}}
 		};
@@ -149,7 +149,7 @@
 			#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
 			#variable {copying} {1};
 			#local {i} {};
-			#foreach {${msdpOldList[]}} {i}
+			#foreach {*{msdpOldList[]}} {i}
 			{
 				#variable {MSDP_$i} {${msdpOldList[$i]}}
 			};

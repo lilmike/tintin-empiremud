@@ -113,7 +113,7 @@
 	{
 		#showme {Missing spells:};
 		#local {i} {};
-		#foreach {${recastList[]}} {i}
+		#foreach {*{recastList[]}} {i}
 		{
 			#showme {${recastList[$i]}}
 		}
