@@ -821,7 +821,7 @@
 			};
 			PLAY $playChimes
 		};
-		@do_hook{worldtime;%1}
+		@do_hook{worldTime;%1}
 	}
 }
 
