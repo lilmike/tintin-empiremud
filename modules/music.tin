@@ -100,9 +100,10 @@
      #variable {msg} {"${msg[2]}" by "${msg[1]}" from "${msg[3]}"};
      #replace {msg} {;} { - };
      #replace {msg} {ö} {o};
+     #replace {msg} {from ""} {};
      #regexp {$msg} {Now playing:{\s}via{\s}{.*}.}
      {
-          #switch {{${music[player]}}} {#case {{cmus}} {#script {msg} {basename {$(cmus-remote -Q | head -2 | tail -1)} | rev | cut -d '.' -f2- | rev}};#case {{mpd}} {#script {msg} {mpc current | sed 's/\// - /g' | rev | cut -d '.' -f2- | rev}};#case {{xmms2}} {#script {msg} {basename {$(xmms2 info | tail -n 1 | sed 's/^\[server\] url = file:\/\/\///' | rev | cut -d '.' -f2- | rev)}}}};#variable {msg} {${msg[1]}};#replace {msg} {from ""} {};#replace {msg} {+} { };#replace {msg} {\%27} {'};#replace {msg} {\%28} {(};#replace {msg} {\%29} {)};#replace {msg} {\%2c} {,};#variable {newAutoTitleString} {$msg}
+          #switch {{${music[player]}}} {#case {{cmus}} {#script {msg} {basename {$(cmus-remote -Q | head -2 | tail -1)} | rev | cut -d '.' -f2- | rev}};#case {{mpd}} {#script {msg} {mpc current | sed 's/\// - /g' | rev | cut -d '.' -f2- | rev}};#case {{xmms2}} {#script {msg} {basename {$(xmms2 info | tail -n 1 | sed 's/^\[server\] url = file:\/\/\///' | rev | cut -d '.' -f2- | rev)}}}};#variable {msg} {${msg[1]}};#replace {msg} {+} { };#replace {msg} {\%27} {'};#replace {msg} {\%28} {(};#replace {msg} {\%29} {)};#replace {msg} {\%2c} {,};#variable {newAutoTitleString} {$msg}
      }
 }
 {9}
