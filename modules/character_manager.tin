@@ -342,6 +342,5 @@
 #TICKER           {csave}  {#if {{$MSDP_ACCOUNT_NAME} == {$OLD_MSDP_ACCOUNT_NAME}}{CSAVE}}                                          {90}
 
 #VARIABLE         {OLD_MSDP}  {}
-#VARIABLE         {OLD_MSDP_ACCOUNT_NAME}     {}
 #VARIABLE         {copying}  {0}
 
