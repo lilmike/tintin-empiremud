@@ -59,14 +59,14 @@
 }
 {8}
 
-#ACTION {^[/death]: %1 has been {executed|killed} by %*$}
+#ACTION {^[/death]: %1 has been {executed|killed} by %* at (%d, %d)$}
 {
      PLAY miscellaneous/death;
      Channel_Event misc %0
 }
 {8}
 
-#ACTION {^[/death]: %1 has {died|been slain} at %*$}
+#ACTION {^[/death]: %1 has {died|been slain} at (%d, %d)$}
 {
      PLAY miscellaneous/death;
      Channel_Event misc %0
@@ -623,7 +623,7 @@
 
 
 #VARIABLE         {channel}  {}
-#VARIABLE         {channelBuffer}  {{1}{all}{2}{cowsay}{3}{empire}{4}{immortal}{5}{misc}{6}{music}{7}{ooc}{8}{say}{9}{party}{10}{tell}}
+#VARIABLE         {channelBuffer}  {{1}{All}{2}{cowsay}{3}{empire}{4}{immortal}{5}{misc}{6}{music}{7}{ooc}{8}{say}{9}{party}{10}{tell}}
 #VARIABLE         {channelBufferIndex}  {1}
 #VARIABLE         {currentSplitRows}  {1}
 #VARIABLE         {messageIndex}  {1}
