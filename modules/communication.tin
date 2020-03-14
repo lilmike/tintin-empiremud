@@ -425,7 +425,7 @@
 
 #MACRO {\e+}
 {
-     #list {${channelBuffer[$channelBufferIndex]}List} {size} {messageIndex};
+     #list {channel[${channelBuffer[$channelBufferIndex]}]} {size} {messageIndex};
      NOTIFY Moved to top of buffer;
      display_channel $channelBuffer[$channelBufferIndex] $messageIndex
 }
@@ -497,7 +497,7 @@
 #MACRO {\e=}
 {
      #variable {messageReset} {false};
-     #list {${channelBuffer[$channelBufferIndex]}List} {size} {i};
+     #list {channel[${channelBuffer[$channelBufferIndex]}]} {size} {i};
      #math {messageIndex} {$messageIndex+1};
      #if {$messageIndex > $i}
      {
