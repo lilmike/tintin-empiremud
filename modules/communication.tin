@@ -1,524 +1,631 @@
 #ACTION {%1-EBG31@ %2}
 {
-	#line {gag};
-	#script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
-	#variable {unencryptedMessage} {${unencryptedMessage[1]}};
-	#echo {%1${unencryptedMessage}'};
-	#if {{$channelSending} != {true}}
-	{
-		PLAY cryptmsg
-	}
+     #line {gag};
+     #script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
+     #variable {unencryptedMessage} {${unencryptedMessage[1]}};
+     #line ignore #showme {%1${unencryptedMessage}'};
+     PLAY cryptmsg
 }
 {8}
 
 #ACTION {^You {say|tell .+|shout}, '%2'$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		#switch {{%1}}
-		{
-			#case {{say}}
-			{
-				SYNTH_PLAY saySendSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event say %0
-			};
-			#case {{tell %*}}
-			{
-				SYNTH_PLAY tellSendSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event tell %0
-			};
-			#case {{shout}}
-			{
-				SYNTH_PLAY shoutChannelSound;
-				Add_Channel_Event all %0
-			}
-		}
-	}
+     #switch {{%1}}
+     {
+          #case {{say}}
+          {
+               SYNTH_PLAY saySendSound;
+               Channel_Event say %0
+          };
+          #case {{tell %*}}
+          {
+               SYNTH_PLAY tellSendSound;
+               Channel_Event tell %0
+          };
+          #case {{shout}}
+          {
+               SYNTH_PLAY shoutChannelSound;
+               Channel_Event shout %0
+          }
+     }
 }
 {8}
 
 #ACTION {^[ %* {has switched to|used alternate to switch to} %* ]$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		SYNTH_PLAY switchCharacterSound;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     SYNTH_PLAY switchCharacterSound;
+     Channel_Event misc %0
 }
 {8}
 
 #ACTION {^[ %1 has been {demote|promote}d to %* ]$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY miscellaneous/%2;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     PLAY miscellaneous/%2;
+     Channel_Event misc %0
 }
 {8}
 
 #ACTION {^[ %1 has entered the game ]$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY miscellaneous/player_enter;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     PLAY miscellaneous/player_enter;
+     Channel_Event misc %0
 }
 {8}
 
 #ACTION {^[ %1 has {left|quit} the game{\.?} ]$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY miscellaneous/player_leave;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     PLAY miscellaneous/player_leave;
+     Channel_Event misc %0
 }
 {8}
 
 #ACTION {^[/death]: %1 has been {executed|killed} by %*$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY miscellaneous/death;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     PLAY miscellaneous/death;
+     Channel_Event misc %0
 }
 {8}
 
 #ACTION {^[/death]: %1 has {died|been slain} at %*$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY miscellaneous/death;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     PLAY miscellaneous/death;
+     Channel_Event misc %0
 }
 {8}
 
 #ACTION {%* whispers to you, '%*'$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		SYNTH_PLAY sayReceiveSound;
-		Add_Channel_Event all %0;
-		Add_Channel_Event say %0
-	}
+     SYNTH_PLAY sayReceiveSound;
+     Channel_Event say %0
 }
 {9}
 
 #ACTION {^%* {says|tells you|shouts}, '%3'$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		#switch {{%2}}
-		{
-			#case {{says}}
-			{
-				SYNTH_PLAY sayReceiveSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event say %0
-			};
-			#case {{tells you}}
-			{
-				SYNTH_PLAY tellReceiveSound;
-				Add_Channel_Event all %0;
-				Add_Channel_Event tell %0
-			};
-			#case {{shouts}}
-			{
-				SYNTH_PLAY shoutChannelSound;
-				Add_Channel_Event all %0
-			}
-		}
-	}
+     #switch {{%2}}
+     {
+          #case {{says}}
+          {
+               SYNTH_PLAY sayReceiveSound;
+               Channel_Event say %0
+          };
+          #case {{tells you}}
+          {
+               SYNTH_PLAY tellReceiveSound;
+               Channel_Event tell %0
+          };
+          #case {{shouts}}
+          {
+               SYNTH_PLAY shoutChannelSound;
+               Channel_Event shout %0
+          }
+     }
 }
 {9}
 
 #ACTION {^A tiny voice booms across the hills, '%*'$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		SYNTH_PLAY shoutChannelSound;
-		Add_Channel_Event all %0
-	}
+     SYNTH_PLAY shoutChannelSound;
+     Channel_Event shout %0
 }
 {9}
 
 #ACTION {^Welcome to your EmpireMUD!%sPrepare to face your destiny!$}
 {
-	/join cowsay;
-	/join music;
-	#variable {busy} {false}
+     /join cowsay;
+     /join music;
+     #variable {busy} {false}
 }
 {9}
 
 #ACTION {^You are too exhausted to follow.$}
 {
-	gt Out of movement!
+     gt Out of movement!
 }
 {9}
 
 #ACTION {^You improve your {Battle|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to %d.$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		#format {i} {%l} {%1};
-		#replace {i} { } {_};
-		PLAY improve/$i;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     #format {i} {%l} {%1};
+     #replace {i} { } {_};
+     PLAY improve/$i;
+     Channel_Event misc %0
 }
 {9}
 
 #ACTION {^You sense that it came from %*'s mini-Mike.$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		Add_Channel_Event all %0
-	}
+     Channel_Event shout %0
 }
 {9}
 
 #ACTION {^You whisper to %*, '%*'$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		SYNTH_PLAY saySendSound;
-		Add_Channel_Event all %0;
-		Add_Channel_Event say %0
-	}
+     SYNTH_PLAY saySendSound;
+     Channel_Event say %0
 }
 {9}
 
 #ACTION {^Your daily quests and bonus experience have reset!$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY skills/reset;
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     PLAY skills/reset;
+     Channel_Event misc %0
 }
 {9}
 
 #ACTION {^Your trading post item '%*' has sold for %* coins.$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[ %* ]$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     Channel_Event misc %0
 }
 {9}
 
 #ACTION {^[/%S{]| }%*}
 {
-	#if {{$channelSending} != {true}}
-	{
-		#if {&%1ChannelSound}
-		{
-			SYNTH_PLAY %1ChannelSound
-		};
-		#else
-		{
-			SYNTH_PLAY defaultChannelSound
-		};
-		Add_Channel_Event all %0;
-		#if {{%1} == {{cowsay|music|ooc}}}
-		{
-			Add_Channel_Event %1 %0
-		}
-	}
+     #if {&%1ChannelSound}
+     {
+          SYNTH_PLAY %1ChannelSound
+     };
+     #else
+     {
+          SYNTH_PLAY defaultChannelSound
+     };
+     Channel_Event %1 %0
 }
 {9}
 
 #ACTION {^[{EMPIRE|gsay|IMMORTAL}%*}
 {
-	#if {{$channelSending} != {true}}
-	{
-		SYNTH_PLAY %1ChannelSound;
-		Add_Channel_Event all %0;
-		#if {{%1} == {gsay}}
-		{
-			Add_Channel_Event party %0
-		};
-		#elseif {{%1} == {IMMORTAL}}
-		{
-			Add_Channel_Event immortal %0
-		};
-		#else
-		{
-			Add_Channel_Event empire %0
-		}
-	}
+     SYNTH_PLAY %1ChannelSound;
+     #if {{%1} == {gsay}}
+     {
+          Channel_Event party %0
+     };
+     #elseif {{%1} == {IMMORTAL}}
+     {
+          Channel_Event immortal %0
+     };
+     #else
+     {
+          Channel_Event empire %0
+     }
 }
 {9}
+
 
 #ALIAS {^pimptell %S %2}
 {
-	#script {echo -n "tell %1 "; curl --connect-timeout 10 -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+     tell %1 @pimp{%2}
 }
 {8}
 
-#ALIAS {^Add_Channel_Event {all|cowsay|empire|immortal|misc|music|ooc|say|party|tell} %2}
+#ALIAS {^Add_Channel_Event %*}
 {
-	#list {%1List} {insert} {1} {%2};
-	#if {{${channelBuffer[$channelBufferIndex]}} == {%1} && {$messageReset} != {true}}
-	{
-		#math {messageIndex} {$messageIndex+1}
-	}
+     NOTIFY Debug: Error: Deprecated alias Channel_Event called with arguments %1
 }
 {9}
 
-#ALIAS {^away %1}
+#ALIAS {^Channel_Event %S %2}
 {
-	#variable {awayMessage} {%1};
-	#showme {Your away message is set to: $awayMessage}
+     #list {channel[All]} {insert} {1} {%2};
+     #list {channel[%1]} {insert} {1} {%2};
+     #if {{${channelBuffer[$channelBufferIndex]}} == {%1} && {$messageReset} != {true}}
+     {
+          #math {messageIndex} {$messageIndex+1}
+     };
+     @extract_link{%2}
 }
 {9}
 
-#ALIAS {^away$}
+#ALIAS {^NOTIFY %1}
 {
-	#variable {awayMessage} {false};
-	#showme {away message cleared.}
-}
-{9}
-
-#ALIAS {^crypt%S %2}
-{
-	#script {encryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh};
-	#variable {encryptedMessage} {${encryptedMessage[1]}};
-	%1 -EBG31@  $encryptedMessage
+     #if {!&{character[notify]}}
+     {
+          #variable {character[notify]} {top}
+     };
+     #switch {{${character[notify]}}}
+     {
+          #case {{inline}}
+          {
+               #line ignore #showme {%1}
+          };
+          #case {{notify-send}}
+          {
+               #system {notify-send %1}
+          };
+          #default
+          {
+               #if {!&{splitLines}}
+               {
+                    #variable {splitLines} {1}
+               };
+               #local {rowsNeeded} {1};
+               @var_save{script};
+               #variable {script} {@fold{%1}};
+               #list {script} {size} {rowsNeeded};
+               #local {rows} {};
+               #screen get rows rows;
+               #if {$rowsNeeded > $currentSplitRows && $rowsNeeded <= $rows / 8}
+               {
+                    #split {$rowsNeeded} {$splitLines};
+                    #variable {currentSplitRows} {$rowsNeeded}
+               };
+               #elseif {$rowsNeeded > $rows / 8}
+               {
+                    #unvariable {script};
+                    @var_restore{script};
+                    NOTIFY Error: notification too long -- $rowsNeeded rows.;
+                    #return
+               };
+               @var_save{z};
+               #variable {z} {0};
+               #foreach {*{script[]}} {z}
+               {
+                    #line ignore #showme {${script[$z]}} {$z}
+               };
+               #if {$z < $currentSplitRows}
+               {
+                    @var_save{counter};
+                    #math {counter} {$z + 1};
+                    #loop {$counter} {$currentSplitRows} {counter}
+                    {
+                         #showme {@separator{}} {$counter}
+                    };
+                    #unvariable counter;
+                    @var_restore{counter}
+               };
+               #unvariable z;
+               @var_restore{z};
+               #unvariable script;
+               @var_restore{script}
+          }
+     }
 }
 {9}
 
 #ALIAS {^display_channel %w %d}
 {
-	#variable {channelSending} {true};
-	#showme {${%1List[%2]}};
-	#variable {channelSending} {false}
+     NOTIFY ${channel[%1][%2]}
+}
+{9}
+
+#ALIAS {^notify %S$}
+{
+     #switch {{%1}}
+     {
+          #case {{inline}}
+          {
+               #variable {character[notify]} {%1};
+               NOTIFY Notification type set to %1.
+          };
+          #case {{notify-send}}
+          {
+               #variable {character[notify]} {%1};
+               NOTIFY Notification type set to %1.
+          };
+          #case {{top}}
+          {
+               #variable {character[notify]} {%1};
+               NOTIFY Notification type set to %1.
+          };
+          #default
+          {
+               NOTIFY Unknown notification option "%1".
+          }
+     }
 }
 {9}
 
 #ALIAS {^pimp%+ %2}
 {
-	#script {echo -n "%1"; curl --connect-timeout 10 -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+     %1 @pimp{%2}
 }
 {9}
 
+#ALIAS {^splitlines %d$}
+{
+     #split {$currentSplitRows} {%1};
+     NOTIFY Bottom split lines set to %1;
+     #variable {splitLines} {%1}
+}
+{9}
+
+#ALIAS {^view %s%w$}
+{
+     #format {i} {%n} {%2};
+     #replace {i} {Repl{y|ies}} {Tell};
+     #if {&{channel[$i]}}
+     {
+          #list {channelBuffer} {find} {$i} {channelBufferIndex};
+          #if {$channelBufferIndex == 0}
+          {
+               #list {channelBuffer} {add} {$i};
+               #list {channelBuffer} {find} {$i} {channelBufferIndex}
+          };
+          NOTIFY Channel buffer set to ${channelBuffer[$channelBufferIndex]}
+     };
+     #else
+     {
+          NOTIFY Nothing to show for channel $i.
+     }
+}
+{9}
+
+
+#FUNCTION {pimp}
+{
+     #script {result} {curl -s --data-urlencode English="%0" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep '<textarea id="Ebonics"' | html2text};
+     #variable {result} {${result[1]}}
+}
+
+
+#MACRO {\c!}
+{
+     #variable {channelBufferIndex} {13};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\cB}
+{
+     #system {echo 'talk' > ~/.config/barnard/cmd}
+}
+
 #MACRO {\e!}
 {
-	#variable {channelBufferIndex} {0};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {2};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e#}
 {
-	#variable {channelBufferIndex} {2};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {4};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e$}
 {
-	#variable {channelBufferIndex} {3};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {5};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e%}
 {
-	#variable {channelBufferIndex} {4};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {6};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e&}
 {
-	#variable {channelBufferIndex} {6};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {8};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e(}
 {
-	#variable {channelBufferIndex} {8};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {10};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e)}
 {
-	#variable {channelBufferIndex} {9};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {11};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e*}
 {
-	#variable {channelBufferIndex} {7};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {9};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e+}
 {
-	#list {${channelBuffer[$channelBufferIndex]}List} {size} {messageIndex};
-	#showme {Moved to top of buffer};
-	display_channel $channelBuffer[$channelBufferIndex] $messageIndex
+     #list {${channelBuffer[$channelBufferIndex]}List} {size} {messageIndex};
+     NOTIFY Moved to top of buffer;
+     display_channel $channelBuffer[$channelBufferIndex] $messageIndex
 }
 
 #MACRO {\e-}
 {
-	#variable {messageReset} {false};
-	#math {messageIndex} {$messageIndex-1};
-	#if {$messageIndex < 1}
-	{
-		#variable {messageIndex} {1};
-		#showme {Bottom of buffer}
-	};
-	display_channel $channelBuffer[$channelBufferIndex] $messageIndex;
-	#undelay {resetMessageIndex};
-	#delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {20}
+     #variable {messageReset} {false};
+     #math {messageIndex} {$messageIndex-1};
+     #if {$messageIndex < 1}
+     {
+          #variable {messageIndex} {1};
+          NOTIFY Bottom of buffer
+     };
+     display_channel $channelBuffer[$channelBufferIndex] $messageIndex;
+     #unticker {resetMessageIndex};
+     #delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {20}
 }
 
 #MACRO {\e0}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 10
+     display_channel $channelBuffer[$channelBufferIndex] 10
 }
 
 #MACRO {\e1}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 1
+     display_channel $channelBuffer[$channelBufferIndex] 1
 }
 
 #MACRO {\e2}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 2
+     display_channel $channelBuffer[$channelBufferIndex] 2
 }
 
 #MACRO {\e3}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 3
+     display_channel $channelBuffer[$channelBufferIndex] 3
 }
 
 #MACRO {\e4}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 4
+     display_channel $channelBuffer[$channelBufferIndex] 4
 }
 
 #MACRO {\e5}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 5
+     display_channel $channelBuffer[$channelBufferIndex] 5
 }
 
 #MACRO {\e6}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 6
+     display_channel $channelBuffer[$channelBufferIndex] 6
 }
 
 #MACRO {\e7}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 7
+     display_channel $channelBuffer[$channelBufferIndex] 7
 }
 
 #MACRO {\e8}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 8
+     display_channel $channelBuffer[$channelBufferIndex] 8
 }
 
 #MACRO {\e9}
 {
-	display_channel $channelBuffer[$channelBufferIndex] 9
+     display_channel $channelBuffer[$channelBufferIndex] 9
 }
 
 #MACRO {\e=}
 {
-	#variable {messageReset} {false};
-	#list {${channelBuffer[$channelBufferIndex]}List} {size} {i};
-	#math {messageIndex} {$messageIndex+1};
-	#if {$messageIndex > $i}
-	{
-		#variable {messageIndex} {$i};
-		#showme {Top of buffer}
-	};
-	display_channel $channelBuffer[$channelBufferIndex] $messageIndex;
-	#unvariable {i};
-	#undelay {resetMessageIndex};
-	#delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {20}
+     #variable {messageReset} {false};
+     #list {${channelBuffer[$channelBufferIndex]}List} {size} {i};
+     #math {messageIndex} {$messageIndex+1};
+     #if {$messageIndex > $i}
+     {
+          #variable {messageIndex} {$i};
+          NOTIFY Top of buffer
+     };
+     display_channel $channelBuffer[$channelBufferIndex] $messageIndex;
+     #unvariable {i};
+     #unticker {resetMessageIndex};
+     #delay {resetMessageIndex} {#var {messageIndex} {1};#var {messageReset} {true}} {20}
 }
 
 #MACRO {\e@}
 {
-	#variable {channelBufferIndex} {1};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {3};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\eOP}
+{
+     #variable {channelBufferIndex} {13};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\eOQ}
+{
+     #variable {channelBufferIndex} {14};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\eOR}
+{
+     #variable {channelBufferIndex} {15};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\eOS}
+{
+     #variable {channelBufferIndex} {16};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e[1;3C}
 {
-	#if {!&{channelBufferIndex} || $channelBufferIndex >= $totalChannels}
-	{
-		#variable {channelBufferIndex} {$totalChannels}
-	};
-	#else
-	{
-		#math {channelBufferIndex} {$channelBufferIndex + 1}
-	};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #nop {Alt right arrow};
+     #if {!&{channelBufferIndex} || $channelBufferIndex >= @list_size{channelBuffer}}
+     {
+          #variable {channelBufferIndex} {@list_size{channelBuffer}}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex + 1}
+     };
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\e[1;3D}
+{
+     #nop {Alt left arrow};
+     #if {!&{channelBufferIndex} || $channelBufferIndex <= 1}
+     {
+          #variable {channelBufferIndex} {1}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex - 1}
+     };
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\e\c1}
+{
+     #nop {This is currently disabled until I can find a good key for it. Do not remove!};
+     #if {!&{channelBufferIndex} || $channelBufferIndex <= 1}
+     {
+          #variable {channelBufferIndex} {1}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex - 1}
+     };
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\e\c2}
+{
+     #nop {This is currently disabled until I can find a good key for it. Do not remove!};
+     #if {!&{channelBufferIndex} || $channelBufferIndex >= @list_size{channelBuffer}}
+     {
+          #variable {channelBufferIndex} {@list_size{channelBuffer}}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex + 1}
+     };
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e^}
 {
-	#variable {channelBufferIndex} {5};
-	#variable {messageIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {7};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
 }
 
 #MACRO {\e_}
 {
-	#variable {messageIndex} {1};
-	#showme {Moved to bottom of buffer};
-	display_channel $channelBuffer[$channelBufferIndex] $messageIndex
+     #variable {messageIndex} {1};
+     NOTIFY Moved to bottom of buffer;
+     display_channel $channelBuffer[$channelBufferIndex] $messageIndex
 }
 
-#VARIABLE         {allList}  {}
-#VARIABLE         {awayMessage}  {false}
-#VARIABLE         {channelBuffer}  {{0}{all}{1}{cowsay}{2}{empire}{3}{immortal}{4}{misc}{5}{music}{6}{ooc}{7}{say}{8}{party}{9}{tell}}
-#VARIABLE         {channelBufferIndex}  {0}
-#VARIABLE         {channelSending}  {false}
-#VARIABLE         {cowsayList}  {}
-#VARIABLE         {empireList}  {}
-#VARIABLE         {immortalList}  {}
+#MACRO {\e`}
+{
+     #variable {channelBufferIndex} {12};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+#MACRO {\e~}
+{
+     #variable {channelBufferIndex} {1};
+     NOTIFY Channel buffer set to $channelBuffer[$channelBufferIndex]
+}
+
+
+#VARIABLE         {channel}  {}
+#VARIABLE         {channelBuffer}  {{1}{all}{2}{cowsay}{3}{empire}{4}{immortal}{5}{misc}{6}{music}{7}{ooc}{8}{say}{9}{party}{10}{tell}}
+#VARIABLE         {channelBufferIndex}  {1}
+#VARIABLE         {currentSplitRows}  {1}
 #VARIABLE         {messageIndex}  {1}
 #VARIABLE         {messageReset}  {true}
-#VARIABLE         {miscList}  {}
-#VARIABLE         {musicList}  {}
-#VARIABLE         {oocList}  {}
-#VARIABLE         {partyList}  {}
-#VARIABLE         {sayList}  {}
-#VARIABLE         {tellList}  {}
-#VARIABLE         {totalChannels}  {9}
+

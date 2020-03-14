@@ -1,0 +1,29 @@
+#FUNCTION {extract_link}
+{
+	#regexp {%0} {{.*}'{.*}{(http://|https://|www.)\S+[^']}{.*}} {#variable {uri} {&3}};
+	#regexp {%0} {{.*}'{wormhole receive \d+-\S+}'{.*}} {#variable {uri} {&2}};
+	#return #nop
+}
+
+#MACRO {\eL}
+{
+	#if {{$uri} != {}}
+	{
+		#if {$X > 0}
+		{
+			#system {echo "${uri}" | xclip -selection clipboard&}
+		};
+		#else
+		{
+			#system {echo "command clipboard $uri" | socat - UNIX-CLIENT:/tmp/fenrirscreenreader-deamon.sock&}
+		};
+		#echo {sent ${uri} to clipboard.};
+		#variable {uri} {}
+	};
+	#else
+	{
+		#echo {There is currently no URI available.}
+	}
+}
+
+#VARIABLE         {uri}  {}

@@ -1,193 +1,347 @@
 #ALIAS {^CSAVE$}
 {
-	#if {{$MSDP_ACCOUNT_NAME} != {} && {$MSDP_ACCOUNT_NAME} != {\$MSDP_ACCOUNT_NAME}}
-	{
-		#variable {historyPath} {${HOME}/${MSDP_ACCOUNT_NAME}\.history};
-		#replace {historyPath} {\\} {};
-		#history {write} {$historyPath};
-		#unvariable {historyPath};
-		#unvariable {MSDP_%*};
-		#class {${msdpOldList[ACCOUNT_NAME]}} {write} {${HOME}/${msdpOldList[ACCOUNT_NAME]}};
-		#class {${msdpOldList[CHARACTER_NAME]}} {close};
-		#variable {copying} {1};
-		#local {i} {};
-		#foreach {*{msdpOldList[]}} {i}
-		{
-			#variable {MSDP_$i} {${msdpOldList[$i]}}
-		};
-		#variable {copying} {0};
-		#class {${MSDP_ACCOUNT_NAME}} {open}
-	}
+     #if {{$MSDP_ACCOUNT_NAME} != {} && &{MSDP_ACCOUNT_NAME} && {$MSDP_ACCOUNT_NAME} != {\$MSDP_ACCOUNT_NAME}}
+     {
+          #variable {historyPath} {${HOME}/${MSDP_ACCOUNT_NAME}.history};
+          #replace {historyPath} {\\} {};
+          #history {write} {$historyPath};
+          #unvariable {historyPath};
+          #variable {copying} {1};
+          #unvariable {MSDP_%*};
+          #class {${msdpOldList[ACCOUNT_NAME]}} {write} {${HOME}/${msdpOldList[ACCOUNT_NAME]}};
+          #class {${msdpOldList[ACCOUNT_NAME]}} {close};
+          #local {i} {};
+          #foreach {*{msdpOldList[]}} {i}
+          {
+               #variable {MSDP_$i} {${msdpOldList[$i]}}
+          };
+          #variable {copying} {0};
+          #class {${MSDP_ACCOUNT_NAME}} {open}
+     }
 }
 {9}
 
-#ALIAS {^bot{kill|load} %S$}
+#ALIAS {^bot{kill|load|reload} %S$}
 {
-	#nop {character bot path};
-	#variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}\.bots};
-	#replace {modpath} {\\} {};
-	#nop {Kill, load, or reload a specified bot.};
-	#if {{%1} == {kill}}
-	{
-		#if {&{bot.%1}}
-		{
-			${bot.%1}
-		};
-		#undelay {%*bot%*};
-		#unticker {%*bot%*};
-		#unvariable {%*bot%*};
-		#class {bot_%2} {kill};
-		#class {$MSDP_ACCOUNT_NAME} {open};
-		#showme {bot %2 has been killed.}
-	};
-	#if {{%1} == {load}}
-	{
-		#showme {Loading bot %2.tin};
-		#class {$MSDP_ACCOUNT_NAME} {close};
-		#class {bot_%2} {read} {$modpath/%2.tin};
-		#if {&{bot.%1}}
-		{
-			${bot.%1}
-		}
-	};
-	#unvariable {modpath}
+     #nop {character bot path};
+     #variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}.bots};
+     #replace {modpath} {\\} {};
+     #nop {Kill, load, or reload a specified bot.};
+     #if {{%1} == {{kill|reload}}}
+     {
+          #local {tmp} {%1};
+          #replace {tmp} {reload} {kill};
+          #local {exists} {@bot_${tmp}{}};
+          #variable {exists} {$exists};
+          #if {{$exists} != {@%*}}
+          {
+               $exists
+          };
+          #if {&{b_%2Shutdown}}
+          {
+               ${b_%2Shutdown}
+          };
+          #class {bot_%2} {kill};
+          #class {$MSDP_ACCOUNT_NAME} {open};
+          NOTIFY bot %2 has been killed.
+     };
+     #if {{%1} == {{load|reload}}}
+     {
+          NOTIFY Loading bot %2.tin;
+          #class {bot_%2} {read} {$modpath/%2.tin};
+          #local {tmp} {%1};
+          #replace {tmp} {reload} {load};
+          #local {exists} {@bot_${tmp}{}};
+          #variable {exists} {$exists};
+          #if {{$exists} != {@%*}}
+          {
+               $exists
+          };
+          #if {&{b_%2Startup}}
+          {
+               #class {bot_%2} {open};
+               ${b_%2Startup};
+               #class {bot_%2} {close}
+          };
+          #class {$MSDP_ACCOUNT_NAME} {open}
+     };
+     #unvariable {modpath}
 }
 {9}
 
 #ALIAS {^cmod{kill|load|reload} %S$}
 {
-	CSAVE;
-	#nop {character module path};
-	#variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}\.modules};
-	#replace {modpath} {\\} {};
-	#nop {reload all modules};
-	#if {{%0} == {cmodreload all}}
-	{
-		#script {for module in $modpath/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
-		#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-		#echo {All character modules reloaded}
-	};
-	#else
-	{
-		#nop {Kill, load, or reload a specified module.};
-		#if {{%1} == {{kill|reload}}}
-		{
-			#class {character_%2} {kill};
-			#showme {Character module %2 has been killed.}
-		};
-		#if {{%1} == {{load|reload}}}
-		{
-			#showme {Loading character module %2.tin};
-			#script {if [ -r "$HOME/modules/%2.tin" ]; then echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";elif [ -r "$modpath/%2.tin" ]; then echo "#class {character_%2} {read} {$modpath/%2.tin}";else echo "#echo {Character module %2.tin not found.}";fi};
-			#class {$MSDP_ACCOUNT_NAME} {open}
-		}
-	};
-	#unvariable {modpath}
+     CSAVE;
+     #nop {character module path};
+     #variable {modpath} {${HOME}/${MSDP_ACCOUNT_NAME}.modules};
+     #replace {modpath} {\\} {};
+     #nop {reload all modules};
+     #if {{%0} == {cmodreload all}}
+     {
+          @var_save{script};
+          @var_save{z};
+          #script {script} {for module in "$modpath/"*.tin ; do echo "$(basename "$module" .tin)";done};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Shutdown}}
+               {
+                    ${c_${z}Shutdown}
+               }
+          };
+          #script {for module in "$modpath/"*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename "$module" .tin)} {read} {$module}";done};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Startup}}
+               {
+                    #class {character_$z} {open};
+                    ${c_${z}Startup};
+                    #class {character_$z} {close}
+               }
+          };
+          #script {script} {if [ -d "$HOME/modules/" ] ; then for module in "$HOME/modules/"*.tin ; do echo "$(basename "$module" .tin)";done;fi};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Shutdown}}
+               {
+                    ${c_${z}Shutdown}
+               }
+          };
+          #script {if [ -d "$HOME/modules" ]; then for module in "$HOME/modules/"*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Startup}}
+               {
+                    #class {character_$z} {open};
+                    ${c_${z}Startup};
+                    #class {character_$z} {close}
+               }
+          };
+          #unvariable z;
+          #unvariable script;
+          @var_restore{script};
+          @var_restore{z};
+          NOTIFY All character modules reloaded
+     };
+     #else
+     {
+          #nop {Kill, load, or reload a specified module.};
+          #if {{%1} == {{kill|reload}}}
+          {
+               #if {&{c_%2Shutdown}}
+               {
+                    ${c_%2Shutdown}
+               };
+               #class {character_%2} {kill};
+               NOTIFY Character module %2 has been killed.
+          };
+          #if {{%1} == {{load|reload}}}
+          {
+               NOTIFY Loading character module %2.tin;
+               #script {if [ -r "$modpath/%2.tin" ]; then echo "#class {character_%2} {read} {$modpath/%2.tin}";elif [ -r "$HOME/modules/%2.tin" ]; then echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";else echo "NOTIFY Character module %2.tin not found.";fi};
+               #if {&{c_%2Startup}}
+               {
+                    #class {character_%2} {open};
+                    ${c_%2Startup};
+                    #class {character_%2} {close}
+               };
+               #class {$MSDP_ACCOUNT_NAME} {open}
+          }
+     };
+     #unvariable {modpath}
+}
+{9}
+
+#ALIAS {^q{f|ff|ffe|ffec|ffect|ffects}$}
+{
+     #local {i} {};
+     #foreach {*{MSDP_AFFECTS[]}} {i}
+     {
+          #regexp {$i} {{^[^0-9]+$}}
+          {
+               #echo {&0}
+          }
+     }
+}
+{9}
+
+#ALIAS {^whoami$}
+{
+     #echo {You are $MSDP_ACCOUNT_NAME, and are level $MSDP_LEVEL.};
+     #if {&{character[lastDeath]}}
+     {
+          #echo {${character[lastDeath]}}
+     }
 }
 {9}
 
 #ALIAS {^{audioprompt|beeps|noaudioprompt|nobeeps}$}
 {
-	#switch {{%0}}
-	{
-		#case {{audioprompt}}
-		{
-			#variable {character[audioprompt]} {1};
-			#echo {Audio prompt enabled.}
-		};
-		#case {{beeps}}
-		{
-			#variable {character[beeps]} {1};
-			#echo {Opponent condition beeps enabled.}
-		};
-		#case {{noaudioprompt}}
-		{
-			#variable {character[audioprompt]} {0};
-			#echo {Audio prompt disabled.}
-		};
-		#case {{nobeeps}}
-		{
-			#variable {character[beeps]} {0};
-			#echo {Opponent condition beeps disabled.}
-		}
-	}
+     #switch {{%0}}
+     {
+          #case {{audioprompt}}
+          {
+               #variable {character[audioprompt]} {1};
+               NOTIFY Audio prompt enabled.
+          };
+          #case {{beeps}}
+          {
+               #variable {character[beeps]} {1};
+               NOTIFY Opponent condition beeps enabled.
+          };
+          #case {{noaudioprompt}}
+          {
+               #variable {character[audioprompt]} {0};
+               NOTIFY Audio prompt disabled.
+          };
+          #case {{nobeeps}}
+          {
+               #variable {character[beeps]} {0};
+               NOTIFY Opponent condition beeps disabled.
+          }
+     }
 }
 {9}
 
+
 #EVENT {SESSION DISCONNECTED}
 {
-	CSAVE;
-	#unvariable {connected};
-	#nop {Make sure background music is disabled when the program closes.};
-	#script {tileSoundFilePID} {if [ -f ".tileSoundFilePID" ] ; then echo "$(cat ".tileSoundFilePID")";else echo "false";fi;echo "false" > .tileSoundFilePID};
-	#variable {tileSoundFilePID} {${tileSoundFilePID[1]}};
-	#if {{$tileSoundFilePID} != {false}}
-	{
-		#system {kill $tileSoundFilePID};
-		#system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" &> /dev/null;fi}
-	};
-	#if {${mineCounter[total]} > 0}
-	{
-		post ${name} discovered ${mineCounter[copper]} copper, ${mineCounter[gold]} gold, ${mineCounter[imperium]} imperium, ${mineCounter[iron]} iron, ${mineCounter[nocturnium]} nocturnium and ${mineCounter[silver]} silver mines for a total of ${mineCounter[total]}\.
-	}
+     CSAVE;
+        #unvariable {connected};
+        #nop {Make sure background music is disabled when the program closes.};
+        #script {tileSoundFilePID} {if [ -f ".tileSoundFilePID" ] ; then echo "$(cat ".tileSoundFilePID")";else echo "false";fi;echo "false" > .tileSoundFilePID};
+        #variable {tileSoundFilePID} {${tileSoundFilePID[1]}};
+        #if {{$tileSoundFilePID} != {false}}
+        {
+                #system {kill $tileSoundFilePID};
+                #system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" &> /dev/null;fi}
+        };
+        #if {${mineCounter[total]} > 0}
+        {
+                post ${name} discovered ${mineCounter[copper]} copper, ${mineCounter[gold]} gold, ${mineCounter[imperium]} imperium, ${mineCounter[iron]} iron, ${mineCounter[nocturnium]} nocturnium and ${mineCounter[silver]} silver mines for a total of ${mineCounter[total]}\.
+        }
 }
 
 #EVENT {VARIABLE UPDATE MSDP_ACCOUNT_NAME}
 {
-	#nop {Hook name: characterName};
-	#nop {Hook args: character name.};
-	#if {{%1} != {} && !$copying}
-	{
-		#if {{${OLD_MSDP_ACCOUNT_NAME}} != {} && {$OLD_MSDP_ACCOUNT_NAME} != {%1}}
-		{
-			#variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.history};
-			#replace {historyPath} {\\} {};
-			#history {write} {$historyPath};
-			#unvariable {historyPath};
-			#unvariable {MSDP_%*};
-			#class {${OLD_MSDP_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}};
-			#class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
-			#variable {copying} {1};
-			#local {i} {};
-			#foreach {*{msdpOldList[]}} {i}
-			{
-				#variable {MSDP_$i} {${msdpOldList[$i]}}
-			};
-			#variable {copying} {0};
-			#nop {unload any old character classes};
-			#variable {modpath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}\.modules};
-			#replace {modpath} {\\} {};
-			#script {for module in $modpath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {kill}";done}
-		};
-		#nop {Make sure the character file exists so there's no error on read.};
-		#system {if ! [ -f "$HOME/%1" ]; then if [ "%1" != "" ]; then mkdir -p "$HOME/%1.modules";cp modules/config.txt "$HOME/%1.modules/config.tin";echo "#nop" > "$HOME/%1";fi;fi};
-		#variable {OLD_MSDP_ACCOUNT_NAME} {%1};
-		#history {read} {${HOME}/%1.history};
-		#nop {clear out old sound settings};
-		#unvariable {MSP};
-		#nop {clear out old leader settings};
-		#unvariable {leader};
-		#nop {clear old hooks.};
-		#variable {hook} {};
-		#class {%1} {read} {${HOME}/%1};
-		#nop {Load common personal modules.};
-		#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-		#nop {Load personal modules.};
-		#script {if [ -d "$HOME/%1.modules" ]; then for module in $HOME/%1.modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
-		#if {{$bgm} == {true}}
-		{
-			#variable {tileSoundFile} {none};
-			Tile_Play $tileSoundFile;
-			look
-		};
-		#class {%1} {open};
-		@do_hook{characterName;%1}
-	}
+     #if {{%1} != {} && !$copying}
+     {
+          #nop {Hook name: characterName};
+          #nop {Hook args: character name.};
+          #if {{${OLD_MSDP_ACCOUNT_NAME}} != {} && {$OLD_MSDP_ACCOUNT_NAME} != {%1}}
+          {
+               #variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}.history};
+               #replace {historyPath} {\\} {};
+               #history {write} {$historyPath};
+               #unvariable {historyPath};
+               #variable {copying} {1};
+               #unvariable {MSDP_%*};
+               #class {${OLD_MSDP_ACCOUNT_NAME}} {write} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}};
+               #class {${OLD_MSDP_ACCOUNT_NAME}} {kill};
+               #local {i} {};
+               #foreach {*{msdpOldList[]}} {i}
+               {
+                    #variable {MSDP_$i} {${msdpOldList[$i]}}
+               };
+               #variable {copying} {0}
+          };
+          #if {${cspam}}
+          {
+               #class {applied_spam_settings} {kill}
+          };
+          #nop {unload any old character classes};
+          #variable {modpath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}.modules};
+          #replace {modpath} {\\} {};
+          @var_save{script};
+          @var_save{z};
+          #script {script} {if [ ! -d "$modpath" ] ; then mkdir "$modpath" ; fi ; for module in $(find "$modpath/" -maxdepth 1 -iname "*.tin"); do echo "$(basename "$module" .tin)";done};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Shutdown}}
+               {
+                    ${c_${z}Shutdown}
+               }
+          };
+          #script {for module in $(find "$modpath/" -maxdepth 1 -iname "*.tin"); do echo "#class {$(basename "$module" .tin)} {kill}";done};
+          #script {script} {if [ ! -d "$HOME/modules/" ] ; then mkdir "$HOME/modules/" ; cp modules/config.txt "$HOME/modules/config.tin" ; fi ; for module in $(find "$HOME/modules/" -maxdepth 1 -iname "*.tin"); do echo "$(basename "$module" .tin)";done};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Shutdown}}
+               {
+                    ${c_${z}Shutdown}
+               }
+          };
+          #script {for module in $(find "$HOME/modules/" -maxdepth 1 -iname "*.tin") ; do echo "#class {$(basename "$module" .tin)} {kill}";done};
+          #nop {Make sure the character file exists so there's no error on read.};
+          #system {if ! [ -f "$HOME/%1" ] && [ "%1" != "" ] ; then echo "#nop" > "$HOME/%1" ; fi};
+          #variable {OLD_MSDP_ACCOUNT_NAME} {%1};
+          #history {read} {${HOME}/%1.history};
+          #nop {clear out old sound settings};
+          #unvariable {MSP};
+          #nop {clear out old leader settings};
+          #unvariable {leader};
+          #nop {clear old hooks.};
+          #unvariable {hook};
+          #class {%1} {read} {${HOME}/%1};
+          #if {&{splitLines}}
+          {
+               #split {$currentSplitRows} {$splitLines}
+          };
+          #if {!&{auto}}
+          {
+               #nop {The auto variable isn't set, create it in the character class to prevent character modules using it from grabbing it and preventing saving.};
+               #class {%1} {open};
+               #variable {auto} {};
+               #class {%1} {close}
+          };
+          #nop {Load common personal modules.};
+          #script {script} {if [ ! -d "$HOME/modules/" ] ; then mkdir "$HOME/modules/" ; cp modules/config.txt "$HOME/modules/config.tin" ; fi ; for module in $(find "$HOME/modules/" -maxdepth 1 -iname "*.tin") ; do echo "$(basename "$module" .tin)";done};
+          #script {for module in $(find "$HOME/modules" -maxdepth 1 -name "*.tin") ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Startup}}
+               {
+                    #class {character_$z} {open};
+                    ${c_${z}Startup};
+                    #class {character_$z} {close}
+               }
+          };
+          #nop {Load personal modules.};
+          #script {if [ ! -d "$HOME/%1.modules" ]; then mkdir "$HOME/%1.modules/" ; fi ; for module in $(find "$HOME/%1.modules" -maxdepth 1 -name "*.tin") ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done};
+          #foreach {${script[%*]}} {z}
+          {
+               #if {&{c_${z}Startup}}
+               {
+                    #class {character_$z} {open};
+                    ${c_${z}Startup};
+                    #class {character_$z} {close}
+               }
+          };
+          #if {${cspam}}
+          {
+               #class {%1} {close};
+               #class {applied_spam_settings} {read} {modules/spam.rules};
+               #class {%1} {open};
+               NOTIFY Client side spam filters applied.
+          };
+          #unvariable z;
+          #unvariable script;
+          @var_restore{script};
+          @var_restore{z};
+                #if {{$bgm} == {true}}
+                {
+                        #variable {tileSoundFile} {none};
+                        Tile_Play $tileSoundFile;
+                        look
+                };
+          #class {%1} {open};
+          @do_hook{charactername;%1}
+     }
 }
 
-#TICKER           {csave}  {#if {{$MSDP_ACCOUNT_NAME} == {$OLD_MSDP_ACCOUNT_NAME}}{CSAVE}}                                      {90}
+
+#TICKER           {csave}  {#if {{$MSDP_ACCOUNT_NAME} == {$OLD_MSDP_ACCOUNT_NAME}}{CSAVE}}                                          {90}
+
 #VARIABLE         {OLD_MSDP}  {}
-#VARIABLE         {characterName}  {}
-#VARIABLE         {characterPosition}  {}
+#VARIABLE         {OLD_MSDP_ACCOUNT_NAME}     {}
 #VARIABLE         {copying}  {0}
-#VARIABLE         {hook}  {}
+

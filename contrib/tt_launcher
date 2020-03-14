@@ -1,6 +1,0 @@
-#!/bin/bash
-
-cd ~/tintin-empiremud
-git pull
-tt++ em.tin
-exit 0

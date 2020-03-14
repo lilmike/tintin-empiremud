@@ -19,21 +19,6 @@
 {9}
 
 
-#ALIAS {^GET_AUTOTITLE$}
-{
-     #if {${auto[title]}}
-     {
-          Get_Music_Message_String;
-          #if {{${music[newAutoTitleString]}} != {${music[oldAutoTitleString]}}}
-          {
-               #variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};
-               #variable {settingTitle} {1};
-               title ${music[newAutoTitleString]}
-          }
-     }
-}
-{9}
-
 #ALIAS {^Get_Music_Message_String$}
 {
      #switch {{${music[player]}}}
@@ -84,7 +69,7 @@
                #script {i} {xmms2 info | grep album | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//'};
                #variable {msg[3]} {${i[1]}}
           };
-          #default
+          #case {{cmus}}
           {
                #script {i} {cmus-remote -Q | sed -n 's/^tag artist //p'};
                #format {msg[1]} {%p} {${i[1]}};
@@ -92,6 +77,11 @@
                #format {msg[2]} {%p} {${i[1]}};
                #script {i} {cmus-remote -Q | sed -n 's/^tag album //p'};
                #format {msg[3]} {%p} {${i[1]}}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.};
+               #variable {msg} {{1}{nobody}{2}{nothing}{3}{}}
           }
      };
      #variable {music[newAutoTitleString]} {${msg[1]} - ${msg[2]}};
@@ -100,10 +90,21 @@
      #variable {msg} {"${msg[2]}" by "${msg[1]}" from "${msg[3]}"};
      #replace {msg} {;} { - };
      #replace {msg} {ö} {o};
-     #replace {msg} {from ""} {};
-     #regexp {$msg} {Now playing:{\s}via{\s}{.*}.}
+     #replace {msg} {from ""} {}
+}
+{9}
+
+#ALIAS {^SET_AUTOTITLE$}
+{
+     #if {${auto[title]}}
      {
-          #switch {{${music[player]}}} {#case {{cmus}} {#script {msg} {basename {$(cmus-remote -Q | head -2 | tail -1)} | rev | cut -d '.' -f2- | rev}};#case {{mpd}} {#script {msg} {mpc current | sed 's/\// - /g' | rev | cut -d '.' -f2- | rev}};#case {{xmms2}} {#script {msg} {basename {$(xmms2 info | tail -n 1 | sed 's/^\[server\] url = file:\/\/\///' | rev | cut -d '.' -f2- | rev)}}}};#variable {msg} {${msg[1]}};#replace {msg} {+} { };#replace {msg} {\%27} {'};#replace {msg} {\%28} {(};#replace {msg} {\%29} {)};#replace {msg} {\%2c} {,};#variable {newAutoTitleString} {$msg}
+          Get_Music_Message_String;
+          #if {{${music[newAutoTitleString]}} != {${music[oldAutoTitleString]}}}
+          {
+               #variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};
+               #variable {settingTitle} {1};
+               title ${music[newAutoTitleString]}
+          }
      }
 }
 {9}
@@ -112,7 +113,7 @@
 {
      #variable {music[links][apiUrl]} {%2/yourls-api.php};
      #variable {music[links][apiKey]} {%4};
-     #echo {music links enabled using ${music[links][apiUrl]}\.};
+     NOTIFY music links enabled using ${music[links][apiUrl]}.;
      CSAVE
 }
 {9}
@@ -127,7 +128,7 @@
      {
           #variable {music[player]} {%2}
      };
-     #echo {music player set to ${music[player]}\.};
+     NOTIFY music player set to ${music[player]}.;
      CSAVE
 }
 {9}
@@ -137,7 +138,7 @@
      Get_Music_Message_String;
      #if {!&{music[links][apiKey]}}
      {
-          %2 Now playing: $msg via ${music[player]}\.
+          %2 Now playing: $msg via ${music[player]}.
      };
      #else
      {
@@ -146,7 +147,7 @@
           #replace {music[links][longUrl]} {&} {%%26};
           #script {i} {curl --connect-timeout 10 -s --data "signature=${music[links][apiKey]}" --data "action=shorturl" --data "format=text" --data-urlencode "url=${music[links][longUrl]}" ${music[links][apiUrl]}};
           #variable {music[links][shortUrl]} {${i[1]}};
-          %2 Now playing: $msg via ${music[player]}\. ${music[links][shortUrl]}
+          %2 Now playing: $msg via ${music[player]}. ${music[links][shortUrl]}
      }
 }
 {9}
@@ -155,12 +156,12 @@
 {
      #if {{%0} == {autotitle}}
      {
-          #echo {Your title will automatically change to currently playing song.};
+          NOTIFY Your title will automatically change to currently playing song.;
           #variable {auto[title]} {1}
      };
      #else
      {
-          #echo {Your title will no longer be automatically set.};
+          NOTIFY Your title will no longer be automatically set.;
           #variable {auto[title]} {0}
      }
 }
@@ -169,7 +170,7 @@
 #ALIAS {^{musicc|musicch|musiccha|musicchan|musicchann|musicchanne|musicchannel} %s%S$}
 {
      #variable {music[channel]} {%3};
-     #echo {Music channel set to %3.};
+     NOTIFY Music channel set to %3.;
      CSAVE
 }
 {9}
@@ -180,12 +181,12 @@
      {
           #variable {music[links][apiUrl]} {https://1u.rs/yourls-api.php};
           #variable {music[links][apiKey]} {b0dda9c182};
-          #echo {music links enabled using ${music[links][apiUrl]}\.}
+          NOTIFY music links enabled using ${music[links][apiUrl]}.
      };
      #else
      {
           #unvariable {music[links]};
-          #echo {Music links disabled.}
+          NOTIFY Music links disabled.
      };
      CSAVE
 }
@@ -224,11 +225,18 @@
           {
                #system {xmms2 next}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -n}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
-     }
+     };
+     #nop {Currently playing track};
+     Get_Music_Message_String;
+     NOTIFY $msg.
 }
 
 #MACRO {\eC}
@@ -256,9 +264,13 @@
           {
                #system {xmms2 toggle}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -u}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
      }
 }
@@ -293,10 +305,14 @@
           {
                #system {xmms2 repeat}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -R};
                #script {echo "#showme {Cmus $(cmus-remote -Q | grep 'repeat ' | sed 's/true/on/g' | sed 's/false/off/g' | sed 's/set //').}"}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
      }
 }
@@ -322,10 +338,14 @@
           {
                #system {xmms2 playlist shuffle;if [ $? -eq 0 ] ; then echo "Playlist shuffled.";fi}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -S};
                #script {echo "#showme {Cmus $(cmus-remote -Q | grep 'shuffle' | sed 's/true/on/g' | sed 's/false/off/g' | sed 's/set //').}"}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
      }
 }
@@ -334,7 +354,7 @@
 {
      #nop {Currently playing track};
      Get_Music_Message_String;
-     #showme {$msg\.}
+     NOTIFY $msg.
 }
 
 #MACRO {\eV}
@@ -362,9 +382,13 @@
           {
                #system {xmms2 stop}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -s}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
      }
 }
@@ -394,11 +418,18 @@
           {
                #system {xmms2 play}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -p}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
-     }
+     };
+     #nop {Currently playing track};
+     Get_Music_Message_String;
+     NOTIFY $msg.
 }
 
 #MACRO {\eZ}
@@ -422,71 +453,98 @@
           {
                #system {xmms2 prev}
           };
-          #default
+          #case {{cmus}}
           {
                #system {cmus-remote -r}
+          };
+          #default
+          {
+               #showme {No default music player set. Try musicplayer name.}
           }
-     }
+     };
+     #nop {Currently playing track};
+     Get_Music_Message_String;
+     NOTIFY $msg.
 }
 
 #MACRO {\e\x7B}
 {
-     #nop {Music player seek backward.};
+     #nop {Music player volume down.};
      #switch {{${music[player]}}}
      {
           #case {{audacious}}
           {
-               #system {audtool --playback-seek-relative -5}
+               #system {audtool --set-volume $(($(audtool --get-volume) - 10))}
           };
           #case {{moc}}
           {
-               #system {mocp -k -5}
+               #system {mocp -v -5}
           };
           #case {{{mpd|mopidy}}}
           {
-               #system {mpc -q seek -5}
+               #system {mpc -q volume -5}
+          };
+          #case {{pianobar}}
+          {
+               #system {echo -n '(' > ~/.config/pianobar/ctl}
           };
           #case {{xmms2}}
           {
-               #system {xmms2 seek -5}
+               #script {i} {xmms2 server config equalizer.preamp | tr -Cd "[:digit:]-"};
+               #math {i} {${i[1]} - 1};
+               #system {xmms2 server config equalizer.preamp $i}
+          };
+          #case {{cmus}}
+          {
+               #system {cmus-remote -v -5%}
           };
           #default
           {
-               #system {cmus-remote -k -5}
+               #showme {No default music player set. Try musicplayer name.}
           }
      }
 }
 
 #MACRO {\e\x7D}
 {
-     #nop {Music player seek forward.};
+     #nop {Increase music player volume};
      #switch {{${music[player]}}}
      {
           #case {{audacious}}
           {
-               #system {audtool --playback-seek-relative 5}
+               #system {audtool --set-volume $(($(audtool --get-volume) + 10))}
           };
           #case {{moc}}
           {
-               #system {mocp -k +5}
+               #system {mocp -v +5}
           };
           #case {{{mpd|mopidy}}}
           {
-               #system {mpc -q seek +5}
+               #system {mpc -q volume +5}
+          };
+          #case {{pianobar}}
+          {
+               #system {echo -n ')' > ~/.config/pianobar/ctl}
           };
           #case {{xmms2}}
           {
-               #system {xmms2 seek +5}
+               #script {i} {xmms2 server config equalizer.preamp | tr -Cd "[:digit:]-"};
+               #math {i} {${i[1]} + 1};
+               #system {xmms2 server config equalizer.preamp $i}
+          };
+          #case {{cmus}}
+          {
+               #system {cmus-remote -v +5%}
           };
           #default
           {
-               #system {cmus-remote -k +5}
+               #showme {No default music player set. Try musicplayer name.}
           }
      }
 }
 
 
-#TICKER           {autotitle}  {GET_AUTOTITLE}  {30}
+#TICKER           {autotitle}  {SET_AUTOTITLE}  {30}
 
 #VARIABLE         {msg}  {}
 #VARIABLE         {settingTitle}  {0}

@@ -1,3 +1,15 @@
+#ALIAS {^fortune %1}
+{
+	#script {echo -n "say ";fortune -sn1000 %1 | tr '[:space:];' ' '}
+}
+{9}
+
+#ALIAS {^fortune$}
+{
+	#script {echo -n "say ";fortune -sn1000 | tr '[:space:];' ' '}
+}
+{9}
+
 #ALIAS {^idle %1}
 {
 	#list {idleList} {clear};
@@ -8,30 +20,30 @@
 
 #ALIAS {^idle$}
 {
+	#local {i} {};
 	#if {!&{idleList}}
 	{
 		#list {idleList} {add} {look}
 	};
 	#echo {Current commands to avoide the void are:};
-	#local {i} {};
 	#foreach {*{idleList[]}} {i}
 	{
 		#echo {${idleList[$i]}}
 	};
-	#echo {To set your idle commands, type idle follow by a list of commands enclosed in braces and separated by semi-colons.}
+	#echo {To set your idle commands, type idle followed by a list of commands enclosed in braces and separated by semi-colons.}
 }
 {9}
 
 #EVENT {MINUTE}
 {
-	#script {idle.time} {date '+%s'};
-	#variable {idle.time} {${idle.time[1]}};
-	#math {idle.seconds} {${idle.time} - ${idle.lastUse}};
-	#if {${idle.seconds} > 300}
+	#script {idle[time]} {date '+%s'};
+	#variable {idle[time]} {${idle[time][1]}};
+	#math {idle[seconds]} {${idle[time]} - ${idle[lastUse]}};
+	#if {${idle[seconds]} > 300}
 	{
 		#if {!&{idleList}}
 		{
-			#list {idleList} {add} {look}
+			#list {idleList} {add} {pose}
 		};
 		${idleList[@list_rand{idleList}]}
 	}
@@ -39,7 +51,6 @@
 
 #EVENT {SEND OUTPUT}
 {
-	#script {idle.lastUse} {date '+%s'};
-	#variable {idle.lastUse} {${idle.lastUse[1]}}
+	#script {idle[lastUse]} {date '+%s'};
+	#variable {idle[lastUse]} {${idle[lastUse][1]}}
 }
-
