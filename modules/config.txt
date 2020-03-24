@@ -5,7 +5,7 @@
 #CONFIG           {COLOR PATCH}  {OFF}
 #CONFIG           {COMMAND COLOR}  {\e[0;37m}
 #CONFIG           {COMMAND ECHO}  {OFF}
-#CONFIG           {CONNECT RETRY}  {  0.0}
+#CONFIG           {CONNECT RETRY}  {0.0}
 #CONFIG           {HISTORY SIZE}  {5000}
 #CONFIG           {LOG MODE}  {PLAIN}
 #CONFIG           {MOUSE TRACKING}  {OFF}
