@@ -1,330 +1,375 @@
 #ACTION {^You are hungry.$}
 {
-	PLAY health/hungry;
-	#if {&{auto[eat]}}
-	{
-		eat ${auto[eat]}
-	};
-	#elseif {{$autoforage} == {true}}
-	{
-		forage
-	}
+     PLAY health/hungry;
+     #if {&{auto[eat]}}
+     {
+          eat ${auto[eat]}
+     };
+     #elseif {{$autoforage} == {true}}
+     {
+          forage
+     }
 }
 {8}
 
 #ACTION {^You forage around %*}
 {
-	PAN_PLAY skills/search;
-	#if {{$autoforage} == {true}}
-	{
-		#regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})} {#&4 eat &3}
-	}
+     PAN_PLAY skills/search;
+     #if {{$autoforage} == {true}}
+     {
+          #regexp {%1} {and find {a|an|some} {bunch of|couple red|dry|few|green|handful of|juicy|plump|red|wood ear} {.*}(x{.*})}
+          {
+               #&4 eat &3
+          }
+     }
 }
 {8}
 
 #ACTION {^You lunge at %*, grasping onto its neck and biting into it vigorously!$}
 {
-	#variable {feeding} {true}
+     #variable {feeding} {true}
 }
 {8}
 
 #ACTION {^[ The mud will {shutdown|reboot} in %d minut{e|es} (type 'confirm' to {reboot|shutdown} faster) ]$}
 {
-	#if {{$channelSending} != {true}}
-	{
-		PLAY system/%1 system/%2-minute;
-		#if {{$autoconfirmreboots} == {true} && {$rebootConfirmed} != {true}}
-		{
-			#variable {rebootConfirmed} {true};
-			confirm
-		};
-		#if {%2 == 1}
-		{
-			#variable {rebootConfirmed} {false}
-		};
-		Add_Channel_Event all %0;
-		Add_Channel_Event misc %0
-	}
+     #if {{$channelSending} != {true}}
+     {
+          PLAY system/%1 system/%2-minute;
+          #if {{$autoconfirmreboots} == {true} && {$rebootConfirmed} != {true}}
+          {
+               #variable {rebootConfirmed} {true};
+               confirm
+          };
+          #if {%2 == 1}
+          {
+               #variable {rebootConfirmed} {false}
+          };
+          Channel_Event misc %0
+     }
 }
 {8}
 
 #ACTION {%* is {stunned, but will probably regain consciousness again|knocked unconscious|incapacitated and will slowly die, if not aided}{\.|!}$}
 {
-	PLAY combat/unconscious;
-	#if {{$autobite} == {true} && {$feeding} == {false}}
-	{
-		#regexp {%1} {{.*} {.*}} {bite &2};
-		#variable {feeding} {true}
-	}
+     PLAY combat/unconscious;
+     #if {{$autobite} == {true} && {$feeding} == {false}}
+     {
+          #regexp {%1} {{.*} {.*}}
+          {
+               bite &2
+          };
+          #variable {feeding} {true}
+     }
 }
 {9}
 
 #ACTION {%1 is trying to summon you to %2 -- use 'accept/reject summon'.$}
 {
-	#variable {playerSummoner} {%1}
+     #variable {playerSummoner} {%1}
 }
 {9}
 
 #ACTION {^No-one by that name here.$}
 {
-	#variable {feeding} {false}
+     #variable {feeding} {false}
 }
 {9}
 
 #ACTION {^You are thirsty.$}
 {
-	PLAY health/thirsty;
-	#if {&{auto[drink]}}
-	{
-		drink ${auto[drink]}
-	}
+     PLAY health/thirsty;
+     #if {&{auto[drink]}}
+     {
+          drink ${auto[drink]}
+     }
 }
 {9}
 
 #ACTION {^You pull the last of %* blood from {her|his|its} veins, and {he|it|she} falls limply to the ground!$}
 {
-	#variable {feeding} {false};
-	PLAY combat/vampire_feed
+     #variable {feeding} {false};
+     PLAY combat/vampire_feed
 }
 {9}
 
 #ACTION {^You stop feeding.$}
 {
-	#variable {feeding} {false}
+     #variable {feeding} {false}
 }
 {9}
 
+
 #ALIAS {^autodo all$}
 {
-	#if {{$MSDP_OPPONENT_NAME} == {}}
-	{
-		#variable {autodotype} {all}
-	};
-	#else
-	{
-		#variable {autodotype} {combat}
-	};
-	#list {autoDo[$autodotype]} {size} {i};
-	#if {$i > 0}
-	{
-		#loop {1} {$i} {x}
-		{
-			${autoDo[$autodotype][$x]}
-		}
-	}
+     #if {{$MSDP_OPPONENT_NAME} == {}}
+     {
+          #variable {autodotype} {all}
+     };
+     #else
+     {
+          #variable {autodotype} {combat}
+     };
+     #list {autoDo[$autodotype]} {size} {i};
+     #if {$i > 0}
+     {
+          #loop {1} {$i} {x}
+          {
+               ${autoDo[$autodotype][$x]}
+          }
+     }
 }
 {9}
 
 #ALIAS {^autodo {add|remove} {combat|all} %w$}
 {
-	#if {{%1} == {add}}
-	{
-		#list {autoDo[%2]} {find} {%3} {i};
-		#if {$i == 0}
-		{
-			#list {autoDo[%2]} {add} {%3};
-			#if {{%2} == {combat}}
-			{
-				#echo {%3 added to auto do list for combat only}
-			};
-			#else
-			{
-				#echo {%3 added to auto do list always}
-			}
-		};
-		#else
-		{
-			#echo {%3 already in %2 autodo list}
-		}
-	};
-	#else
-	{
-		#list {autoDo[%2]} {find} {%3} {i};
-		#if {$i > 0}
-		{
-			#list {autoDo[%2]} {delete} {$i};
-			#echo {%3 removed from %2 auto do list}
-		};
-		#else
-		{
-			#echo {%3 not found.}
-		}
-	}
+     #if {{%1} == {add}}
+     {
+          #list {autoDo[%2]} {find} {%3} {i};
+          #if {$i == 0}
+          {
+               #list {autoDo[%2]} {add} {%3};
+               #if {{%2} == {combat}}
+               {
+                    #echo {%3 added to auto do list for combat only}
+               };
+               #else
+               {
+                    #echo {%3 added to auto do list always}
+               }
+          };
+          #else
+          {
+               #echo {%3 already in %2 autodo list}
+          }
+     };
+     #else
+     {
+          #list {autoDo[%2]} {find} {%3} {i};
+          #if {$i > 0}
+          {
+               #list {autoDo[%2]} {delete} {$i};
+               #echo {%3 removed from %2 auto do list}
+          };
+          #else
+          {
+               #echo {%3 not found.}
+          }
+     }
 }
 {9}
 
 #ALIAS {^autodo {pause|resume}$}
 {
-	#if {{%1} == {pause}}
-	{
-		#variable {autoDoPaused} {1};
-		#echo {autodo paused}
-	};
-	#else
-	{
-		#variable {autoDoPaused} {0};
-		#echo {autodo resumed}
-	}
+     #if {{%1} == {pause}}
+     {
+          #variable {autoDoPaused} {1};
+          #echo {autodo paused}
+     };
+     #else
+     {
+          #variable {autoDoPaused} {0};
+          #echo {autodo resumed}
+     }
 }
 {9}
 
 #ALIAS {^autodo$}
 {
-	#if {&{autoDo[combat]}}
-	{
-		#list {autoDo[combat]} {size} {i};
-		#if {$i > 0}
-		{
-			#echo {combat autodo:};
-			#local {i} {};
-			#foreach {${autoDo[combat][]}} {i}
-			{
-				#echo {${autoDo[combat][$i]}}
-			}
-		};
-		#else
-		{
-			#echo {No autodo for combat only}
-		}
-	};
-	#else
-	{
-		#echo {No autodo for combat only}
-	};
-	#if {&{autoDo[all]}}
-	{
-		#list {autoDo[all]} {size} {i};
-		#if {$i > 0}
-		{
-			#echo {always autodo:};
-			#local {i} {};
-			#foreach {${autoDo[all][]}} {i}
-			{
-				#echo {${autoDo[all][$i]}}
-			}
-		};
-		#else
-		{
-			#echo {No autodo for always}
-		}
-	};
-	#else
-	{
-		#echo {No autodo for always}
-	}
+     #if {&{autoDo[combat]}}
+     {
+          #list {autoDo[combat]} {size} {i};
+          #if {$i > 0}
+          {
+               #echo {combat autodo:};
+               #local {i} {};
+               #foreach {${autoDo[combat][]}} {i}
+               {
+                    #echo {${autoDo[combat][$i]}}
+               }
+          };
+          #else
+          {
+               #echo {No autodo for combat only}
+          }
+     };
+     #else
+     {
+          #echo {No autodo for combat only}
+     };
+     #if {&{autoDo[all]}}
+     {
+          #list {autoDo[all]} {size} {i};
+          #if {$i > 0}
+          {
+               #echo {always autodo:};
+               #local {i} {};
+               #foreach {${autoDo[all][]}} {i}
+               {
+                    #echo {${autoDo[all][$i]}}
+               }
+          };
+          #else
+          {
+               #echo {No autodo for always}
+          }
+     };
+     #else
+     {
+          #echo {No autodo for always}
+     }
 }
 {9}
 
 #ALIAS {^autoshield %1}
 {
-	#showme {You will now equip %1 as shield in melee combat.};
-	#variable {autoshield} {%1}
+     #showme {You will now equip %1 as shield in melee combat.};
+     #variable {autoshield} {%1}
 }
 {9}
 
 #ALIAS {^noautodo$}
 {
-	#echo {auto do list cleared};
-	#unvariable {autoDo}
+     #echo {auto do list cleared};
+     #unvariable {autoDo}
 }
 {9}
 
 #ALIAS {^noautoshield$}
 {
-	#showme {Autoshield disabled.};
-	#unvariable {autoshield}
+     #showme {Autoshield disabled.};
+     #unvariable {autoshield}
 }
 {9}
 
 #ALIAS {^{auto|noauto}{eat|drink}{.*}}
 {
-	#if {{%1} == {noauto}}
-	{
-		#showme {Auto%2 disabled.};
-		#unvariable {auto[%2]}
-	};
-	#else
-	{
-		#showme {You will now %2 %3 when hungry or thirsty.};
-		#variable {auto[%2]} {%3}
-	}
+     #if {{%1} == {noauto}}
+     {
+          #showme {Auto%2 disabled.};
+          #unvariable {auto[%2]}
+     };
+     #else
+     {
+          #showme {You will now %2 %3 when hungry or thirsty.};
+          #variable {auto[%2]} {%3}
+     }
 }
 {9}
 
 #ALIAS {^{noauto|auto}bite$}
 {
-	#if {{%0} == {autobite}}
-	{
-		#showme {autobite enabled};
-		#variable {autobite} {true}
-	};
-	#else
-	{
-		#showme {autobite disabled};
-		#unvariable {autobite}
-	}
+     #if {{%0} == {autobite}}
+     {
+          #showme {autobite enabled};
+          #variable {autobite} {true}
+     };
+     #else
+     {
+          #showme {autobite disabled};
+          #unvariable {autobite}
+     }
 }
 {9}
 
 #ALIAS {^{noauto|auto}confirmreboots$}
 {
-	#if {{%0} == {autoconfirmreboots}}
-	{
-		#showme {You will now automatically confirm reboots when asked by the game.};
-		#variable {autoconfirmreboots} {true}
-	};
-	#else
-	{
-		#showme {Autoconfirmreboots disabled.};
-		#unvariable {autoconfirmreboots}
-	}
+     #if {{%0} == {autoconfirmreboots}}
+     {
+          #showme {You will now automatically confirm reboots when asked by the game.};
+          #variable {autoconfirmreboots} {true}
+     };
+     #else
+     {
+          #showme {Autoconfirmreboots disabled.};
+          #unvariable {autoconfirmreboots}
+     }
 }
 {9}
 
 #ALIAS {^{noauto|auto}forage$}
 {
-	#if {{%0} == {autoforage}}
-	{
-		#echo {You will automatically forage for and eat food when you are hungry.};
-		#variable {autoforage} {true}
-	};
-	#else
-	{
-		#showme {Autoforage disabled.};
-		#unvariable {autoforage}
-	}
+     #if {{%0} == {autoforage}}
+     {
+          #echo {You will automatically forage for and eat food when you are hungry.};
+          #variable {autoforage} {true}
+     };
+     #else
+     {
+          #showme {Autoforage disabled.};
+          #unvariable {autoforage}
+     }
 }
 {9}
 
 #ALIAS {^{noauto|auto}{loot|skin}$}
 {
-	#switch {{%0}}
-	{
-		#case {{autoloot}}
-		{
-			#showme {autoloot is enabled.};
-			#variable {autoloot} {true}
-		};
-		#case {{noautoloot}}
-		{
-			#showme {autoloot is disabled.};
-			#variable {autoloot} {false}
-		};
-		#case {{autoskin}}
-		{
-			#showme {autoskinning is enabled.};
-			#variable {autoskin} {true}
-		};
-		#case {{noautoskin}}
-		{
-			#showme {autoskinning is disabled.};
-			#variable {autoskin} {false}
-		}
-	}
+     #switch {{%0}}
+     {
+          #case {{autoloot}}
+          {
+               #showme {autoloot is enabled.};
+               #variable {autoloot} {true}
+          };
+          #case {{noautoloot}}
+          {
+               #showme {autoloot is disabled.};
+               #variable {autoloot} {false}
+          };
+          #case {{autoskin}}
+          {
+               #showme {autoskinning is enabled.};
+               #variable {autoskin} {true}
+          };
+          #case {{noautoskin}}
+          {
+               #showme {autoskinning is disabled.};
+               #variable {autoskin} {false}
+          }
+     }
 }
 {9}
+
+
+#CONFIG           {AUTO TAB}  {5000}
+#CONFIG           {BUFFER SIZE}  {10000}
+#CONFIG           {CHARSET}  {UTF-8}
+#CONFIG           {COLOR MODE}  {TRUE}
+#CONFIG           {COLOR PATCH}  {OFF}
+#CONFIG           {COMMAND COLOR}  {\e[0;37m}
+#CONFIG           {COMMAND ECHO}  {ON}
+#CONFIG           {CONNECT RETRY}  {0.0}
+#CONFIG           {HISTORY SIZE}  {1000}
+#CONFIG           {LOG MODE}  {RAW}
+#CONFIG           {MOUSE TRACKING}  {OFF}
+#CONFIG           {PACKET PATCH}  {AUTO OFF}
+#CONFIG           {RANDOM SEED}  {2072940941}
+#CONFIG           {REPEAT CHAR}  {!}
+#CONFIG           {REPEAT ENTER}  {OFF}
+#CONFIG           {SCREEN READER}  {OFF}
+#CONFIG           {SCROLL LOCK}  {ON}
+#CONFIG           {SPEEDWALK}  {OFF}
+#CONFIG           {TAB WIDTH}  {8}
+#CONFIG           {TELNET}  {ON}
+#CONFIG           {TINTIN CHAR}  {#}
+#CONFIG           {VERBATIM}  {OFF}
+#CONFIG           {VERBATIM CHAR}  {\}
+#CONFIG           {VERBOSE}  {OFF}
+#CONFIG           {WORDWRAP}  {ON}
+
+#PATHDIR          {d}  {u}  {32}
+#PATHDIR          {e}  {w}  {2}
+#PATHDIR          {n}  {s}  {1}
+#PATHDIR          {ne}  {sw}  {3}
+#PATHDIR          {nw}  {se}  {9}
+#PATHDIR          {s}  {n}  {4}
+#PATHDIR          {se}  {nw}  {6}
+#PATHDIR          {sw}  {ne}  {12}
+#PATHDIR          {u}  {d}  {16}
+#PATHDIR          {w}  {e}  {8}
 
 #VARIABLE         {feeding}  {false}
 #VARIABLE         {lastCommand}  {}
 #VARIABLE         {playerSummoner}  {}
 #VARIABLE         {rebootConfirmed}  {false}
+
