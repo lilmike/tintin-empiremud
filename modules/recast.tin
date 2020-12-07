@@ -13,45 +13,35 @@
 #ACTION {^You concentrate and veins of red mana streak down your skin.$}
 {
 	PLAY magic/hasten;
-	Remove_Spell hasten;
-	#undelay {recast};
-	#delay {recast} {Recast} {10}
+	Remove_Spell hasten
 }
 {9}
 
 #ACTION {^You concentrate for a moment and sparkling blue wings made of pure mana erupt from your back!$}
 {
 	PLAY magic/fly;
-	Remove_Spell fly;
-	#undelay {recast};
-	#delay {recast} {Recast} {10}
+	Remove_Spell fly
 }
 {9}
 
 #ACTION {^You feel the gift of foresight!$}
 {
 	PLAY magic/foresight;
-	Remove_Spell foresight;
-	#undelay {recast};
-	#delay {recast} {Recast} {10}
+	Remove_Spell foresight
 }
 {9}
 
 #ACTION {^You feel yourself shielded by your mana!$}
 {
 	PLAY magic/manashield;
-	Remove_Spell manashield;
-	#undelay {recast};
-	#delay {recast} {Recast} {10}
+	Remove_Spell manashield
 }
 {9}
 
 #ACTION {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
 {
 	PLAY magic/eartharmor;
-	Remove_Spell eartharmor;
-	#undelay {recast};
-	#delay {recast} {Recast} {10}
+	Remove_Spell eartharmor
 }
 {9}
 
