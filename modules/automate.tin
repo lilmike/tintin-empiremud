@@ -183,7 +183,7 @@
           {
                #echo {combat autodo:};
                #local {i} {};
-               #foreach {${autoDo[combat][]}} {i}
+               #foreach {*{autoDo[combat][]}} {i}
                {
                     #echo {${autoDo[combat][$i]}}
                }
@@ -204,7 +204,7 @@
           {
                #echo {always autodo:};
                #local {i} {};
-               #foreach {${autoDo[all][]}} {i}
+               #foreach {*{autoDo[all][]}} {i}
                {
                     #echo {${autoDo[all][$i]}}
                }
