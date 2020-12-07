@@ -193,7 +193,7 @@
 
 #ALIAS {^{sca|scan}$}
 {
-	#echo {$North\n $South\n $East\n $West\n $Northwest\n $Northeast\n $Southwest\n $Southeast}
+	#echo {$North\n $East\n $South\n $West\n $Northwest\n $Northeast\n $Southwest\n $Southeast}
 }
 {9}
 
