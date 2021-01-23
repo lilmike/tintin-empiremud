@@ -167,7 +167,7 @@
 
 #ACTION {^[/%S{]| }%*}
 {
-     #if {&%1ChannelSound}
+     #if {&{%1ChannelSound}}
      {
           SYNTH_PLAY %1ChannelSound
      };
