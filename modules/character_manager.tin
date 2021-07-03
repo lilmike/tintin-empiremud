@@ -4,7 +4,7 @@
      {
           #variable {historyPath} {${HOME}/${MSDP_ACCOUNT_NAME}.history};
           #replace {historyPath} {\\} {};
-          #history {write} {$historyPath};
+          #line substitute variables #history {write} {$historyPath};
           #unvariable {historyPath};
           #variable {copying} {1};
           #unvariable {MSDP_%*};
@@ -231,7 +231,7 @@
           {
                #variable {historyPath} {${HOME}/${OLD_MSDP_ACCOUNT_NAME}.history};
                #replace {historyPath} {\\} {};
-               #history {write} {$historyPath};
+               #line substitute variables #history {write} {$historyPath};
                #unvariable {historyPath};
                #variable {copying} {1};
                #unvariable {MSDP_%*};
