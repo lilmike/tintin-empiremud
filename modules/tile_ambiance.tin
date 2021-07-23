@@ -14,7 +14,7 @@
 				#variable {tileSoundFilePID} {false}
 			};
 			#variable {oldSoundFile} {$tileSoundFile};
-			#script {bash -c 'if [ -f "sounds/terrain/$tileSoundFile" ] ; then play -qV0 "sounds/terrain/$tileSoundFile" repeat 10000 gain ${MSP[VOLUME]} &> /dev/null&echo "$!" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";else echo "false" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";fi'}
+			#script {bash -c 'if [ -f "sounds/terrain/$tileSoundFile" ] ; then play -qV0 "sounds/terrain/$tileSoundFile" repeat - gain ${MSP[VOLUME]} &> /dev/null&echo "$!" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";else echo "false" > .tileSoundFilePID;echo "#variable {tileSoundFilePID} {$(cat .tileSoundFilePID)}";fi'}
 		}
 	}
 }
