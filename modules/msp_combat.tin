@@ -1,4 +1,4 @@
-#VARIABLE         {damageTypes}  {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}
+#VARIABLE         {damageTypes}  {(?:deadly )?bite|burn|claw|hit|kick|jab|pound|slash|slice|stab(?:s)?}
 
 #ACTION {{You wince in pain as poison courses through your blood!|You burn from the inside out as poison flows through your veins!}}
 {
@@ -10,7 +10,7 @@
 }
 {5}
 
-#ACTION {^You {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %* {missing|missing {it|her|him}}!$}
+#ACTION {^You $damageTypes  %* {missing|missing} {it|her|him}!$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -133,7 +133,7 @@
 }
 {9}
 
-#ACTION {%1 barely {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} you.$}
+#ACTION {%1 barely $damageTypes you.$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -159,7 +159,7 @@
 }
 {9}
 
-#ACTION {%1 {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}s you%*{\.|!}$}
+#ACTION {%1 $damageTypes you%*{\.|!}$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -176,7 +176,7 @@
 }
 {9}
 
-#ACTION {%1 {tries to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}|{bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} at} you but misses by a {hair!|mile\.}$}
+#ACTION {%1 tries to $damageTypes {?:(?:at)?} you but misses by a {hair!|mile\.}$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -200,7 +200,7 @@
 }
 {9}
 
-#ACTION {^Shadows creep up around you and then strike out at a %1!$}
+#ACTION {^Shadows creep up around you and then strike out at %1!$}
 {
 	LPLAY combat/terrify
 }
@@ -365,7 +365,7 @@
 }
 {9}
 
-#ACTION {^You try to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %* but miss by a mile.$}
+#ACTION {^You try to $damageTypes %* but miss by a {mile|hair}{[.!]}$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -375,7 +375,7 @@
 }
 {9}
 
-#ACTION {^You try to {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %2, but {he|it|she} blocks.$}
+#ACTION {^You try to $damageTypes %2, but {he|it|she} blocks.$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -385,7 +385,7 @@
 }
 {9}
 
-#ACTION {^You {OBLITERATE|ANNIHILATE|LIQUIDATE|massacre|maul} %* with your {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab}{\.|!|!!}$}
+#ACTION {^You {OBLITERATE|ANNIHILATE|LIQUIDATE|massacre|maul} %* with your ${damageTypes}{\.|!|!!}$}
 {
 	#if {{$cspam} == {true}}
 	{
@@ -406,7 +406,7 @@
 }
 {9}
 
-#ACTION {^You {bite|burn|claw|hit|kick|jab|pound|slash|slice|stab|deadly bite|deadly burn|deadly claw|deadly hit|deadly kick|deadly jab|deadly pound|deadly slash|deadly slice|deadly stab} %*{\.|!}$}
+#ACTION {^You $damageTypes %*{\.|!}$}
 {
 	#if {{$cspam} == {true}}
 	{
