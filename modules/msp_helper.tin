@@ -219,12 +219,6 @@
 }
 {9}
 
-#ACTION {^You don't seem to have more to smelt.$}
-{
-	PLAY skills/work_complete
-}
-{9}
-
 #ACTION {^You don't seem to have more to tan.$}
 {
 	PLAY skills/work_complete
@@ -275,13 +269,13 @@
 }
 {9}
 
-#ACTION {^You finish milling a sack of {flour|cornmeal} (x%d)!$}
+#ACTION {^You finish milling %*{?:(?: \(x\d+\))?}!$}
 {
 	PLAY get/sack
 }
 {9}
 
-#ACTION {^You finish sawing a stack of lumber (x%d).$}
+#ACTION {^You finish sawing %*{?:(?: \(x]\d+\))?}.$}
 {
 	PLAY get/lumber
 }
@@ -349,7 +343,7 @@
 }
 {9}
 
-#ACTION {^You have successfully created an iron ingot!$}
+#ACTION {^You finish smelting %*!$}
 {
 	PLAY get/iron_ingot
 }
@@ -425,7 +419,7 @@
 }
 {9}
 
-#ACTION {^You position some {lumber and tie it in place|wood on the structure}.$}
+#ACTION {^You tie %* into position.$}
 {
 	PLAY craft/tie_wood
 }
@@ -514,49 +508,49 @@
 }
 {9}
 
-#ACTION {^You start smelting.$}
+#ACTION {^You start smelting %*.$}
 {
 	PLAY skills/smelt
 }
 {9}
 
-#ACTION {^You store a pile of clay.{( \(x\d+\)*)}$}
+#ACTION {^You store a pile of clay.{?:(?: \(x\d+\))?}$}
 {
 	PLAY store/clay
 }
 {9}
 
-#ACTION {^You store a sack of {barley|cornmeal|flour|dried rice}.{( \(x\d+\)*)}$}
+#ACTION {^You store a sack of {barley|cornmeal|flour|dried rice}.{?:(?: \(x\d+\))?}$}
 {
 	PLAY store/sack
 }
 {9}
 
-#ACTION {^You store a {giant linefish|magenta arrowfish|fillet of raw meat|slab of pork}.{( \(x\d+\)*)}$}
+#ACTION {^You store a {giant linefish|magenta arrowfish|fillet of raw meat|slab of pork}.{?:(?: \(x\d+\))?}$}
 {
 	PLAY store/meat
 }
 {9}
 
-#ACTION {^You store a {heavy log|large tree|stack of lumber|stick}.{( \(x\d+\)*)}$}
+#ACTION {^You store a {heavy log|large tree|stack of lumber|stick}.{?:(?: \(x\d+\))?}$}
 {
 	PLAY store/lumber
 }
 {9}
 
-#ACTION {^You store a {pile of gold dust|silver nugget}.{( \(x\d+\)*)}$}
+#ACTION {^You store a {pile of gold dust|silver nugget}.{?:(?: \(x\d+\))?}$}
 {
 	PLAY store/treasure
 }
 {9}
 
-#ACTION {^You store an iron ingot.{( \(x\d+\))*}$}
+#ACTION {^You store %* ingot.{?:(?: \(x\d+\))?}$}
 {
 	PLAY store/metal
 }
 {9}
 
-#ACTION {^You strike a flint set and light %*.$}
+#ACTION {^You strike %* and light %*.$}
 {
 	PLAY miscellaneous/flint_and_steel
 }
@@ -705,7 +699,7 @@
 }
 {9}
 
-#ACTION {^You {continue|start} cook%*.$}
+#ACTION {^You {continue|start|wait for .+ to} {cook|bak}%*.$}
 {
 	PLAY skills/cook
 }
@@ -754,7 +748,7 @@
 }
 {9}
 
-#ACTION {^{A covered wagon|A rickety cart|Something} is pulled%* %w.$}
+#ACTION {^%* is pulled%* %w.$}
 {
 	PLAY move/cart_%3
 }
