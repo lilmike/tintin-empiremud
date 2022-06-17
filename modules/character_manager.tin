@@ -223,7 +223,7 @@
 
 #EVENT {VARIABLE UPDATE MSDP_ACCOUNT_NAME}
 {
-     #if {{%1} != {} && !$copying}
+     #if {{%1} != {} && !${copying}}
      {
           #nop {Hook name: characterName};
           #nop {Hook args: character name.};
