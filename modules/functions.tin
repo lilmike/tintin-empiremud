@@ -1,271 +1,304 @@
+#FUNCTION {client_version}
+{
+    #script {result} {tt++ -V | grep 'TinTin++ ' | cut -d ' ' -f2};
+    #variable {result} {${result[1]}}
+}
+
 #FUNCTION {cut}
 {
-     #nop {Can cut with specified field and delimiter, defaults are space for the delimiter and 1 for field.};
-     #local {fieldIndex} {1};
-     #local {string} {%0};
-     #regexp {${string}} {{.*}-d {.} }
-     {
-          #variable {delimiter} {&2};#replace {string} {-d &2 }
-     };
-     #else
-     {
-          #variable {delimiter} { }
-     };
-     #regexp {${string}} {{.*}-f {\d+} }
-     {
-          #variable {field} {&2};#replace {string} {-f &2 }
-     };
-     #else
-     {
-          #variable {field} {1}
-     };
-     #variable {result} {};
-     #parse {${string}} {character}
-     {
-          #if {{$character} == {${delimiter}}}
-          {
-               #math {fieldIndex} {${fieldIndex} + 1}
-          };
-          #if {${fieldIndex} == ${field} && {${character}} != {${delimiter}}}
-          {
-               #variable {result} {${result}${character}}
-          }
-     }
+    #nop {Can cut with specified field and delimiter, defaults are space for the delimiter and 1 for field.};
+    #local {fieldIndex} {1};
+    #local {string} {%0};
+    #regexp {${string}} {{.*}-d {.} }
+    {
+        #variable {delimiter} {&2};#replace {string} {-d &2 }
+    };
+    #else
+    {
+        #variable {delimiter} { }
+    };
+    #regexp {${string}} {{.*}-f {\d+} }
+    {
+        #variable {field} {&2};#replace {string} {-f &2 }
+    };
+    #else
+    {
+        #variable {field} {1}
+    };
+    #variable {result} {};
+    #parse {${string}} {character}
+    {
+        #if {{$character} == {${delimiter}}}
+        {
+            #math {fieldIndex} {${fieldIndex} + 1}
+        };
+        #if {${fieldIndex} == ${field} && {${character}} != {${delimiter}}}
+        {
+            #variable {result} {${result}${character}}
+        }
+    }
 }
 
 #FUNCTION {do_hook}
 {
-     #nop {Note: Hook names cannot have the semicolon character in them.};
-     #local {i} {0};
-     #list {hook[%1]} {size} {i};
-     #if {$i > 0}
-     {
-          #variable {hookArgsList} {};
-          #variable {hookArgs} {};
-          #local {j} {};
-          #local {k} {};
-          #list {hookArgsList} {create} {%0};
-          #foreach {*{hookArgsList[]}} {k}
-          {
-               #if {$k == 1}
-               {
-                    #continue
-               };
-               #if {$k == 2}
-               {
-                    #variable {hookArgs} {${hookArgsList[$k]}}
-               };
-               #else
-               {
-                    #variable {hookArgs} {$hookArgs;${hookArgsList[$k]}}
-               }
-          };
-          #foreach {*{hook[%1][]}} {j}
-          {
-               #local {exists} {@${j}{${hookArgs}}};
-               #variable {exists} {$exists};
-               #if {{$exists} != {@%*}}
-               {
-                    $exists
-               }
-          };
-          #unvariable {hookArgs};
-          #unvariable {hookArgsList}
-     };
-     #return #nop
+    #nop {Note: Hook names cannot have the semicolon character in them.};
+    #local {i} {0};
+    #list {hook[%1]} {size} {i};
+    #if {$i > 0}
+    {
+        #variable {hookArgsList} {};
+        #variable {hookArgs} {};
+        #local {j} {};
+        #local {k} {};
+        #list {hookArgsList} {create} {%0};
+        #foreach {*{hookArgsList[]}} {k}
+        {
+            #if {$k == 1}
+            {
+                #continue
+            };
+            #if {$k == 2}
+            {
+                #variable {hookArgs} {${hookArgsList[$k]}}
+            };
+            #else
+            {
+                #variable {hookArgs} {$hookArgs;${hookArgsList[$k]}}
+            }
+        };
+        #foreach {*{hook[%1][]}} {j}
+        {
+            #local {exists} {@${j}{${hookArgs}}};
+            #variable {exists} {$exists};
+            #if {{$exists} != {@%*}}
+            {
+                $exists
+            }
+        };
+        #unvariable {hookArgs};
+        #unvariable {hookArgsList}
+    };
+    #return #nop
 }
 
 #FUNCTION {fold}
 {
-     @var_save{script};
-     #variable {script} {};
-     @var_save{characters};
-     #variable {characters} {};
-     #list {characters} {explode} {%1};
-     @var_save{y};
-     #variable {y} {1};
-     @var_save{length};
-     #variable {length} {0};
-     @var_save{spaces};
-     #variable {spaces} {0};
-     #local {cols} {};
-     #screen get cols cols;
-     @var_save{lastSpace};
-     #variable {lastSpace} {0};
-     @var_save{x};
-     @var_save{stop};
-     #variable {stop} {0};
-     @var_save{charSize};
-     #list {characters} {size} {charSize};
-     #while {$y <= $charSize}
-     {
-          #if {$y - $length >= $cols && $spaces && $lastSpace > 0}
-          {
-               #variable {stop} {$lastSpace}
-          };
-          #elseif {$y - $length >= $cols && !$spaces && $lastSpace <= 0}
-          {
-               #nop {There wasn't a space in the last cols worth of characters, back y up 5 characters and append --};
-               #math {y} {$y - 5};
-               #variable {stop} {$y}
-          };
-          #if {$stop > 0}
-          {
-               #local {line} {};
-               #loop {$length} {$stop} {x}
-               {
+    @var_save{script};
+    @var_save{characters};
+    #list {characters} {tokenize} {%1};
+    @var_save{y};
+    #variable {y} {1};
+    @var_save{length};
+    #variable {length} {0};
+    @var_save{spaces};
+    #variable {spaces} {0};
+    #local {cols} {};
+    #screen get cols cols;
+    @var_save{lastSpace};
+    #variable {lastSpace} {0};
+    @var_save{x};
+    @var_save{stop};
+    #variable {stop} {0};
+    @var_save{charSize};
+    #list {characters} {size} {charSize};
+    #if {$charSize <= $cols}
+    {
+        #nop {Shortcircuit the loop because we don't need to break it into lines.};
+        #variable {script[1]} {%1}
+    };
+    #else
+    {
+        #while {$y <= $charSize}
+        {
+            #if {$y - $length >= $cols && $spaces && $lastSpace > 0}
+            {
+                #variable {stop} {$lastSpace}
+            };
+            #elseif {$y - $length >= $cols && !$spaces && $lastSpace <= 0}
+            {
+                #nop {There wasn't a space in the last cols worth of characters, back y up 5 characters and append --};
+                #math {y} {$y - 5};
+                #variable {stop} {$y}
+            };
+            #if {$stop > 0}
+            {
+                #local {line} {};
+                #loop {$length} {$stop} {x}
+                {
                     #variable {line} {${line}${characters[$x]}}
-               };
-               #if {$lastSpace <= 0}
-               {
+                };
+                #if {$lastSpace <= 0}
+                {
                     #variable {line} {${line}--}
-               };
-               #else
-               {
+                };
+                #else
+                {
                     #variable {y} {$lastSpace}
-               };
-               #list {script} {insert} {-1} {$line};
-               #variable {length} {$y};
-               #variable {lastSpace} {-1};
-               #variable {spaces} {0};
-               #variable {stop} {0}
-          };
-          #if {{${characters[$y]}} == { }}
-          {
-               #variable {spaces} {1};
-               #variable {lastSpace} {$y}
-          };
-          #math {y} {$y + 1}
-     };
-     #if {$length < $charSize}
-     {
-          #local {line} {};
-          #loop {$length} {$charSize} {x}
-          {
-               #variable {line} {${line}${characters[$x]}}
-          };
-          #list {script} {insert} {-1} {$line}
-     };
-     #unvariable {stop};
-     @var_restore{stop};
-     #unvariable {characters};
-     @var_restore{characters};
-     #unvariable y;
-     @var_restore{y};
-     #unvariable length;
-     @var_restore{length};
-     #unvariable {spaces};
-     @var_restore{spaces};
-     #unvariable lastSpace;
-     @var_restore{lastSpace};
-     #unvariable x;
-     @var_restore{x};
-     #unvariable charSize;
-     @var_restore{charSize};
-     #local {tmp} {$script};
-     #unvariable {script};
-     @var_restore{script};
-     #return $tmp
+                };
+                #list {script} {insert} {-1} {$line};
+                #variable {length} {$y};
+                #variable {lastSpace} {-1};
+                #variable {spaces} {0};
+                #variable {stop} {0}
+            };
+            #if {{${characters[$y]}} == { }}
+            {
+                #variable {spaces} {1};
+                #variable {lastSpace} {$y}
+            };
+            #math {y} {$y + 1}
+        };
+        #if {$length < $charSize}
+        {
+            #local {line} {};
+            #loop {$length} {$charSize} {x}
+            {
+                #variable {line} {${line}${characters[$x]}}
+            };
+            #list {script} {insert} {-1} {$line}
+        }
+    };
+    @var_restore{stop};
+    @var_restore{characters};
+    @var_restore{y};
+    @var_restore{length};
+    @var_restore{spaces};
+    @var_restore{lastSpace};
+    @var_restore{x};
+    @var_restore{charSize};
+    #local {tmp} {$script};
+    @var_restore{script};
+    #return $tmp
 }
 
 #FUNCTION {list_rand}
 {
-     #math {result} {1d@list_size{%1}}
+    #math {result} {1d@list_size{%1}}
 }
 
 #FUNCTION {list_size}
 {
-     #list {%1} {size} {result}
+    #list {%1} {size} {result}
 }
 
 #FUNCTION {percent}
 {
-     #math {result} {(${%1} / ${%1_MAX}) * 100.0};
-     #format {result} {%d} {$result}
+    #math {result} {(${%1} / ${%1_MAX}) * 100.0};
+    #format {result} {%d} {$result}
 }
 
 #FUNCTION {pretty_print_number}
 {
-     #nop {Prints numbers in pretty format, thousand groups numbers, and fixes tintin's %M format option currently so that G turns into B since tintin is using giga, mega, terra, etc, which only giga currently does not mesh with amounts in muds like billion, million, trillion, etc. By default thousand groups numbers below 1 million and metric formats everything above.};
-     #nop {Usage: @pretty_print_numbers{<number>;[force flag]}. Number is required, and force flag is optional, and can be g for thousand grouping or m for tintin's metric format with fixes.};
-     #local {formatVar} {};
-     #if {{%2} == {g}}
-     {
-          #format {formatVar} {%g} {%1};
-          #return $formatVar
-     };
-     #elseif {{%2} == {m}}
-     {
-          #format {formatVar} {%M} {%1}
-     };
-     #else
-     {
-          #if {%1 < 1000000 && %1 > -1000000}
-          {
-               #format {formatVar} {%g} {%1};
-               #return $formatVar
-          };
-          #else
-          {
-               #format {formatVar} {%M} {%1}
-          }
-     };
-     #nop {We've made it here, the number is not a thousand groupped number, fix it up.};
-     #regexp {$formatVar} {{.*}.{\d+}G{.*}}
-     {
-          #var {formatVar} {&1.&2B&3}
-     };
-     #return $formatVar
+    #nop {Prints numbers in pretty format, thousand groups numbers, and fixes tintin's %M format option currently so that G turns into B since tintin is using giga, mega, terra, etc, which only giga currently does not mesh with amounts in muds like billion, million, trillion, etc. By default thousand groups numbers below 1 million and metric formats everything above.};
+    #nop {Usage: @pretty_print_numbers{<number>;[force flag]}. Number is required, and force flag is optional, and can be g for thousand grouping or m for tintin's metric format with fixes.};
+    #local {formatVar} {};
+    #if {{%2} == {g}}
+    {
+        #format {formatVar} {%g} {%1};
+        #return $formatVar
+    };
+    #elseif {{%2} == {m}}
+    {
+        #format {formatVar} {%M} {%1}
+    };
+    #else
+    {
+        #if {%1 < 1000000 && %1 > -1000000}
+        {
+            #format {formatVar} {%g} {%1};
+            #return $formatVar
+        };
+        #else
+        {
+            #format {formatVar} {%M} {%1}
+        }
+    };
+    #nop {We've made it here, the number is not a thousand groupped number, fix it up.};
+    #regexp {$formatVar} {{.*}.{\d+}G{.*}}
+    {
+        #var {formatVar} {&1.&2B&3}
+    };
+    #return $formatVar
+}
+
+#FUNCTION {randint}
+{
+    #nop {pass largest number you want returned. Returns 1 through given int};
+    #math {result} {1d%1}
+}
+
+#FUNCTION {random_choice}
+{
+    #local {choiceList} {%0};
+    #local {i} {0};
+    #list {choiceList} {create} {${choiceList}};
+    #list {choiceList} {size} {i};
+    #if {$i == 0}
+    {
+        #return #nop
+    };
+    #else
+    {
+        #math {i} {1d$i};
+        #return ${choiceList[$i]}
+    }
 }
 
 #FUNCTION {separator}
 {
-     #nop {Takes 1 optional argument, the separator string. The default is -.};
-     #if {{%1} == {}}
-     {
-          #script {result} {for x in $(seq $(tput cols)) ; do echo -n "-";done}
-     };
-     #else
-     {
-          #local {columns} {};
-          #local {length} {@strlen{%1}};
-          #script {columns} {tput cols};
-          #math {columns} {${columns[1]} / ${length}};
-          #script {result} {for x in $(seq ${columns}) ; do echo -n "%1";done}
-     };
-     #variable {result} {${result[1]}}
+    #nop {Takes 1 optional argument, the separator string. The default is -.};
+    #if {{%1} == {}}
+    {
+        #script {result} {for x in $(seq $(tput cols)) ; do echo -n "-";done}
+    };
+    #else
+    {
+        #local {columns} {};
+        #local {length} {@strlen{%1}};
+        #script {columns} {tput cols};
+        #math {columns} {${columns[1]} / ${length}};
+        #script {result} {for x in $(seq ${columns}) ; do echo -n "%1";done}
+    };
+    #variable {result} {${result[1]}}
 }
 
 #FUNCTION {strip_braces}
 {
-     #variable {result} {%1};
-     #replace {result} {^\x7B} {};
-     #replace {result} {\x7D$} {}
+    #variable {result} {%1};
+    #replace {result} {^\x7B} {};
+    #replace {result} {\x7D$} {}
 }
 
 #FUNCTION {strlen}
 {
-     #nop Return the length of a string.;
-     #format result {%L} {%0}
+    #nop Return the length of a string.;
+    #format result {%L} {%0}
 }
 
 #FUNCTION {var_restore}
 {
-     #if {&{varList[%1]}}
-     {
-          var {%1} {${varList[%1]}};
-          #unvariable {varList[%1]}
-     };
-     #return #nop
+    #if {&{varList[%1]}}
+    {
+        #variable {%1} {${varList[%1]}};
+        #unvariable {varList[%1]}
+    };
+    #else
+    {
+        #unvariable {%1}
+    };
+    #return #nop
 }
 
 #FUNCTION {var_save}
 {
-     #if {&{%1]}}
-     {
-          #variable {varList[%1]} {${%1}}
-     };
-     #return #nop
+    #if {&{%1}}
+    {
+        #variable {varList[%1]} {${%1}};
+        #variable {%1} {}
+    };
+    #return #nop
 }
 
 
+#VARIABLE {hook} {}
+#VARIABLE {varList} {}
