@@ -148,6 +148,7 @@
      #echo {@separator{}};
      #echo {To get started type login};
      #nop {If everything went ok with the news file above, display the last time news was updated.};
+#nop {
      #if {$motdStatus == 200}
      {
           #echo {@separator{}};
@@ -156,6 +157,7 @@
           #echo {@separator{}};
           Channel_Event misc News last modified: ${motdTime};
           Channel_Event misc To listen to it type news.
+}
      };
      #unvariable {motd};
      #unvariable {motdTime};
