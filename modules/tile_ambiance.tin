@@ -44,9 +44,9 @@
 
 #EVENT {VARIABLE UPDATE MSDP_ROOM}
 {
-	#if {!$copying}
+	#if {!${copying}}
 	{
-		#variable {tmp} {%1};
+		#local {tmp} {%1};
 		#if {{${tmp[NAME]}} != {{$tileNames}}}
 		{
 			#variable {tileSoundFile} {none}

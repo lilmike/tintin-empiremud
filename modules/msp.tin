@@ -43,7 +43,7 @@
 	};
 	#if {${MSP[SOUND]}}
 	{
-		#variable {tmp} {%1};
+		#local {tmp} {%1};
 		#replace {tmp} { } {;};
 		#variable {sounds} {};
 		#foreach {$tmp} {tmp3}

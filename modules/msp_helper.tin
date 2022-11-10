@@ -795,10 +795,11 @@
 {
 	#nop {Hook name: worldTime};
 	#nop {Hook arguments: time in 24 hour format};
-	#if {{%1} != {} && !$copying}
+	#if {{%1} != {} && !${copying}}
 	{
 		#if {&{character[clock]}}
 		{
+                        #local {tmp} {};
 			#math {tmp} {%1 % 12};
 			#if {$tmp == 0}
 			{

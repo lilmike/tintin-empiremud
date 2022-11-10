@@ -12,7 +12,7 @@ post $name sold %1 for %2 %3 coins on the trading post.
 
 #action {^You have been enrolled in %1.$}
 {
-#variable {tmp} {%1};
+#local {tmp} {%1};
 #replace {tmp} { } {};
 #variable {empireName} {%1};
 #if {{$mp} == {%1}}
