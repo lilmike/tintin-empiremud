@@ -124,7 +124,7 @@
 }
 {9}
 
-#ACTION {^You improve your {Battle|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to %d.$}
+#ACTION {^You improve your {Battle|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to %d{( using .+)?}.$}
 {
      #format {i} {%l} {%1};
      #replace {i} { } {_};

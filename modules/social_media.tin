@@ -43,7 +43,7 @@ PLAY skills/prospect_%2;
 }
 {9}
 
-#action {^You improve your {Battle|Empire|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to 100.$}
+#action {^You improve your {Battle|Empire|High Sorcery|Natural Magic|Stealth|Survival|Trade|Vampire} skill to 100{( using .+)?}.$}
 {
 post $name improved %1 to 100!
 }
