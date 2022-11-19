@@ -169,7 +169,7 @@
 }
 {9}
 
-#ACTION {^You carefully place {a|an} %2 in the structure.$}
+#ACTION {^You carefully place {a|an|some} %2 in the structure.$}
 {
     #switch {{%2}}
     {
