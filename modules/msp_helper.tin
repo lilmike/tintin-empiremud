@@ -580,7 +580,7 @@
 }
 {9}
 
-#ACTION {^You tie %* into position.$}
+#ACTION {^You position %* and tie it in place.$}
 {
     PLAY craft/tie_wood
 }
