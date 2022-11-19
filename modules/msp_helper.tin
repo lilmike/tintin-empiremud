@@ -1,823 +1,835 @@
 #ACTION {^The mine is depleted.$}
 {
-	PLAY skills/work_complete
+    PLAY skills/work_complete
 }
 {1}
 
 #ACTION {^You are starving!$}
 {
-	PLAY miscellaneous/vampire_starving
+    PLAY miscellaneous/vampire_starving
 }
 {8}
 
 #ACTION {^You kneel and begin digging holes to plant %1 here.$}
 {
-	PLAY skills/dig
+    PLAY skills/dig
 }
 {8}
 
 #ACTION {^Your shadowstep cooldown has ended.$}
 {
-	#if {{$cspam} == {true}}
-	{
-		#line {gag}
-	};
-	REV_PLAY skills/shadowstep
+    #if {{$cspam} == {true}}
+    {
+        #line {gag}
+    };
+    REV_PLAY skills/shadowstep
 }
 {8}
 
 #ACTION {%* splits open!$}
 {
-	PLAY skills/split_rock
+    PLAY skills/split_rock
 }
 {9}
 
 #ACTION {%1 runs toward you!$}
 {
-	PLAY move/enemy_run
-}
-{9}
-
-#ACTION {^%S se{t|ts} up a large beehive.$}
-{
-	PLAY craft/beehive
-}
-{9}
-
-#ACTION {^A fish darts past you, but you narrowly miss it!$}
-{
-	PLAY fail/miss
-}
-{9}
-
-#ACTION {^As you chant, {a mighty tree springs from the ground|the plants around you grow with amazing speed}!$}
-{
-	PLAY ambiance/grow
-}
-{9}
-
-#ACTION {^It starts to rain.$}
-{
-	PLAY weather/rain
-}
-{9}
-
-#ACTION {^Lightning starts to show in the sky.$}
-{
-	PAN_PLAY weather/thunder
-}
-{9}
-
-#ACTION {^Mana twists and swirls around your hand and becomes a fireball!$}
-{
-	PLAY magic/ready_fireball
-}
-{9}
-
-#ACTION {^The ground under you shakes violently!$}
-{
-	PLAY ambiance/earthquake
-}
-{9}
-
-#ACTION {^The residual magic flowing through %* proves too much, and {he|it|she} falls over dead!$}
-{
-	PLAY magic/death_residual
-}
-{9}
-
-#ACTION {^The searing magical pain proves too much for %*, and {he|it|she} falls over dead!$}
-{
-	PLAY magic/death_residual
-}
-{9}
-
-#ACTION {^The sun {rises over|slowly disappears beneath} the horizon.$}
-{
-	#if {{%1} == {rises over}}
-	{
-		PLAY ambiance/sunrise
-	};
-	#else
-	{
-		PLAY ambiance/sunset
-	}
-}
-{9}
-
-#ACTION {^There's nothing left here to chop.$}
-{
-	PLAY skills/work_complete;
-	#if {{$bgm} == {true}}
-	{
-		look
-	}
-}
-{9}
-
-#ACTION {^With a loud crack, %* falls!$}
-{
-	PLAY get/tree
-}
-{9}
-
-#ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore|imperium ore|tin ore} falls from the wall!$}
-{
-	PLAY get/iron_ore
-}
-{9}
-
-#ACTION {^You begin harvesting %*.$}
-{
-	PLAY skills/harvest
-}
-{9}
-
-#ACTION {^You brush dust out of the cracks in the stone.$}
-{
-	PLAY skills/dust_stone
-}
-{9}
-
-#ACTION {^You can now alternate again.$}
-{
-	SYNTH_PLAY alternateCooldownSound
-}
-{9}
-
-#ACTION {^You can't enter it from this side. The {entrance is|entrances are} from the %*.$}
-{
-	SYNTH_PLAY noEnterSound
-}
-{9}
-
-#ACTION {^You carefully harvest the %*.$}
-{
-	PAN_PLAY skills/harvest
-}
-{9}
-
-#ACTION {^You carefully place {a|an} %2 in the structure.$}
-{
-	#switch {{%2}}
-	{
-		#case {{iron ingot}}
-		{
-			PLAY craft/metal
-		};
-		#case {{rock}}
-		{
-			PLAY craft/rock
-		};
-		#default
-		{
-			PLAY craft/wood
-		}
-	}
-}
-{9}
-
-#ACTION {^You carefully plant seeds in rows along the ground.$}
-{
-	PLAY skills/plant_seed
-}
-{9}
-
-#ACTION {^You carefully remove %1 from the structure.$}
-{
-	PLAY skills/dismantle
-}
-{9}
-
-#ACTION {^You carefully skin the corpse of %*...$}
-{
-	PLAY skills/skin
-}
-{9}
-
-#ACTION {^You chant a few mystic words and a portal whirls open!$}
-{
-	PLAY miscellaneous/portal
-}
-{9}
-
-#ACTION {^You click your fingers and %1 catches fire!$}
-{
-	PLAY magic/touch_of_flame
-}
-{9}
-
-#ACTION {^You cover the seeds and gently pack the dirt.$}
-{
-	PLAY skills/plant_pat
-}
-{9}
-
-#ACTION {^You don't seem to have a tree.$}
-{
-	PLAY skills/work_complete
-}
-{9}
-
-#ACTION {^You don't seem to have more to tan.$}
-{
-	PLAY skills/work_complete
-}
-{9}
-
-#ACTION {^You empty %1 of %2.$}
-{
-	PLAY ambiance/empty_liquid
-}
-{9}
-
-#ACTION {^You find a small flake of gold!$}
-{
-	PLAY get/gold_flake
-}
-{9}
-
-#ACTION {^You find {a|a daggerbite|a handfull of|a twig of|a small|an iridescent blue|some|some magewhisper} %*{bileberries|fiveleaf|flower|frond|iris|redthorn|sepals|stick|whitegrass}!$}
-{
-	PLAY get/%3
-}
-{9}
-
-#ACTION {^You finish dismantling the building.$}
-{
-	PLAY skills/complete_dismantle;
-	#if {{$bgm} == {true}}
-	{
-		look
-	}
-}
-{9}
-
-#ACTION {^You finish forging %1!$}
-{
-	PLAY skills/complete_forge
-}
-{9}
-
-#ACTION {^You finish harvesting the crop!$}
-{
-	PLAY skills/work_complete;
-	#if {{$bgm} == {true}}
-	{
-		look
-	}
-}
-{9}
-
-#ACTION {^You finish milling %*{?:(?: \(x\d+\))?}!$}
-{
-	PLAY get/sack
-}
-{9}
-
-#ACTION {^You finish sawing %*{?:(?: \(x]\d+\))?}.$}
-{
-	PLAY get/lumber
-}
-{9}
-
-#ACTION {^You gently fill %1 from %2.$}
-{
-	PLAY ambiance/liquid_fill
-}
-{9}
-
-#ACTION {^You get {a stone spear head|a handaxe}.$}
-{
-	#if {{%1} == {a stone spear head}}
-	{
-		PLAY craft/spear_head
-	};
-	#elseif {{%1} == {a handaxe}}
-	{
-		PLAY craft/handaxe
-	}
-}
-{9}
-
-#ACTION {^You give the plug drill one final swing and pry loose %1 stone block!$}
-{
-	PLAY get/stone
-}
-{9}
-
-#ACTION {^You grind the millstone, making %*...$}
-{
-	PLAY skills/mill
-}
-{9}
-
-#ACTION {^You have become %*!$}
-{
-	#if {{%1} == {$MSDP_ACCOUNT_NAME%*}}
-	{
-		PLAY skills/form_normal
-	}
-}
-{9}
-
-#ACTION {^You have become a {black|brown|cloud of swirling|horrid|sage|savage|towering} {bat|mist|monstrosity|werewolf|wolf}!$}
-{
-	PLAY skills/animal_form_%2
-}
-{9}
-
-#ACTION {^You have finished planting!$}
-{
-	PLAY skills/work_complete;
-	#if {{$bgm} == {true}}
-	{
-		look
-	}
-}
-{9}
-
-#ACTION {^You have mail waiting.$}
-{
-	PLAY miscellaneous/email
-}
-{9}
-
-#ACTION {^You finish smelting %*!$}
-{
-	PLAY get/iron_ingot
-}
-{9}
-
-#ACTION {^You hit %1 on the anvil hard with %2!$}
-{
-	PLAY skills/forge
-}
-{9}
-
-#ACTION {^You jab your %1 into the water and when you extract it you find %2 on the end!$}
-{
-	PLAY get/fish
-}
-{9}
-
-#ACTION {^You jab your shovel into the dirt...$}
-{
-	PLAY skills/dig1
-}
-{9}
-
-#ACTION {^You knead %* with a foul-smelling mixture...$}
-{
-	PLAY skills/tan_kneed
-}
-{9}
-
-#ACTION {^You kneel down and begin panning at %1.$}
-{
-	PLAY skills/pan
-}
-{9}
-
-#ACTION {^You lay a road here.$}
-{
-	PLAY craft/rock;
-	#if {{$bgm} == {true}}
-	{
-		look
-	}
-}
-{9}
-
-#ACTION {^You lie down and go to sleep.$}
-{
-	PLAY ambiance/sleep
-}
-{9}
-
-#ACTION {^You mark %1 with a glowing blue skybrand!$}
-{
-	RPLAY magic/skybrand
-}
-{9}
-
-#ACTION {^You pick at the ground a little bit...$}
-{
-	PAN_PLAY skills/mine
-}
-{9}
-
-#ACTION {^You pick at the walls with %1, looking for %2.$}
-{
-	PAN_PLAY skills/mine
-}
-{9}
-
-#ACTION {^You plant %* and tie %* to stakes.$}
-{
-	PLAY skills/tie_plant
-}
-{9}
-
-#ACTION {^You tie %* into position.$}
-{
-	PLAY craft/tie_wood
-}
-{9}
-
-#ACTION {^You pull a flint stone from the ground!$}
-{
-	PLAY get/flint_stone
-}
-{9}
-
-#ACTION {^You pull a lump of clay from the ground!$}
-{
-	PLAY get/clay
-}
-{9}
-
-#ACTION {^You pull a rock from the ground!$}
-{
-	PLAY get/rock
-}
-{9}
-
-#ACTION {^You pull a yellow lightning stone from the ground!$}
-{
-	PLAY get/lightning_stone
-}
-{9}
-
-#ACTION {^You run toward %1!}
-{
-	PLAY move/you_run
-}
-{9}
-
-#ACTION {^You scrape %* clean...$}
-{
-	PLAY skills/tan_scrape
-}
-{9}
-
-#ACTION {^You shadowstep to %*!$}
-{
-	PLAY skills/shadowstep
-}
-{9}
-
-#ACTION {^You sift through %1, looking for %2...$}
-{
-	#if {{$cspam} == {true}}
-	{
-		#showme {You pan for %2.};
-		#line {gag}
-	};
-	PLAY skills/pan
-}
-{9}
-
-#ACTION {^You sift through some dirt...$}
-{
-	PAN_PLAY skills/sift
-}
-{9}
-
-#ACTION {^You slip some shims into cracks in the stone.$}
-{
-	PLAY skills/shim_stone
-}
-{9}
-
-#ACTION {^You smelt %* in the fire...$}
-{
-	PLAY skills/smelt
-}
-{9}
-
-#ACTION {^You start forging.$}
-{
-	PLAY skills/forge
-}
-{9}
-
-#ACTION {^You start milling.$}
-{
-	PLAY skills/mill
-}
-{9}
-
-#ACTION {^You start smelting %*.$}
-{
-	PLAY skills/smelt
-}
-{9}
-
-#ACTION {^You store a pile of clay.{?:(?: \(x\d+\))?}$}
-{
-	PLAY store/clay
-}
-{9}
-
-#ACTION {^You store a sack of {barley|cornmeal|flour|dried rice}.{?:(?: \(x\d+\))?}$}
-{
-	PLAY store/sack
-}
-{9}
-
-#ACTION {^You store a {giant linefish|magenta arrowfish|fillet of raw meat|slab of pork}.{?:(?: \(x\d+\))?}$}
-{
-	PLAY store/meat
-}
-{9}
-
-#ACTION {^You store a {heavy log|large tree|stack of lumber|stick}.{?:(?: \(x\d+\))?}$}
-{
-	PLAY store/lumber
-}
-{9}
-
-#ACTION {^You store a {pile of gold dust|silver nugget}.{?:(?: \(x\d+\))?}$}
-{
-	PLAY store/treasure
-}
-{9}
-
-#ACTION {^You store %* ingot.{?:(?: \(x\d+\))?}$}
-{
-	PLAY store/metal
-}
-{9}
-
-#ACTION {^You strike %* and light %*.$}
-{
-	PLAY miscellaneous/flint_and_steel
-}
-{9}
-
-#ACTION {^You swing %1 hard!$}
-{
-	PLAY skills/chop
-}
-{9}
-
-#ACTION {^You swing back %* and prepare to chop...$}
-{
-	PLAY skills/ready_axe
-}
-{9}
-
-#ACTION {^You thrust your hand toward %1 and strike {her|him|it} with a powerful bolt of lightning!$}
-{
-	RPLAY magic/lightningbolt
-}
-{9}
-
-#ACTION {^You toss a shovel-full of dirt out of the trench.$}
-{
-	PLAY skills/dig2
-}
-{9}
-
-#ACTION {^You touch a hestian trinket and it begins to swirl with light...$}
-{
-	PLAY magic/hestian_trinket_charge
-}
-{9}
-
-#ACTION {^You transport to another starting location!$}
-{
-	PLAY move/transport
-}
-{9}
-
-#ACTION {^You walk through the field, harvesting the %*.$}
-{
-	PAN_PLAY skills/harvest
-}
-{9}
-
-#ACTION {^You water the freshly seeded ground.$}
-{
-	PLAY skills/plant_water
-}
-{9}
-
-#ACTION {^You whistle loudly...$}
-{
-	PLAY miscellaneous/whistle
-}
-{9}
-
-#ACTION {^You wince and recoil from the sunlight!$}
-{
-	PLAY miscellaneous/vampire_hiss
-}
-{9}
-
-#ACTION {^You {begin looking around for sticks|begin looking around|look around for something nice to pick\.\.|search the ground for sticks\.\.}.$}
-{
-	PAN_PLAY skills/search
-}
-{9}
-
-#ACTION {^You {begin sawing|saw} %*.$}
-{
-	PLAY skills/saw
-}
-{9}
-
-#ACTION {^You {begin scraping|scrape at} %*{\.\.\.|\.}$}
-{
-	PLAY skills/tree_scrape
-}
-{9}
-
-#ACTION {^You {begin to PLAY a lyre|strum at a lyre and hum to the tune|pluck at a lyre}.$}
-{
-	Play_Lyre
-}
-{9}
-
-#ACTION {^You {begin to PLAY a wooden flute|whistle a tune through a wooden flute|PLAY a wooden flute}.$}
-{
-	Play_Flute
-}
-{9}
-
-#ACTION {^You {begin to chip at .+|chip away at .+\.\.}.$}
-{
-	PLAY skills/chip_rock
-}
-{9}
-
-#ACTION {^You {begin to dig into|dig vigorously at} the ground.$}
-{
-	PAN_PLAY skills/dig
-}
-{9}
-
-#ACTION {^You {begin to quarry|hammer a plug drill into} the stone.$}
-{
-	PLAY skills/quarry
-}
-{9}
-
-#ACTION {^You {brush|soak|stretch} %*...$}
-{
-	PLAY skills/tan_%1
-}
-{9}
-
-#ACTION {^You {carefully|finish} {sew|sewing} %3{\.\.\.|!}$}
-{
-	PLAY skills/sew
-}
-{9}
-
-#ACTION {^You {complete|finish crafting} %*!$}
-{
-	PLAY skills/work_complete;
-	#if {{$bgm} == {true} && {%2} == {the construction}}
-	{
-		look
-	}
-}
-{9}
-
-#ACTION {^You {continue|finish} crafting {a|an|the} %*{\.\.\.|!}$}
-{
-	#if {{%1} == {finish}}
-	{
-		PLAY craft/complete_wood
-	};
-	#else
-	{
-		PLAY craft/wood
-	}
-}
-{9}
-
-#ACTION {^You {continue|start|wait for .+ to} {cook|bak}%*.$}
-{
-	PLAY skills/cook
-}
-{9}
-
-#ACTION {^You {drink|eat} %*.$}
-{
-	PLAY health/%2
-}
-{9}
-
-#ACTION {^You {find|store} a {basket of peaches|bunch of apples}{\.|!}}
-{
-	#if {{%1} == {find}}
-	{
-		PLAY get/fruit
-	};
-	#else
-	{
-		PLAY store/fruit
-	}
-}
-{9}
-
-#ACTION {^You {hammer nails into the wood joints|nail the wood onto the structure}.$}
-{
-	PLAY craft/wood1
-}
-{9}
-
-#ACTION {^You {heave a huge stone block into place|put down a layer of bricks}.$}
-{
-	PLAY craft/stone
-}
-{9}
-
-#ACTION {^Your portal sickness has ended.$}
-{
-	REV_PLAY miscellaneous/portal
-}
-{9}
-
-#ACTION {^Yo{u|ur} {begin to transform|body warps and distorts painfully}!$}
-{
-	PLAY skills/morph
+    PLAY move/enemy_run
 }
 {9}
 
 #ACTION {^%* is pulled%* %w.$}
 {
-	PLAY move/cart_%3
+    PLAY move/cart_%3
+}
+{9}
+
+#ACTION {^%S se{t|ts} up a large beehive.$}
+{
+    PLAY craft/beehive
+}
+{9}
+
+#ACTION {^A fish darts past you, but you narrowly miss it!$}
+{
+    PLAY fail/miss
+}
+{9}
+
+#ACTION {^As you chant, {a mighty tree springs from the ground|the plants around you grow with amazing speed}!$}
+{
+    PLAY ambiance/grow
+}
+{9}
+
+#ACTION {^It starts to rain.$}
+{
+    PLAY weather/rain
+}
+{9}
+
+#ACTION {^Lightning starts to show in the sky.$}
+{
+    PAN_PLAY weather/thunder
+}
+{9}
+
+#ACTION {^Mana twists and swirls around your hand and becomes a fireball!$}
+{
+    PLAY magic/ready_fireball
+}
+{9}
+
+#ACTION {^The ground under you shakes violently!$}
+{
+    PLAY ambiance/earthquake
+}
+{9}
+
+#ACTION {^The residual magic flowing through %* proves too much, and {he|it|she} falls over dead!$}
+{
+    PLAY magic/death_residual
+}
+{9}
+
+#ACTION {^The searing magical pain proves too much for %*, and {he|it|she} falls over dead!$}
+{
+    PLAY magic/death_residual
+}
+{9}
+
+#ACTION {^The sun {rises over|slowly disappears beneath} the horizon.$}
+{
+    #if {{%1} == {rises over}}
+    {
+        PLAY ambiance/sunrise
+    };
+    #else
+    {
+        PLAY ambiance/sunset
+    }
+}
+{9}
+
+#ACTION {^There's nothing good left to gather here.$}
+{
+    PLAY skills/work_complete
+}
+{9}
+
+#ACTION {^There's nothing left here to chop.$}
+{
+    PLAY skills/work_complete;
+    #if {{$bgm} == {true}}
+    {
+        look
+    }
+}
+{9}
+
+#ACTION {^With a loud crack, %* falls!$}
+{
+    PLAY get/tree
+}
+{9}
+
+#ACTION {^With that last stroke, {a|some} {copper ore|iron ore|pile of gold dust|nocturnium ore|silver nugget|moonstone ore|imperium ore|tin ore} falls from the wall!$}
+{
+    PLAY get/iron_ore
+}
+{9}
+
+#ACTION {^You begin harvesting %*.$}
+{
+    PLAY skills/harvest
+}
+{9}
+
+#ACTION {^You brush dust out of the cracks in the stone.$}
+{
+    PLAY skills/dust_stone
+}
+{9}
+
+#ACTION {^You can now alternate again.$}
+{
+    SYNTH_PLAY alternateCooldownSound
+}
+{9}
+
+#ACTION {^You can't enter it from this side. The {entrance is|entrances are} from the %*.$}
+{
+    SYNTH_PLAY noEnterSound
+}
+{9}
+
+#ACTION {^You carefully harvest the %*.$}
+{
+    PAN_PLAY skills/harvest
+}
+{9}
+
+#ACTION {^You carefully place {a|an} %2 in the structure.$}
+{
+    #switch {{%2}}
+    {
+        #case {{iron ingot}}
+        {
+            PLAY craft/metal
+        };
+        #case {{rock}}
+        {
+            PLAY craft/rock
+        };
+        #default
+        {
+            PLAY craft/wood
+        }
+    }
+}
+{9}
+
+#ACTION {^You carefully plant seeds in rows along the ground.$}
+{
+    PLAY skills/plant_seed
+}
+{9}
+
+#ACTION {^You carefully remove %1 from the structure.$}
+{
+    PLAY skills/dismantle
+}
+{9}
+
+#ACTION {^You carefully skin the corpse of %*.$}
+{
+    PLAY skills/skin
+}
+{9}
+
+#ACTION {^You chant a few mystic words and a portal whirls open!$}
+{
+    PLAY miscellaneous/portal
+}
+{9}
+
+#ACTION {^You click your fingers and %1 catches fire!$}
+{
+    PLAY magic/touch_of_flame
+}
+{9}
+
+#ACTION {^You cover the seeds and gently pack the dirt.$}
+{
+    PLAY skills/plant_pat
+}
+{9}
+
+#ACTION {^You don't seem to have a tree.$}
+{
+    PLAY skills/work_complete
+}
+{9}
+
+#ACTION {^You don't seem to have more to tan.$}
+{
+    PLAY skills/work_complete
+}
+{9}
+
+#ACTION {^You empty %1.$}
+{
+    PLAY ambiance/empty_liquid
+}
+{9}
+
+#ACTION {^You find a small flake of gold!$}
+{
+    PLAY get/gold_flake
+}
+{9}
+
+#ACTION {^You find {a|a daggerbite|a handfull of|a twig of|a small|an iridescent blue|some|some magewhisper} %*{bileberries|fiveleaf|flower|frond|iris|redthorn|sepals|stick|whitegrass}!$}
+{
+    PLAY get/%3
+}
+{9}
+
+#ACTION {^You finish dismantling the building.$}
+{
+    PLAY skills/complete_dismantle;
+    #if {{$bgm} == {true}}
+    {
+        look
+    }
+}
+{9}
+
+#ACTION {^You finish forging %1!$}
+{
+    PLAY skills/complete_forge
+}
+{9}
+
+#ACTION {^You finish harvesting the crop!$}
+{
+    PLAY skills/work_complete;
+    #if {{$bgm} == {true}}
+    {
+        look
+    }
+}
+{9}
+
+#ACTION {^You finish milling %*{?:(?: \(x\d+\))?}!$}
+{
+    PLAY get/sack
+}
+{9}
+
+#ACTION {^You finish sawing %*{?:(?: \(x]\d+\))?}.$}
+{
+    PLAY get/lumber
+}
+{9}
+
+#ACTION {^You finish smelting %*!$}
+{
+    PLAY get/iron_ingot
+}
+{9}
+
+#ACTION {^You gently fill %1 with %2.$}
+{
+    PLAY ambiance/liquid_fill
+}
+{9}
+
+#ACTION {^You get {a stone spear head|a handaxe}.$}
+{
+    #if {{%1} == {a stone spear head}}
+    {
+        PLAY craft/spear_head
+    };
+    #elseif {{%1} == {a handaxe}}
+    {
+        PLAY craft/handaxe
+    }
+}
+{9}
+
+#ACTION {^You give the plug drill one final swing and pry loose %1 stone block!$}
+{
+    PLAY get/stone
+}
+{9}
+
+#ACTION {^You grind the millstone, making %*...$}
+{
+    PLAY skills/mill
+}
+{9}
+
+#ACTION {^You have become %*!$}
+{
+    #if {{%1} == {$MSDP_ACCOUNT_NAME%*}}
+    {
+        PLAY skills/form_normal
+    }
+}
+{9}
+
+#ACTION {^You have become a {black|brown|cloud of swirling|horrid|sage|savage|towering} {bat|mist|monstrosity|werewolf|wolf}!$}
+{
+    PLAY skills/animal_form_%2
+}
+{9}
+
+#ACTION {^You have finished planting!$}
+{
+    PLAY skills/work_complete;
+    #if {{$bgm} == {true}}
+    {
+        look
+    }
+}
+{9}
+
+#ACTION {^You have mail waiting.$}
+{
+    PLAY miscellaneous/email
+}
+{9}
+
+#ACTION {^You hit %1 on the anvil hard with %2!$}
+{
+    PLAY skills/forge
+}
+{9}
+
+#ACTION {^You jab your %1 into the water and when you extract it you find %2 on the end!$}
+{
+    PLAY get/fish
+}
+{9}
+
+#ACTION {^You jab your shovel into the dirt...$}
+{
+    PLAY skills/dig1
+}
+{9}
+
+#ACTION {^You knead %* with a foul-smelling mixture...$}
+{
+    PLAY skills/tan_kneed
+}
+{9}
+
+#ACTION {^You kneel down and begin panning at %1.$}
+{
+    PLAY skills/pan
+}
+{9}
+
+#ACTION {^You lay a road here.$}
+{
+    PLAY craft/rock;
+    #if {{$bgm} == {true}}
+    {
+        look
+    }
+}
+{9}
+
+#ACTION {^You lie down and go to sleep.$}
+{
+    PLAY ambiance/sleep
+}
+{9}
+
+#ACTION {^You mark %1 with a glowing blue skybrand!$}
+{
+    RPLAY magic/skybrand
+}
+{9}
+
+#ACTION {^You pick at the ground a little bit...$}
+{
+    PAN_PLAY skills/mine
+}
+{9}
+
+#ACTION {^You pick at the walls with %1, looking for %2.$}
+{
+    PAN_PLAY skills/mine
+}
+{9}
+
+#ACTION {^You plant %* and tie %* to stakes.$}
+{
+    PLAY skills/tie_plant
+}
+{9}
+
+#ACTION {^You pull a flint stone from the ground!$}
+{
+    PLAY get/flint_stone
+}
+{9}
+
+#ACTION {^You pull a lump of clay from the ground!$}
+{
+    PLAY get/clay
+}
+{9}
+
+#ACTION {^You pull a rock from the ground!$}
+{
+    PLAY get/rock
+}
+{9}
+
+#ACTION {^You pull a yellow lightning stone from the ground!$}
+{
+    PLAY get/lightning_stone
+}
+{9}
+
+#ACTION {^You run toward %1!}
+{
+    PLAY move/you_run
+}
+{9}
+
+#ACTION {^You scrape %* clean...$}
+{
+    PLAY skills/tan_scrape
+}
+{9}
+
+#ACTION {^You shadowstep to %*!$}
+{
+    PLAY skills/shadowstep
+}
+{9}
+
+#ACTION {^You sift through %1, looking for %2...$}
+{
+    #if {{$cspam} == {true}}
+    {
+        #showme {You pan for %2.};
+        #line {gag}
+    };
+    PLAY skills/pan
+}
+{9}
+
+#ACTION {^You sift through some dirt...$}
+{
+    PAN_PLAY skills/sift
+}
+{9}
+
+#ACTION {^You slip some shims into cracks in the stone.$}
+{
+    PLAY skills/shim_stone
+}
+{9}
+
+#ACTION {^You smelt %* in the fire...$}
+{
+    PLAY skills/smelt
+}
+{9}
+
+#ACTION {^You start forging.$}
+{
+    PLAY skills/forge
+}
+{9}
+
+#ACTION {^You start milling.$}
+{
+    PLAY skills/mill
+}
+{9}
+
+#ACTION {^You start smelting %*.$}
+{
+    PLAY skills/smelt
+}
+{9}
+
+#ACTION {^You store %* ingot.{?:(?: \(x\d+\))?}$}
+{
+    PLAY store/metal
+}
+{9}
+
+#ACTION {^You store a pile of clay.{?:(?: \(x\d+\))?}$}
+{
+    PLAY store/clay
+}
+{9}
+
+#ACTION {^You store a sack of {barley|cornmeal|flour|dried rice}.{?:(?: \(x\d+\))?}$}
+{
+    PLAY store/sack
+}
+{9}
+
+#ACTION {^You store a {giant linefish|magenta arrowfish|fillet of raw meat|slab of pork}.{?:(?: \(x\d+\))?}$}
+{
+    PLAY store/meat
+}
+{9}
+
+#ACTION {^You store a {heavy log|large tree|stack of lumber|stick}.{?:(?: \(x\d+\))?}$}
+{
+    PLAY store/lumber
+}
+{9}
+
+#ACTION {^You store a {pile of gold dust|silver nugget}.{?:(?: \(x\d+\))?}$}
+{
+    PLAY store/treasure
+}
+{9}
+
+#ACTION {^You strike %* and light %*.$}
+{
+    PLAY miscellaneous/flint_and_steel
+}
+{9}
+
+#ACTION {^You swing %1 hard!$}
+{
+    PLAY skills/chop
+}
+{9}
+
+#ACTION {^You swing back %* and prepare to chop...$}
+{
+    PLAY skills/ready_axe
+}
+{9}
+
+#ACTION {^You thrust your hand toward %1 and strike {her|him|it} with a powerful bolt of lightning!$}
+{
+    RPLAY magic/lightningbolt
+}
+{9}
+
+#ACTION {^You tie %* into position.$}
+{
+    PLAY craft/tie_wood
+}
+{9}
+
+#ACTION {^You toss a shovel-full of dirt out of the trench.$}
+{
+    PLAY skills/dig2
+}
+{9}
+
+#ACTION {^You touch a hestian trinket and it begins to swirl with light...$}
+{
+    PLAY magic/hestian_trinket_charge
+}
+{9}
+
+#ACTION {^You transport to another starting location!$}
+{
+    PLAY move/transport
+}
+{9}
+
+#ACTION {^You walk through the field, harvesting the %*.$}
+{
+    PAN_PLAY skills/harvest
+}
+{9}
+
+#ACTION {^You water the freshly seeded ground.$}
+{
+    PLAY skills/plant_water
+}
+{9}
+
+#ACTION {^You whistle loudly...$}
+{
+    PLAY miscellaneous/whistle
+}
+{9}
+
+#ACTION {^You wince and recoil from the sunlight!$}
+{
+    PLAY miscellaneous/vampire_hiss
+}
+{9}
+
+#ACTION {^You {(?:take a )?}{drink|eat} %*.$}
+{
+    PLAY health/%2
+}
+{9}
+
+#ACTION {^You {begin looking around for plant material|begin looking around|look around for something nice to pick\.\.|search the ground for useful material\.\.}.$}
+{
+    PAN_PLAY skills/search
+}
+{9}
+
+#ACTION {^You {begin sawing|saw} %*.$}
+{
+    PLAY skills/saw
+}
+{9}
+
+#ACTION {^You {begin scraping|scrape at} %*{\.\.\.|\.}$}
+{
+    PLAY skills/tree_scrape
+}
+{9}
+
+#ACTION {^You {begin to PLAY a lyre|strum at a lyre and hum to the tune|pluck at a lyre}.$}
+{
+    Play_Lyre
+}
+{9}
+
+#ACTION {^You {begin to PLAY a wooden flute|whistle a tune through a wooden flute|PLAY a wooden flute}.$}
+{
+    Play_Flute
+}
+{9}
+
+#ACTION {^You {begin to chip at .+|chip away at .+\.\.}.$}
+{
+    PLAY skills/chip_rock
+}
+{9}
+
+#ACTION {^You {begin to dig into|dig vigorously at} the ground.$}
+{
+    PAN_PLAY skills/dig
+}
+{9}
+
+#ACTION {^You {begin to quarry|hammer a plug drill into} the stone.$}
+{
+    PLAY skills/quarry
+}
+{9}
+
+#ACTION {^You {brush|soak|stretch} %*...$}
+{
+    PLAY skills/tan_%1
+}
+{9}
+
+#ACTION {^You {carefully|finish} {sew|sewing} %3{\.\.\.|!}$}
+{
+    PLAY skills/sew
+}
+{9}
+
+#ACTION {^You {complete|finish crafting} %*!$}
+{
+    PLAY skills/work_complete;
+    #if {{$bgm} == {true} && {%2} == {the construction}}
+    {
+        look
+    }
+}
+{9}
+
+#ACTION {^You {continue|finish} crafting {a|an|the} %*{\.\.\.|!}$}
+{
+    #if {{%1} == {finish}}
+    {
+        PLAY craft/complete_wood
+    };
+    #else
+    {
+        PLAY craft/wood
+    }
+}
+{9}
+
+#ACTION {^You {continue|start|wait for .+ to} {cook|bak}%*.$}
+{
+    PLAY skills/cook
+}
+{9}
+
+#ACTION {^You {find|store} a {basket of peaches|bunch of apples}{\.|!}}
+{
+    #if {{%1} == {find}}
+    {
+        PLAY get/fruit
+    };
+    #else
+    {
+        PLAY store/fruit
+    }
+}
+{9}
+
+#ACTION {^You {hammer nails into the wood joints|nail the wood onto the structure}.$}
+{
+    PLAY craft/wood1
+}
+{9}
+
+#ACTION {^You {heave a huge stone block into place|put down a layer of bricks}.$}
+{
+    PLAY craft/stone
+}
+{9}
+
+#ACTION {^Your portal sickness has ended.$}
+{
+    REV_PLAY miscellaneous/portal
+}
+{9}
+
+#ACTION {^Yo{u|ur} {begin to transform|body warps and distorts painfully}!$}
+{
+    PLAY skills/morph
 }
 {9}
 
 #ACTION {^{Huh\?!\?|In your dreams, or what\?|There is no help on that word\.|You aren't using the proper tool for that\.|There is no room for more\.}$}
 {
-	#if {{%0} == {In your dreams, or what?}}
-	{
-		#variable {rememberCoordinates} {false}
-	};
-	PLAY fail/error
+    #if {{%0} == {In your dreams, or what?}}
+    {
+        #variable {rememberCoordinates} {false}
+    };
+    PLAY fail/error
 }
 {9}
 
 #ACTION {^{There is a bright blue glow all around you\.\.\.|A hestian trinket glows a bright blue and the light begins to envelop you!}$}
 {
-	PLAY magic/hestian_trinket_teleport
+    PLAY magic/hestian_trinket_teleport
 }
 {9}
 
 #ACTION {^{there's|You can't find} {anything|nothing} {here left|left here} to {chop|pick}.$}
 {
-	PLAY fail/nothing
+    PLAY fail/nothing
 }
 {9}
 
+
 #ALIAS {^{noc|c}lock$}
 {
-	#if {{%1} == {c}}
-	{
-		#variable {character[clock]} {1};
-		#showme {Clock chimes enabled.}
-	};
-	#else
-	{
-		#unvariable {character[clock]};
-		#showme {Clock chimes disabled.}
-	}
+    #if {{%1} == {c}}
+    {
+        #variable {character[clock]} {1};
+        #showme {Clock chimes enabled.}
+    };
+    #else
+    {
+        #unvariable {character[clock]};
+        #showme {Clock chimes disabled.}
+    }
 }
 {1}
 
+
+
 #EVENT {VARIABLE UPDATE MSDP_WORLD_TIME}
 {
-	#nop {Hook name: worldTime};
-	#nop {Hook arguments: time in 24 hour format};
-	#if {{%1} != {} && !${copying}}
-	{
-		#if {&{character[clock]}}
-		{
-                        #local {tmp} {};
-			#math {tmp} {%1 % 12};
-			#if {$tmp == 0}
-			{
-				#variable {tmp} {12}
-			};
-			#variable {playChimes} {};
-			#loop {1} {$tmp} {x}
-			{
-				#if {$x > 1}
-				{
-					#variable {playChimes} {$playChimes }
-				};
-				#variable {playChimes} {${playChimes}ambiance/clock}
-			};
-			PLAY $playChimes
-		};
-		@do_hook{worldTime;%1}
-	}
+    #nop {Hook name: worldTime};
+    #nop {Hook arguments: time in 24 hour format};
+    #if {{%1} != {} && !${copying}}
+    {
+        #if {&{character[clock]}}
+        {
+            #local {tmp} {};
+            #math {tmp} {%1 % 12};
+            #if {$tmp == 0}
+            {
+                #variable {tmp} {12}
+            };
+            #variable {playChimes} {};
+            #loop {1} {$tmp} {x}
+            {
+                #if {$x > 1}
+                {
+                    #variable {playChimes} {$playChimes }
+                };
+                #variable {playChimes} {${playChimes}ambiance/clock}
+            };
+            PLAY $playChimes
+        };
+        @do_hook{worldTime;%1}
+    }
 }
 
-#VARIABLE         {playChimes}  {}
+
+
+#VARIABLE {playChimes} {}
+
