@@ -1,156 +1,161 @@
 #ACTION {^You ready a counterspell.$}
 {
-	Remove_Spell counterspell
+    Remove_Spell counterspell
 }
-{5}
 
 #ACTION {^Your counterspell {goes off!|expires\.}$}
 {
-	Add_Spell counterspell
+    Add_Spell counterspell
 }
-{5}
 
 #ACTION {^You concentrate and veins of red mana streak down your skin.$}
 {
-	PLAY magic/hasten;
-	Remove_Spell hasten
+    PLAY magic/hasten;
+    Remove_Spell hasten
 }
 {9}
 
 #ACTION {^You concentrate for a moment and sparkling blue wings made of pure mana erupt from your back!$}
 {
-	PLAY magic/fly;
-	Remove_Spell fly
+    PLAY magic/fly;
+    Remove_Spell fly
 }
 {9}
 
 #ACTION {^You feel the gift of foresight!$}
 {
-	PLAY magic/foresight;
-	Remove_Spell foresight
+    PLAY magic/foresight;
+    Remove_Spell foresight
 }
 {9}
 
 #ACTION {^You feel yourself shielded by your mana!$}
 {
-	PLAY magic/manashield;
-	Remove_Spell manashield
+    PLAY magic/manashield;
+    Remove_Spell manashield
 }
 {9}
 
 #ACTION {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
 {
-	PLAY magic/eartharmor;
-	Remove_Spell eartharmor
+    PLAY magic/eartharmor;
+    Remove_Spell eartharmor
 }
 {9}
 
 #ACTION {^You land quickly as your magical flight wears off.$}
 {
-	REV_PLAY magic/fly;
-	Add_Spell fly
+    REV_PLAY magic/fly;
+    Add_Spell fly
 }
 {9}
 
 #ACTION {^Your foresight ends.$}
 {
-	REV_PLAY magic/foresight;
-	Add_Spell foresight
+    REV_PLAY magic/foresight;
+    Add_Spell foresight
 }
 {9}
 
 #ACTION {^Your haste fades.$}
 {
-	REV_PLAY magic/hasten;
-	Add_Spell hasten
+    REV_PLAY magic/hasten;
+    Add_Spell hasten
 }
 {9}
 
 #ACTION {^Your mana shield fades.$}
 {
-	REV_PLAY magic/manashield;
-	Add_Spell manashield
+    REV_PLAY magic/manashield;
+    Add_Spell manashield
 }
 {9}
 
 #ACTION {^Your plating of earth armor crumbles to dust.$}
 {
-	REV_PLAY magic/eartharmor;
-	Add_Spell eartharmor
+    REV_PLAY magic/eartharmor;
+    Add_Spell eartharmor
 }
 {9}
 
+
 #ALIAS {^Recast$}
 {
-	#format {tmp} {%T} {};
-	#math {tmp} {$tmp-10};
-	#if {$tmp >= $lastRecast}
-	{
-		#list {recastList} {size} {recastListSize};
-		#if {$recastListSize > 0}
-		{
-			${recastList[1]};
-			#format {lastRecast} {%T} {}
-		}
-	}
+    #format {tmp} {%T} {};
+    #math {tmp} {$tmp-10};
+    #if {$tmp >= $lastRecast}
+    {
+        #list {recastList} {size} {recastListSize};
+        #if {$recastListSize > 0}
+        {
+            ${recastList[1]};
+            #format {lastRecast} {%T} {}
+        }
+    }
 }
 {9}
 
 #ALIAS {^mis{s|si|sin|sing}$}
 {
-	#list {recastList} {size} {recastListSize};
-	#if {$recastListSize > 0}
-	{
-		#showme {Missing spells:};
-		#local {i} {};
-		#foreach {*{recastList[]}} {i}
-		{
-			#showme {${recastList[$i]}}
-		}
-	};
-	#else
-	{
-		#showme {No spells are missing currently.}
-	}
+    #list {recastList} {size} {recastListSize};
+    #if {$recastListSize > 0}
+    {
+        #showme {Missing spells:};
+        #local {i} {};
+        #foreach {*{recastList[]}} {i}
+        {
+            #showme {${recastList[$i]}}
+        }
+    };
+    #else
+    {
+        #showme {No spells are missing currently.}
+    }
 }
 {9}
 
 #ALIAS {^{Add|Remove}_Spell %2}
 {
-	#list {recastList} {find} {%2} {recastListIndex};
-	#if {$recastListIndex > 0 && {%1} == {Remove}}
-	{
-		#list {recastList} {delete} {$recastListIndex}
-	};
-	#if {{$%2} == {true}}
-	{
-		#if {$recastListIndex == 0 && {%1} == {Add}}
-		{
-			#list {recastList} {add} {%2};
-			%2;
-			#format {lastRecast} {%T} {}
-		}
-	}
+    #list {recastList} {find} {%2} {recastListIndex};
+    #if {$recastListIndex > 0 && {%1} == {Remove}}
+    {
+        #list {recastList} {delete} {$recastListIndex}
+    };
+    #if {{$%2} == {true}}
+    {
+        #if {$recastListIndex == 0 && {%1} == {Add}}
+        {
+            #list {recastList} {add} {%2};
+            %2;
+            #format {lastRecast} {%T} {}
+        }
+    }
 }
 {9}
 
 #ALIAS {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield|counterspell}$}
 {
-	#if {{%1} == {auto}}
-	{
-		#variable {%3} {true};
-		#showme {%3 will automatically recast.}
-	};
-	#else
-	{
-		#unvariable {%3};
-		#showme {%3 will no longer automatically recast.}
-	}
+    #if {{%1} == {auto}}
+    {
+        #variable {%3} {true};
+        #showme {%3 will automatically recast.}
+    };
+    #else
+    {
+        #unvariable {%3};
+        Remove_Spell %3;
+        #showme {%3 will no longer automatically recast.}
+    }
 }
 {9}
 
-#TICKER           {recast}  {Recast}  {1}
-#VARIABLE         {lastRecast}  {0}
-#VARIABLE         {recastList}  {}
-#VARIABLE         {recastListIndex}  {1}
-#VARIABLE         {recastListSize}  {0}
+
+
+
+#TICKER {recast} {Recast} {1}
+
+#VARIABLE {lastRecast} {0}
+#VARIABLE {recastList} {}
+#VARIABLE {recastListIndex} {1}
+#VARIABLE {recastListSize} {0}
+
