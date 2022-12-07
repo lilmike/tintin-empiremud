@@ -59,11 +59,11 @@ post $name has specialized in %1.
 {
 	#if {{$pump} == {true}}
 	{
-		#system {p post note --to followers --cc public --title "Alter Aeon - http://alteraeon.com" "%1" &> /dev/null&}
+		#system {p post note --to followers --cc public --title "Alter Aeon - http://alteraeon.com" "%1" > /dev/null 2>&1&}
 	};
 	#if {{$twitter} == {true}}
 	{
-		#system {ttytter -silent -norc -status="%1" &> /dev/null&}
+		#system {ttytter -silent -norc -status="%1" > /dev/null 2>&1&}
 	};
 	#if {{$gnusocial} == {true}}
 	{
@@ -80,7 +80,7 @@ post $name has specialized in %1.
 {
 #variable {gnuSocialMudGroup} {muds}
 };
-		#system {curl --connect-timeout 10 -s -u "$gusername:$gpassword" -d status="$(echo -e "%1") #EmpireMUD !$gnuSocialMudGroup" -d source="tintin-empiremud" $gurl/api/statuses/update.xml &> /dev/null&}
+		#system {curl --connect-timeout 10 -s -u "$gusername:$gpassword" -d status="$(echo -e "%1") #EmpireMUD !$gnuSocialMudGroup" -d source="tintin-empiremud" $gurl/api/statuses/update.xml > /dev/null 2>&1&}
 	}
 }
 {9}

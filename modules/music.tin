@@ -400,7 +400,7 @@
      {
           #case {{audacious}}
           {
-               #system {if ! ps -C audacious &> /dev/null ; then audacious -Hp &> /dev/null&fi;audtool --playback-play}
+               #system {if ! ps -C audacious > /dev/null 2>&1 ; then audacious -Hp > /dev/null 2>&1&fi;audtool --playback-play}
           };
           #case {{moc}}
           {

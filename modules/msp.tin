@@ -27,7 +27,7 @@
 		#math {rChannel} {1d9}
 	};
 	#variable {soundFileName} {${soundFileName[1]}};
-	#system {play -qV0 "$soundFileName" gain ${MSP[VOLUME]} remix v0.$lChannel v0.$rChannel &> /dev/null &}
+	#system {play -qV0 "$soundFileName" gain ${MSP[VOLUME]} remix v0.$lChannel v0.$rChannel > /dev/null 2>&1 &}
 }
 {9}
 
@@ -50,7 +50,7 @@
 		{
 			#script {echo "#var {sounds} {$sounds \"$($shuf -n1 -e sounds/$tmp3*opus)\"}"}
 		};
-		#system {play -qV0 $sounds gain ${MSP[VOLUME]} &> /dev/null&}
+		#system {play -qV0 $sounds gain ${MSP[VOLUME]} > /dev/null 2>&1&}
 	}
 }
 {9}
@@ -67,7 +67,7 @@
 	};
 	#if {${MSP[SOUND]}}
 	{
-		#line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%1.opus)" gain ${MSP[VOLUME]} reverse  &> /dev/null &}
+		#line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%1.opus)" gain ${MSP[VOLUME]} reverse  > /dev/null 2>&1 &}
 	}
 }
 {9}
@@ -99,7 +99,7 @@
 	{
 		#if {&{%1}}
 		{
-			#system {play -qV0 ${%1} gain ${MSP[VOLUME]} &> /dev/null &}
+			#system {play -qV0 ${%1} gain ${MSP[VOLUME]} > /dev/null 2>&1 &}
 		}
 	}
 }
@@ -142,7 +142,7 @@
 			#variable {lChannel} {v0.4};
 			#variable {rChannel} {v0.9}
 		};
-		#line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%2*opus)" remix $lChannel $rChannel gain ${MSP[VOLUME]} &> /dev/null &}
+		#line {substitute} {escape} #system {play -qV0 "$($shuf -n1 -e sounds/%2*opus)" remix $lChannel $rChannel gain ${MSP[VOLUME]} > /dev/null 2>&1 &}
 	}
 }
 {9}

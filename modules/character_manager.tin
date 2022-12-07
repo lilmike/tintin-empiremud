@@ -213,7 +213,7 @@
         #if {{$tileSoundFilePID} != {false}}
         {
                 #system {kill $tileSoundFilePID};
-                #system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" &> /dev/null;fi}
+                #system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" > /dev/null 2>&1;fi}
         };
         #if {${mineCounter[total]} > 0}
         {
