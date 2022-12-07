@@ -1,187 +1,184 @@
 #ALIAS {^CLEAN$}
 {
-     #script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill}";done};
-     #unvariable {HOME};
-     #unvariable {result};
-     #unvariable {MSP};
-     #unvariable {idle};
-     #showme {Cleaned environment of classes.}
+    #script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill}";done};
+    #unvariable {HOME};
+    #unvariable {result};
+    #unvariable {MSP};
+    #unvariable {idle};
+    #showme {Cleaned environment of classes.}
 }
 {9}
 
 #ALIAS {^CMOTD$}
 {
-     #echo {@separator{}};
-     #system {fold -w $(tput cols) -s MOTD};
-     #echo {@separator{}}
+    #echo {@separator{}};
+    #system {fold -w $(tput cols) -s MOTD};
+    #echo {@separator{}}
 }
 {9}
 
 #ALIAS {^mod{kill|load|reload} %S$}
 {
-     CSAVE;
-     #nop {reload all modules};
-     #if {{%0} == {modreload all}}
-     {
-          #script {script} {for module in modules/*.tin ; do echo "$(basename "$module" .tin)";done};
-          #foreach {${script[%*]}} {z}
-          {
-               #if {&{${z}Shutdown}}
-               {
-                    ${${z}Shutdown}
-               }
-          };
-          #script {for module in modules/*.tin ; do if [ "$module" != "modules/msdp.tin" ] ; then echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename "$module" .tin)} {read} {$module}";fi;done};
-          #foreach {${script[%*]}} {z}
-          {
-               #if {&{${z}Startup}}
-               {
-                    #class {$z} {open};
-                    ${${z}Startup};
-                    #class {$z} {close}
-               }
-          };
-          #unvariable {script};
-          #unvariable {z};
-          NOTIFY All modules except msdp reloaded.;
-          NOTIFY To reload MSDP you must close and reopen tintin.
-     };
-     #else
-     {
-          #nop {Kill, load, or reload a specified module.};
-          #if {{%2} != {msdp}}
-          {
-               #if {{%1} == {{kill|reload}}}
-               {
-                    #if {&{%2Shutdown}}
-                    {
-                         ${%2Shutdown}
-                    };
-                    #class {%2} {kill};
-                    NOTIFY Class %2 has been killed.
-               };
-               #if {{%1} == {{load|reload}}}
-               {
-                    NOTIFY Loading modules/%2.tin.;
-                    #class {%2} {read} {modules/%2.tin};
-                    #if {&{%2Startup}}
-                    {
-                         #class {%2} {open};
-                         ${%2Startup};
-                         #class {%2} {close}
-                    };
-                    #class {$MSDP_CHARACTER_NAME} {open}
-               }
-          };
-          #else
-          {
-               NOTIFY Cowardly refusing to touch the msdp module. If you really want to do this, do it manually or close your client and restart.
-          }
-     }
+    CSAVE;
+    #nop {reload all modules};
+    #if {{%0} == {modreload all}}
+    {
+        #script {script} {for module in modules/*.tin ; do echo "$(basename "$module" .tin)";done};
+        #foreach {${script[%*]}} {z}
+        {
+            #if {&{${z}Shutdown}}
+            {
+                ${${z}Shutdown}
+            }
+        };
+        #script {for module in modules/*.tin ; do if [ "$module" != "modules/msdp.tin" ] ; then echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename "$module" .tin)} {read} {$module}";fi;done};
+        #foreach {${script[%*]}} {z}
+        {
+            #if {&{${z}Startup}}
+            {
+                #class {$z} {open};
+                ${${z}Startup};
+                #class {$z} {close}
+            }
+        };
+        #unvariable {script};
+        #unvariable {z};
+        NOTIFY All modules except msdp reloaded.;
+        NOTIFY To reload MSDP you must close and reopen tintin.
+    };
+    #else
+    {
+        #nop {Kill, load, or reload a specified module.};
+        #if {{%2} != {msdp}}
+        {
+            #if {{%1} == {{kill|reload}}}
+            {
+                #if {&{%2Shutdown}}
+                {
+                    ${%2Shutdown}
+                };
+                #class {%2} {kill};
+                NOTIFY Class %2 has been killed.
+            };
+            #if {{%1} == {{load|reload}}}
+            {
+                NOTIFY Loading modules/%2.tin.;
+                #class {%2} {read} {modules/%2.tin};
+                #if {&{%2Startup}}
+                {
+                    #class {%2} {open};
+                    ${%2Startup};
+                    #class {%2} {close}
+                };
+                #class {$MSDP_CHARACTER_NAME} {open}
+            }
+        };
+        #else
+        {
+            NOTIFY Cowardly refusing to touch the msdp module. If you really want to do this, do it manually or close your client and restart.
+        }
+    }
 }
 {9}
 
-#ALIAS {^{em|login}$}
+#ALIAS {^{em|login|test}$}
 {
-     #if {{$connected} != {true}}
-     {
-          #session {$mudSessionName} {$mudAddress} {$mudPort}
-     };
-     #else
-     {
-          #showme {Huh?}
-     }
+    #if {{$connected} != {true}}
+    {
+        #local {port} {$mudPort};
+        #if {{%0} == {test}}
+        {
+            #variable {port} {$mudPortTest}
+        };
+        #session {$mudSessionName} {$mudAddress} {$port}
+    };
+    #else
+    {
+        #showme {Huh?}
+    }
 }
 {9}
+
 
 
 #EVENT {PROGRAM START}
 {
-     #nop {Clear the screen so that generic startup messages are not shown.};
-     #system {clear};
-     #nop {Set scrollable region to all but the top line and bottom two lines.};
-     #local {cols} {};
-     #local {rows} {};
-     #screen get rows rows;
-     #screen get cols cols;
-     #math {rows} {$rows - 2};
-     #split {1} {1};
-     #nop {Set the home directory variable.};
-     #script {HOME} {if [ -z "$XDG_CONFIG_HOME" ] ; then if ! [ -d "$HOME/.config/${tintinPackName}/" ] ; then mkdir -p "$HOME/.config/${tintinPackName}";fi;echo -n "$HOME/.config/${tintinPackName}";else if ! [ -d "$XDG_CONFIG_HOME/${tintinPackName}/" ] ; then mkdir -p "$XDG_CONFIG_HOME/-${tintinPackName}/";fi;echo -n "$XDG_CONFIG_HOME/${tintinPackName}";fi};
-     #variable {HOME} {${HOME[1]}};
-     #replace {HOME} {-n } {};
-     #nop {Load all the .tin files in the modules directory in classes named after the module name.};
-     #script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {read} {$module}";done};
-     #script {script} {for module in modules/*.tin ; do echo "$(basename "$module" .tin)";done};
-     #foreach {${script[%*]}} {z}
-     {
-          #if {&{${z}Startup}}
-          {
-               #class {$z} {open};
-               ${${z}Startup};
-               #class {$z} {close}
-          }
-     };
-     #showme {@separator{}} {1};
-     #showme {@separator{}} {-2};
-     PLAY intro;
-     #nop {Get the last modified date of the news file.};
-     #script {motd} {curl --connect-timeout 10 -sI "$MOTDURL"};
-     #regexp {${motd[1]}} {HTTP/{\d+(?:\.\d+)*} {\d+}{.*}}
-     {
-          #variable {motdStatus} {&2}
-     };
-     #list {motd} {size} {s};
-     #if {$s > 1}
-     {
-          #loop {2} {$s} {x}
-          {
-               #regexp {${motd[$x]}} {last-modified: {.*}}
-               {
-                    #variable {motdTime} {&1};#break
-               }
-          }
-     };
-     #nop {Display intro message.};
-     #echo {@separator{}};
-     #system {fold -w $(tput cols) -s MOTD};
-     #echo {@separator{}};
-     #echo {To get started type login};
-     #nop {If everything went ok with the news file above, display the last time news was updated.};
-#nop {
-     #if {$motdStatus == 200}
-     {
-          #echo {@separator{}};
-          #echo {News last modified: ${motdTime}};
-          #echo {To listen to it type news.};
-          #echo {@separator{}};
-          Channel_Event misc News last modified: ${motdTime};
-          Channel_Event misc To listen to it type news.
-}
-     };
-     #unvariable {motd};
-     #unvariable {motdTime};
-     #unvariable {motdStatus};
-     #unvariable script;
-     #unvariable z;
-     #unvariable s;
-     #unvariable x
+    #nop {Clear the screen so that generic startup messages are not shown.};
+    #system {clear};
+    #nop {Set scrollable region to all but the top line and bottom two lines.};
+    #local {cols} {};
+    #local {rows} {};
+    #screen get rows rows;
+    #screen get cols cols;
+    #math {rows} {$rows - 2};
+    #split {1} {1};
+    #nop {Set the home directory variable.};
+    #script {HOME} {if [ -z "$XDG_CONFIG_HOME" ] ; then if ! [ -d "$HOME/.config/${tintinPackName}/" ] ; then mkdir -p "$HOME/.config/${tintinPackName}";fi;echo -n "$HOME/.config/${tintinPackName}";else if ! [ -d "$XDG_CONFIG_HOME/${tintinPackName}/" ] ; then mkdir -p "$XDG_CONFIG_HOME/-${tintinPackName}/";fi;echo -n "$XDG_CONFIG_HOME/${tintinPackName}";fi};
+    #variable {HOME} {${HOME[1]}};
+    #replace {HOME} {-n } {};
+    #nop {Load all the .tin files in the modules directory in classes named after the module name.};
+    #script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {read} {$module}";done};
+    #script {script} {for module in modules/*.tin ; do echo "$(basename "$module" .tin)";done};
+    #foreach {${script[%*]}} {z}
+    {
+        #if {&{${z}Startup}}
+        {
+            #class {$z} {open};
+            ${${z}Startup};
+            #class {$z} {close}
+        }
+    };
+    #showme {@separator{}} {1};
+    #showme {@separator{}} {-2};
+    PLAY intro;
+    #nop {Get the last modified date of the news file.};
+    #script {motd} {curl --connect-timeout 10 -sI "$MOTDURL"};
+    #regexp {${motd[1]}} {HTTP/{\d+(?:\.\d+)*} {\d+}{.*}}
+    {
+        #variable {motdStatus} {&2}
+    };
+    #list {motd} {size} {s};
+    #if {$s > 1}
+    {
+        #loop {2} {$s} {x}
+        {
+            #regexp {${motd[$x]}} {last-modified: {.*}}
+            {
+                #variable {motdTime} {&1};#break
+            }
+        }
+    };
+    #nop {Display intro message.};
+    #echo {@separator{}};
+    #system {fold -w $(tput cols) -s MOTD};
+    #echo {@separator{}};
+    #echo {To get started type login};
+    #nop {If everything went ok with the news file above, display the last time news was updated.};
+    #nop {#if {$motdStatus == 200}{#echo {@separator{}};#echo {News last modified: ${motdTime}};#echo {To listen to it type news.};#echo {@separator{}};Channel_Event misc News last modified: ${motdTime};Channel_Event misc To listen to it type news.}};
+    #unvariable {motd};
+    #unvariable {motdTime};
+    #unvariable {motdStatus};
+    #unvariable script;
+    #unvariable z;
+    #unvariable s;
+    #unvariable x
 }
 
 #EVENT {SESSION CONNECTED}
 {
-     SYNTH_PLAY connectedSound;
-     #nop {Set connected to true so if you accidentally type login it won't try to login twice.};
-     #variable {connected} {true};
-     #nop {Create the log directory if it doesn't exist. Log files are based on date and time.};
-     #script {logFilePath} {date +'log/%Y/%B/%d/'};
-     #variable {logFilePath} {${HOME}/${logFilePath[1]}};
-     #script {logFileName} {date +'%I_%M%p.log'};
-     #system {mkdir -p $logFilePath};
-     #log {overwrite} {${logFilePath}${logFileName[1]}}
+    SYNTH_PLAY connectedSound;
+    #nop {Set connected to true so if you accidentally type login it won't try to login twice.};
+    #variable {connected} {true};
+    #nop {Create the log directory if it doesn't exist. Log files are based on date and time.};
+    #script {logFilePath} {date +'log/%Y/%B/%d/'};
+    #variable {logFilePath} {${HOME}/${logFilePath[1]}};
+    #script {logFileName} {date +'%I_%M%p.log'};
+    #system {mkdir -p $logFilePath};
+    #log {overwrite} {${logFilePath}${logFileName[1]}}
 }
 
 
-#VARIABLE         {connected}  {false}
-#VARIABLE         {tintinPackName}  {tintin-empiremud}
+
+#VARIABLE {connected} {false}
+#VARIABLE {tintinPackName} {tintin-empiremud}
 

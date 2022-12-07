@@ -1,4 +1,6 @@
-#VARIABLE         {MOTDURL}  {https://michaels.world/empire/emotd.opus}
-#VARIABLE         {mudAddress}  {empiremud.net}
-#VARIABLE         {mudPort}  {4000}
-#VARIABLE         {mudSessionName}  {Empire Mud}
+#VARIABLE {MOTDURL} {https://michaels.world/empire/emotd.opus}
+#VARIABLE {mudAddress} {empiremud.net}
+#VARIABLE {mudPort} {4000}
+#VARIABLE {mudPortTest} {4002}
+#VARIABLE {mudSessionName} {Empire Mud}
+
