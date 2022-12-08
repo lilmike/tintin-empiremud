@@ -13,7 +13,7 @@
 
 #ALIAS {^{da|dat|date}$}
 {
-    #system {echo '#echo {$(date +'%I:%M%p%n%A, %B %d, %Y')}'}
+    #script {date +'%I:%M%p%n%A, %B %d, %Y' | while read -r date ; do echo "#echo {$date};" ; done}
 }
 {9}
 
