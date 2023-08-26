@@ -154,7 +154,7 @@
 #ACTION {^{Your intensity has ended\.|Your adaptation is no longer effective\.|You are no longer amplified\.}$}
 {
     #local {spell} {};
-    #switch {%0}
+    #switch {{%0}}
     {
         #case {{Your intensity has ended.}}
         {
