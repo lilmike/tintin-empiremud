@@ -1,156 +1,214 @@
 #ACTION {%1 seems to be burning on the inside as magical pain courses through {him|her|it}!$}
 {
-	RPLAY magic/residual_damage
+    RPLAY magic/residual_damage
 }
 {9}
 
 #ACTION {%1 twitches as magical pain sears through {him|her|it}!$}
 {
-	RPLAY magic/residual_damage
+    RPLAY magic/residual_damage
 }
 {9}
 
 #ACTION {^You %* with your deadly blast!!$}
 {
-	RPLAY magic/fireball
+    RPLAY magic/fireball
 }
 {9}
 
 #ACTION {^You are healed!$}
 {
-	#if {{$cspam} == {true}}
-	{
-		#line {gag}
-	}
+    #if {{$cspam} == {true}}
+    {
+        #line {gag}
+    }
 }
 {9}
 
 #ACTION {^You feel the weight of the world lift from your shoulders!$}
 {
-	PLAY magic/ritual_of_burdens
+    PLAY magic/ritual_of_burdens
 }
 {9}
 
 #ACTION {^You fire a blinding sunshock from your hand and hit %1 square in the face!$}
 {
-	PLAY magic/sunshock
+    PLAY magic/sunshock
 }
 {9}
 
 #ACTION {^You healed %1 for %d (%d/%d health).$}
 {
-	#if {{$cspam} == {true}}
-	{
-		#line {gag};
-		#math {tmppercent} {(%3/%4)*100.0};
-		#echo {%1: $tmppercent}
-	}
+    #if {{$cspam} == {true}}
+    {
+        #line {gag};
+        #math {tmppercent} {(%3/%4)*100.0};
+        #echo {%1: $tmppercent}
+    }
 }
 {9}
 
 #ACTION {^You healed %1 for %d (%d\% health).$}
 {
-	#if {{$cspam} == {true}}
-	{
-		#line {gag};
-		#variable {tmpPercent} {%3};
-		#echo {%1: $tmppercent}
-	}
+    #if {{$cspam} == {true}}
+    {
+        #line {gag};
+        #variable {tmpPercent} {%3};
+        #echo {%1: $tmppercent}
+    }
 }
 {9}
 
 #ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
 {
-	LPLAY magic/heal_friend;
-	#if {{$cspam} == {true}}
-	{
-		#line {gag}
-	}
+    LPLAY magic/heal_friend;
+    #if {{$cspam} == {true}}
+    {
+        #line {gag}
+    }
 }
 {9}
 
 #ACTION {^You muster up as much mana as you can and send out a shockwave, healing the entire party!$}
 {
-	#if {{$cspam} == {true}}
-	{
-		#line {gag}
-	}
+    #if {{$cspam} == {true}}
+    {
+        #line {gag}
+    }
 }
 {9}
 
 #ACTION {^You scorch %* with hotter and hotter fire until it is blackened and dead!$}
 {
-	PLAY combat/fatal/fireball
+    PLAY combat/fatal/fireball
 }
 {9}
 
 #ACTION {^You shoot fire at %1, but {he|it|she} skillfully dodges.$}
 {
-	RPLAY magic/miss_fireball
+    RPLAY magic/miss_fireball
 }
 {9}
 
 #ACTION {^You swirl your mana around your body to heal your wounds.$}
 {
-	LPLAY magic/heal_self;
-	#if {{$cspam} == {true}}
-	{
-		#line {gag}
-	}
+    LPLAY magic/heal_self;
+    #if {{$cspam} == {true}}
+    {
+        #line {gag}
+    }
 }
 {9}
 
 #ACTION {^You whip your hand forward and fire a burst of color at %1!$}
 {
-	RPLAY magic/colorburst
+    RPLAY magic/colorburst
 }
 {9}
 
 #ACTION {^You {begin|call out the chorus of|hum the melody to|sing} the chant of {druids|nature}.$}
 {
-	PLAY magic/chant_of_%2
+    PLAY magic/chant_of_%2
 }
 {9}
 
 #ACTION {^You {whisper your burdens into the air|wrap yourself up and begin chanting}...$}
 {
-	PLAY magic/ritual_start
+    PLAY magic/ritual_start
 }
 {9}
 
 #ACTION {^Your %w cooldown has ended.$}
 {
-	REV_PLAY magic/%1;
-	#if {!&{autoDoPaused}}
-	{
-		#variable {autoDoPaused} {0}
-	};
-	#if {!${autoDoPaused}}
-	{
-		#if {{$MSDP_OPPONENT_NAME} == {}}
-		{
-			#variable {autodotype} {all}
-		};
-		#else
-		{
-			#variable {autodotype} {combat}
-		};
-		#list {autoDo[$autodotype]} {size} {i};
-		#if {$i > 0}
-		{
-			#loop {1} {$i} {x}
-			{
-				#if {{%1} == {${autoDo[$autodotype][$x]}%*}}
-				{
-					%1;
-					#break
-				}
-			}
-		}
-	}
+    REV_PLAY magic/%1;
+    #if {!&{autoDoPaused}}
+    {
+        #variable {autoDoPaused} {0}
+    };
+    #if {!${autoDoPaused}}
+    {
+        #if {{$MSDP_OPPONENT_NAME} == {}}
+        {
+            #variable {autodotype} {all}
+        };
+        #else
+        {
+            #variable {autodotype} {combat}
+        };
+        #list {autoDo[$autodotype]} {size} {i};
+        #if {$i > 0}
+        {
+            #loop {1} {$i} {x}
+            {
+                #if {{%1} == {${autoDo[$autodotype][$x]}%*}}
+                {
+                    %1;
+                    #break
+                }
+            }
+        }
+    }
 }
 {9}
 
-#VARIABLE         {autodotype}  {}
-#VARIABLE         {tmppercent}  {}
-#VARIABLE         {x}  {}
+#ACTION {^{Your intensity has ended\.|Your adaptation is no longer effective\.|You are no longer amplified\.}$}
+{
+    #local {spell} {};
+    #switch {%0}
+    {
+        #case {{Your intensity has ended.}}
+        {
+            #variable {spell} {intensify}
+        };
+        #case {{Your adaptation is no longer effective.}}
+        {
+            #variable {spell} {adapt}
+        };
+        #case {{You are no longer amplified.}}
+        {
+            #variable {spell} {amplify}
+        };
+        #default
+        {
+            NOTIFY Error, invalid spell string "%0", please report.;
+            #return
+        }
+    };
+    REV_PLAY spells/$spell;
+    #if {!&{autoDoPaused}}
+    {
+        #variable {autoDoPaused} {0}
+    };
+    #if {!${autoDoPaused}}
+    {
+        #if {{$MSDP_OPPONENT_NAME} == {}}
+        {
+            #variable {autodotype} {all}
+        };
+        #else
+        {
+            #variable {autodotype} {combat}
+        };
+        #list {autoDo[$autodotype]} {size} {i};
+        #if {$i > 0}
+        {
+            #loop {1} {$i} {x}
+            {
+                #if {{$spell} == {${autoDo[$autodotype][$x]}%*}}
+                {
+                    $spell;
+                    #break
+                }
+            }
+        }
+    }
+}
+{9}
+
+
+
+
+#VARIABLE {autodotype} {}
+#VARIABLE {tmppercent} {}
+#VARIABLE {x} {}
+
