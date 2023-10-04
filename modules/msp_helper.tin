@@ -502,7 +502,7 @@
 }
 {9}
 
-#ACTION {^You start forging.$}
+#ACTION {^You start forging %*.$}
 {
     PLAY skills/forge
 }
