@@ -111,7 +111,6 @@
     #screen get rows rows;
     #screen get cols cols;
     #math {rows} {$rows - 2};
-    #split {1} {1};
     #nop {Set the home directory variable.};
     #script {HOME} {if [ -z "$XDG_CONFIG_HOME" ] ; then if ! [ -d "$HOME/.config/${tintinPackName}/" ] ; then mkdir -p "$HOME/.config/${tintinPackName}";fi;echo -n "$HOME/.config/${tintinPackName}";else if ! [ -d "$XDG_CONFIG_HOME/${tintinPackName}/" ] ; then mkdir -p "$XDG_CONFIG_HOME/-${tintinPackName}/";fi;echo -n "$XDG_CONFIG_HOME/${tintinPackName}";fi};
     #variable {HOME} {${HOME[1]}};

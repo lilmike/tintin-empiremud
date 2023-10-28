@@ -285,7 +285,14 @@
         #class {%1} {read} {${HOME}/%1};
         #if {&{splitLines}}
         {
-            #split {$currentSplitRows} {$splitLines}
+            #if {{${character[notify]}} == {inline}}
+            {
+                #split {0} {$splitLines}
+            };
+            #else
+            {
+                #split {$currentSplitRows} {$splitLines}
+            }
         };
         #if {!&{auto}}
         {
