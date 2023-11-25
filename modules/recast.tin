@@ -1,80 +1,72 @@
-#ACTION {^{You already have a counterspell ready\.|You ready a counterspell\.}$}
-{
-    Remove_Spell counterspell
-}
-
-#ACTION {^Your counterspell {goes off!|expires\.}$}
-{
-    Add_Spell counterspell
-}
-
 #ACTION {^You concentrate and veins of red mana streak down your skin.$}
 {
-    PLAY magic/hasten;
-    Remove_Spell hasten
+    PLAY magic/hasten
 }
 {9}
 
 #ACTION {^You concentrate for a moment and sparkling blue wings made of pure mana erupt from your back!$}
 {
-    PLAY magic/fly;
-    Remove_Spell fly
+    PLAY magic/fly
 }
 {9}
 
 #ACTION {^You feel the gift of foresight!$}
 {
-    PLAY magic/foresight;
-    Remove_Spell foresight
+    PLAY magic/foresight
 }
 {9}
 
 #ACTION {^You feel yourself shielded by your mana!$}
 {
-    PLAY magic/manashield;
-    Remove_Spell manashield
+    PLAY magic/manashield
 }
 {9}
 
 #ACTION {^You form a thick layer of mana over your body, and it hardens to solid earth!$}
 {
-    PLAY magic/eartharmor;
-    Remove_Spell eartharmor
+    PLAY magic/eartharmor
 }
 {9}
 
 #ACTION {^You land quickly as your magical flight wears off.$}
 {
-    REV_PLAY magic/fly;
-    Add_Spell fly
+    REV_PLAY magic/fly
+}
+{9}
+
+#ACTION {^Your counterspell {goes off!|expires\.}$}
+{
+    #nop {Kept in for possible sound trigger.}
 }
 {9}
 
 #ACTION {^Your foresight ends.$}
 {
-    REV_PLAY magic/foresight;
-    Add_Spell foresight
+    REV_PLAY magic/foresight
 }
 {9}
 
 #ACTION {^Your haste fades.$}
 {
-    REV_PLAY magic/hasten;
-    Add_Spell hasten
+    REV_PLAY magic/hasten
 }
 {9}
 
 #ACTION {^Your mana shield fades.$}
 {
-    REV_PLAY magic/manashield;
-    Add_Spell manashield
+    REV_PLAY magic/manashield
 }
 {9}
 
 #ACTION {^Your plating of earth armor crumbles to dust.$}
 {
-    REV_PLAY magic/eartharmor;
-    Add_Spell eartharmor
+    REV_PLAY magic/eartharmor
+}
+{9}
+
+#ACTION {^{You already have a counterspell ready\.|You ready a counterspell\.}$}
+{
+    #nop {Kept in for possible sound trigger.}
 }
 {9}
 
@@ -92,6 +84,28 @@
             #format {lastRecast} {%T} {}
         }
     }
+}
+{9}
+
+#ALIAS {^fl{y?}$}
+{
+    #if {&{MSDP_AFFECTS[fly]} && {${fly}} == {true}}
+    {
+        #nop {We're manually landing, we don't want to autorecast.};
+        #variable {noFly} {1}
+    };
+    #send {%0}
+}
+{9}
+
+#ALIAS {^manas{(?:h(?:i(?:e(?:l(?:d)?)?)?)?)?}$}
+{
+    #if {&{MSDP_AFFECTS[mana shield]} && {${manashield}} == {true}}
+    {
+        #nop {We're manually removing the spell, we don't want to autorecast.};
+        #variable {noManashield} {1}
+    };
+    #send {%0}
 }
 {9}
 
@@ -126,15 +140,20 @@
         #if {$recastListIndex == 0 && {%1} == {Add}}
         {
             #list {recastList} {add} {%2};
-            %2;
+            #send {%2};
             #format {lastRecast} {%T} {}
         }
     }
 }
 {9}
 
-#ALIAS {^{noauto|auto}cast%s{eartharmor|fly|foresight|hasten|manashield|counterspell}$}
+#ALIAS {^{noauto|auto}cast %s%*$}
 {
+    #if {{%3} != {{${recastableSpells}}}}
+    {
+        #showme {I can't currently recast %3. Sorry.};
+        #return
+    };
     #if {{%1} == {auto}}
     {
         #variable {%3} {true};
@@ -151,11 +170,66 @@
 
 
 
+#EVENT {VARIABLE UPDATE MSDP_AFFECTS}
+{
+    #nop {Note: Fixme: I need to move the sound triggers to msp_magic but I'm too lazy right now...};
+    #local {tmp} {%1};
+    #local {j} {};
+    #nop {Note: Hacky, but it works. Copy recastableSpells to a local variable because some affects have a space... Need special cased code for each though...};
+    #local {recastableSpells} {${recastableSpells}};
+    #replace {recastableSpells} {eartharmor} {earth armor};
+    #replace {recastableSpells} {manashield} {mana shield};
+    #nop {Loop through current spells to see if any are new to the list.};
+    #foreach {*{tmp[%*]}} {j}
+    {
+        #if {{${j}} == {{${recastableSpells}}} && !&{MSDP_AFFECTS[$j]}}
+        {
+            #nop {This spell exists in the new list, but not the old. We might need to remove it from recast.};
+            #nop {There should be no harm in removing from the list even if it doesn't autorecast...};
+            #nop {Note: some affects have a space, assume just removing the space will work as the command... Maybe it won't bite us?};
+            #replace {j} { } {};
+            Remove_Spell $j
+        }
+    };
+    #nop {Now loop through the old list, see if any of them have disappeared.};
+    #foreach {*{MSDP_AFFECTS[%*]}} {j}
+    {
+        #if {{$j} == {{${recastableSpells}}} && !&{tmp[$j]}}
+        {
+            #nop {This spell has disappeared as of current update, we might need to recast it.};
+            #nop {Here we cannot simply add it to the recast list, they may not include it on their list of spells they want recast.};
+            #nop {Note: some affects have a space, assume just removing the space will work as the command... Maybe it won't bite us?};
+            #replace {j} { } {};
+            #if {&{$j} && {${$j}} == {true}}
+            {
+                #if {{$j} == {fly} && ${noFly}}
+                {
+                    #nop {We need special code here, so they don't just automatically fly when they manually land.};
+                    #variable {noFly} {0};
+                    #continue
+                };
+                #nop {Note: at this point spaces have been removed, so even though the affect is called mana shield, we can't use that.};
+                #if {{$j} == {manashield} && ${noManashield}}
+                {
+                    #nop {We need special code here, so they don't just automatically cast when they manually remove the spell.};
+                    #variable {noManashield} {0};
+                    #continue
+                };
+                Add_Spell $j
+            }
+        }
+    }
+}
+
+
 
 #TICKER {recast} {Recast} {1}
 
 #VARIABLE {lastRecast} {0}
+#VARIABLE {noFly} {0}
+#VARIABLE {noManashield} {0}
 #VARIABLE {recastList} {}
 #VARIABLE {recastListIndex} {1}
 #VARIABLE {recastListSize} {0}
+#VARIABLE {recastableSpells} {eartharmor|fly|foresight|hasten|manashield|counterspell}
 
