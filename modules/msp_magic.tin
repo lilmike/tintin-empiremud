@@ -143,6 +143,10 @@
                 #if {{%1} == {${autoDo[$autodotype][$x]}%*}}
                 {
                     %1;
+                    #if {{${cspam}} == {true}}
+                    {
+                        #line gag
+                    };
                     #break
                 }
             }
@@ -197,6 +201,10 @@
                 #if {{$spell} == {${autoDo[$autodotype][$x]}%*}}
                 {
                     $spell;
+                    #if {{${cspam}} == {true}}
+                    {
+                        #line gag
+                    };
                     #break
                 }
             }
