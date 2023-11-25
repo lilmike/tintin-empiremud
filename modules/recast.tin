@@ -1,4 +1,4 @@
-#ACTION {^You ready a counterspell.$}
+#ACTION {^{You already have a counterspell ready\.|You ready a counterspell\.}$}
 {
     Remove_Spell counterspell
 }
