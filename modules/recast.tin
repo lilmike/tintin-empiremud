@@ -172,50 +172,53 @@
 
 #EVENT {VARIABLE UPDATE MSDP_AFFECTS}
 {
-    #nop {Note: Fixme: I need to move the sound triggers to msp_magic but I'm too lazy right now...};
-    #local {tmp} {%1};
-    #local {j} {};
-    #nop {Note: Hacky, but it works. Copy recastableSpells to a local variable because some affects have a space... Need special cased code for each though...};
-    #local {recastableSpells} {${recastableSpells}};
-    #replace {recastableSpells} {eartharmor} {earth armor};
-    #replace {recastableSpells} {manashield} {mana shield};
-    #nop {Loop through current spells to see if any are new to the list.};
-    #foreach {*{tmp[%*]}} {j}
+    #if {!${copying} && !${justAlted}}
     {
-        #if {{${j}} == {{${recastableSpells}}} && !&{MSDP_AFFECTS[$j]}}
+        #nop {Note: Fixme: I need to move the sound triggers to msp_magic but I'm too lazy right now...};
+        #local {tmp} {%1};
+        #local {j} {};
+        #nop {Note: Hacky, but it works. Copy recastableSpells to a local variable because some affects have a space... Need special cased code for each though...};
+        #local {recastableSpells} {${recastableSpells}};
+        #replace {recastableSpells} {eartharmor} {earth armor};
+        #replace {recastableSpells} {manashield} {mana shield};
+        #nop {Loop through current spells to see if any are new to the list.};
+        #foreach {*{tmp[%*]}} {j}
         {
-            #nop {This spell exists in the new list, but not the old. We might need to remove it from recast.};
-            #nop {There should be no harm in removing from the list even if it doesn't autorecast...};
-            #nop {Note: some affects have a space, assume just removing the space will work as the command... Maybe it won't bite us?};
-            #replace {j} { } {};
-            Remove_Spell $j
-        }
-    };
-    #nop {Now loop through the old list, see if any of them have disappeared.};
-    #foreach {*{MSDP_AFFECTS[%*]}} {j}
-    {
-        #if {{$j} == {{${recastableSpells}}} && !&{tmp[$j]}}
-        {
-            #nop {This spell has disappeared as of current update, we might need to recast it.};
-            #nop {Here we cannot simply add it to the recast list, they may not include it on their list of spells they want recast.};
-            #nop {Note: some affects have a space, assume just removing the space will work as the command... Maybe it won't bite us?};
-            #replace {j} { } {};
-            #if {&{$j} && {${$j}} == {true}}
+            #if {{${j}} == {{${recastableSpells}}} && !&{MSDP_AFFECTS[$j]}}
             {
-                #if {{$j} == {fly} && ${noFly}}
+                #nop {This spell exists in the new list, but not the old. We might need to remove it from recast.};
+                #nop {There should be no harm in removing from the list even if it doesn't autorecast...};
+                #nop {Note: some affects have a space, assume just removing the space will work as the command... Maybe it won't bite us?};
+                #replace {j} { } {};
+                Remove_Spell $j
+            }
+        };
+        #nop {Now loop through the old list, see if any of them have disappeared.};
+        #foreach {*{MSDP_AFFECTS[%*]}} {j}
+        {
+            #if {{$j} == {{${recastableSpells}}} && !&{tmp[$j]}}
+            {
+                #nop {This spell has disappeared as of current update, we might need to recast it.};
+                #nop {Here we cannot simply add it to the recast list, they may not include it on their list of spells they want recast.};
+                #nop {Note: some affects have a space, assume just removing the space will work as the command... Maybe it won't bite us?};
+                #replace {j} { } {};
+                #if {&{$j} && {${$j}} == {true}}
                 {
-                    #nop {We need special code here, so they don't just automatically fly when they manually land.};
-                    #variable {noFly} {0};
-                    #continue
-                };
-                #nop {Note: at this point spaces have been removed, so even though the affect is called mana shield, we can't use that.};
-                #if {{$j} == {manashield} && ${noManashield}}
-                {
-                    #nop {We need special code here, so they don't just automatically cast when they manually remove the spell.};
-                    #variable {noManashield} {0};
-                    #continue
-                };
-                Add_Spell $j
+                    #if {{$j} == {fly} && ${noFly}}
+                    {
+                        #nop {We need special code here, so they don't just automatically fly when they manually land.};
+                        #variable {noFly} {0};
+                        #continue
+                    };
+                    #nop {Note: at this point spaces have been removed, so even though the affect is called mana shield, we can't use that.};
+                    #if {{$j} == {manashield} && ${noManashield}}
+                    {
+                        #nop {We need special code here, so they don't just automatically cast when they manually remove the spell.};
+                        #variable {noManashield} {0};
+                        #continue
+                    };
+                    Add_Spell $j
+                }
             }
         }
     }

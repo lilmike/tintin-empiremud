@@ -343,7 +343,9 @@
             look
         };
         #class {%1} {open};
-        @do_hook{charactername;%1}
+        @do_hook{charactername;%1};
+            #variable {justAlted} {1};
+            #line oneshot #ticker {alted} {#var {justAlted} {0}} {0.1}
     }
 }
 
@@ -353,4 +355,5 @@
 
 #VARIABLE {OLD_MSDP} {}
 #VARIABLE {copying} {0}
+#VARIABLE {justAlted} {0}
 
