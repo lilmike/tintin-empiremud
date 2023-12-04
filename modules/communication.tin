@@ -8,6 +8,12 @@
 }
 {8}
 
+#ACTION {^%w the elf says, '%*'$}
+{
+    #nop {These guys fill up the buffer far too much, don't add them to it.}
+}
+{8}
+
 #ACTION {^You {say|tell .+|shout}, '%2'$}
 {
     #switch {{%1}}
