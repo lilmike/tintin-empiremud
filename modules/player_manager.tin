@@ -215,10 +215,6 @@
     {
         #system {kill $tileSoundFilePID};
         #system {if [ -f ".tileSoundFilePID" ] ; then rm ".tileSoundFilePID" > /dev/null 2>&1;fi}
-    };
-    #if {${mineCounter[total]} > 0}
-    {
-        post ${name} discovered ${mineCounter[copper]} copper, ${mineCounter[gold]} gold, ${mineCounter[imperium]} imperium, ${mineCounter[iron]} iron, ${mineCounter[nocturnium]} nocturnium and ${mineCounter[silver]} silver mines for a total of ${mineCounter[total]}\.
     }
 }
 
