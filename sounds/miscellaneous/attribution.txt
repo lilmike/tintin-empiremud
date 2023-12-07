@@ -9,3 +9,4 @@ portal.opus taken from portal03.wav by tim.kahn: https://freesound.org/people/ti
 promote.opus taken from Fanfare - Arrival of the guests.wav by gertraut_hecher: https://freesound.org/people/gertraut_hecher/sounds/560522/
 demote.opus taken from Benboncan__Sad_Trombone_more_wah_pseudostereo_reverb.wav by timbre: https://freesound.org/people/Timbre/sounds/73587/
 email.opus taken from letter in mailbox.wav by rtcsoundcrew: https://freesound.org/people/rtcsoundcrew/sounds/558143/
+flint_and_steel.opus taken from Firesteel.wav by Benboncan: https://freesound.org/people/Benboncan/sounds/66457/
