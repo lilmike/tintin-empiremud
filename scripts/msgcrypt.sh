@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Copyright 2023 Michael Taboada and contributers
+#
+# SPDX-License-Identifier: CC0-1.0
+
 SIGNS=( a b c d f e h g j i l k m n o p q r s t u v w x y z A B C D F E H G J I L K M N O P Q R S T U V W X Y Z . - ? ! "#" "+" )
 
 function query() { 

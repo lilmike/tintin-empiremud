@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Copyright 2023 Michael Taboada and contributers
+#
+# SPDX-License-Identifier: CC0-1.0
+
 # Dependancy check 
 for i in clyrics fortune ; do
 if ! command -v $i &> /dev/null ; then

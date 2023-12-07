@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Copyright 2023 Michael Taboada and contributers
+#
+# SPDX-License-Identifier: CC0-1.0
+
 # create variables
 while read L; do
 k="`echo "$L" | cut -d '=' -f 1`"
