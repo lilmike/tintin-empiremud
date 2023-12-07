@@ -556,7 +556,7 @@
 }
 {9}
 
-#ACTION {^You strike %* and light %*.$}
+#ACTION {^You use %* to light {.+\.|the building on fire!}$}
 {
     PLAY miscellaneous/flint_and_steel
 }
