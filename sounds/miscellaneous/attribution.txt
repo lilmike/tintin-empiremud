@@ -1,2 +1,4 @@
 dice-multiple.opus and dice-single.opus taken from Rolling Single and Dual 20-Sided Dice by vartian: https://freesound.org/people/vartian/sounds/560085
 player_enter.opus and player_leave.opus taken from door open close with bell.wav by bplayers: https://freesound.org/people/BPlayers/sounds/506817/
+vampire_hiss.opus taken from Horror Scary Vampire Hiss Angry Growl Hiss #01 by n0iz: https://freesound.org/people/N0IZ/sounds/642240/
+vampire_starving.opus taken from Horror Scary Vampire Hiss Wet Growl Hiss #08 by n0iz: https://freesound.org/people/N0IZ/sounds/642063/
