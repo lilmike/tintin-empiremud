@@ -86,6 +86,20 @@
 }
 {9}
 
+#ACTION {^%* roll{s?} {a \d+-sided die|\d+d\d+} and get{s?}: %d$}
+{
+    #if {{%3} == {{\d+d\d+}}}
+    {
+        PLAY miscellaneous/dice-multiple
+    };
+    #else
+    {
+        PLAY miscellaneous/dice-single
+    };
+    Channel_Event misc %0
+}
+{9}
+
 #ACTION {^%* {says|tells you|shouts}, '%3'$}
 {
     #switch {{%2}}
