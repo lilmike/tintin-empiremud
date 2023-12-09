@@ -62,7 +62,7 @@
 }
 {9}
 
-#ACTION {^It starts to rain.$}
+#ACTION {^{It starts to rain\.|The intense lightning storm gives way to a soothing rain\.}$}
 {
     PLAY weather/rain
 }
