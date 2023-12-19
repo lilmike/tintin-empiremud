@@ -562,7 +562,7 @@
 }
 {9}
 
-#ACTION {^You swing %1 hard!$}
+#ACTION {^{You swing .+ hard!|You stab the tedium shard into the tree!}$}
 {
     PLAY skills/chop
 }
