@@ -65,6 +65,20 @@
 }
 {8}
 
+#ACTION {^[/death]:  %1 has drowned at (???, ???)!$}
+{
+    PLAY miscellaneous/death;
+    Channel_Event misc %0
+}
+{8}
+
+#ACTION {^[/death]: %1 has been eaten by the hoarfrost serragon at (%d, %d)!$}
+{
+    PLAY miscellaneous/death;
+    Channel_Event misc %0
+}
+{8}
+
 #ACTION {^[/death]: %1 has been {executed|killed} by %* at (%d, %d)$}
 {
     PLAY miscellaneous/death;
