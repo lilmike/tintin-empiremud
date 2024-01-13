@@ -10,17 +10,31 @@
 }
 {9}
 
+#ACTION {^The mana swirls around your body and heals your wounds. (+%d, %d/%d)$}
+{
+    LPLAY magic/heal_self;
+    #if {{$cspam} == {true}}
+    {
+        #line {gag};
+        #math {tmppercent} {(%2/%3)*100.0};
+        #echo {Yourself: $tmppercent%}
+    }
+}
+{9}
+
 #ACTION {^You %* with your deadly blast!!$}
 {
     RPLAY magic/fireball
 }
 {9}
 
-#ACTION {^You are healed!$}
+#ACTION {^You are healed! (+%d, %d/%d)$}
 {
     #if {{$cspam} == {true}}
     {
-        #line {gag}
+        #line {gag};
+        #math {tmppercent} {(%2/%3)*100.0};
+        #echo {Yourself: $tmppercent%}
     }
 }
 {9}
@@ -37,43 +51,46 @@
 }
 {9}
 
-#ACTION {^You healed %1 for %d (%d/%d health).$}
+#ACTION {^You heal %*! (+%d, %d/%d)$}
 {
     #if {{$cspam} == {true}}
     {
         #line {gag};
         #math {tmppercent} {(%3/%4)*100.0};
-        #echo {%1: $tmppercent}
+        #echo {%1: $tmppercent%}
     }
 }
 {9}
 
-#ACTION {^You healed %1 for %d (%d\% health).$}
+#ACTION {^You let loose a pulse of healing mana...$}
 {
     #if {{$cspam} == {true}}
     {
-        #line {gag};
-        #variable {tmpPercent} {%3};
-        #echo {%1: $tmppercent}
+        #line gag
     }
 }
 {9}
 
-#ACTION {^You let your mana pulse and wave around %1, healing {her|his|its} wounds.$}
+#ACTION {^You let your mana pulse and wave around %*, healing {his|her|its} wounds. (+%d, %*\%)$}
 {
     LPLAY magic/heal_friend;
     #if {{$cspam} == {true}}
     {
-        #line {gag}
+        #line {gag};
+        #variable {tmppercent} {%4};
+        #echo {%1: $tmppercent%}
     }
 }
 {9}
 
-#ACTION {^You muster up as much mana as you can and send out a shockwave, healing the entire party!$}
+#ACTION {^You let your mana pulse and wave around %*, healing {his|her|its} wounds. (+%d, %d/%d)$}
 {
+    LPLAY magic/heal_friend;
     #if {{$cspam} == {true}}
     {
-        #line {gag}
+        #line {gag};
+        #math {tmppercent} {(%4/%5)*100.0};
+        #echo {%1: $tmppercent%}
     }
 }
 {9}
@@ -90,12 +107,14 @@
 }
 {9}
 
-#ACTION {^You swirl your mana around your body to heal your wounds.$}
+#ACTION {^You swirl your mana around your body to heal your wounds. (+%d, %d/%d)$}
 {
     LPLAY magic/heal_self;
     #if {{$cspam} == {true}}
     {
-        #line {gag}
+        #line {gag};
+        #math {tmppercent} {(%2/%3)*100.0};
+        #echo {Yourself: $tmppercent%}
     }
 }
 {9}
@@ -151,6 +170,15 @@
                 }
             }
         }
+    }
+}
+{9}
+
+#ACTION {^{You muster up as much mana as you can and send out a shockwave, healing the entire party!|You let loose a pulse of healing mana\.\.\.}$}
+{
+    #if {{$cspam} == {true}}
+    {
+        #line {gag}
     }
 }
 {9}
@@ -212,6 +240,7 @@
     }
 }
 {9}
+
 
 
 
