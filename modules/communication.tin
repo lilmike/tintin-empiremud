@@ -72,21 +72,21 @@
 }
 {8}
 
-#ACTION {^[/death]: %1 has been eaten by the hoarfrost serragon at (%d, %d)!$}
+#ACTION {^[/death]: %1 has been eaten by the hoarfrost serragon at ({\d+, \d+|unknown})!$}
 {
     PLAY miscellaneous/death;
     Channel_Event misc %0
 }
 {8}
 
-#ACTION {^[/death]: %1 has been {executed|killed} by %* at (%d, %d)$}
+#ACTION {^[/death]: %1 has been {executed|killed} by %* at ({\d+, \d+|unknown})$}
 {
     PLAY miscellaneous/death;
     Channel_Event misc %0
 }
 {8}
 
-#ACTION {^[/death]: %1 has {died|been slain} at (%d, %d)$}
+#ACTION {^[/death]: %1 has {died|been slain} at ({\d+, \d+|unknown})$}
 {
     PLAY miscellaneous/death;
     Channel_Event misc %0
