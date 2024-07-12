@@ -246,6 +246,8 @@
 
 #ALIAS {^Channel_Event %S %2}
 {
+    #nop {Distinguish empire channels from other muds:};
+    PLAY miscellaneous/channel;
     #list {channel[All]} {insert} {1} {%2};
     #list {channel[%1]} {insert} {1} {%2};
     #if {{${channelBuffer[$channelBufferIndex]}} == {%1} && {$messageReset} != {true}}
