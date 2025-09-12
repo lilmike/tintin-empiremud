@@ -16,7 +16,7 @@
 }
 {9}
 
-#ACTION {^You feel yourself shielded by your mana!$}
+#ACTION {^You pull out a grease pencil and draw a series of arcane symbols down your left arm...$}
 {
     PLAY magic/manashield
 }
