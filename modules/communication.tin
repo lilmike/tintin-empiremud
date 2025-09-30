@@ -213,6 +213,13 @@
 }
 {9}
 
+#ACTION {^[EmpireMUD] %*}
+{
+    PLAY miscellaneous/empire-message;
+    Channel_Event misc %0
+}
+{9}
+
 #ACTION {^[{EMPIRE|gsay|IMMORTAL}%*}
 {
     SYNTH_PLAY %1ChannelSound;

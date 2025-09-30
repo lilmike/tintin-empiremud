@@ -11,3 +11,4 @@ demote.opus taken from Benboncan__Sad_Trombone_more_wah_pseudostereo_reverb.wav 
 email.opus taken from letter in mailbox.wav by rtcsoundcrew: https://freesound.org/people/rtcsoundcrew/sounds/558143/
 flint_and_steel.opus taken from Firesteel.wav by Benboncan: https://freesound.org/people/Benboncan/sounds/66457/
 channel.opus taken from ceramic tink by owlstorm: https://freesound.org/people/owlstorm/sounds/209014/
+empire-message.opus taken from announcement begin by foolboymedia: https://freesound.org/people/FoolBoyMedia/sounds/234525/
