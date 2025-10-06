@@ -1,0 +1,29 @@
+#ALIAS {^spamset %1}
+{
+    #regexp {%1} {{.*} {\d+}}
+    {
+        #variable {spam[&1]} {1};#line oneshot #ticker {spam_&1} {#variable {spam[&1]} {0}} {&2}
+    };
+    #else
+    {
+        #variable {spam[%1]} {1};
+        #line oneshot #ticker {spam_%1} {#variable {spam[%1]} {0}} {3}
+    }
+}
+{9}
+
+
+
+#FUNCTION {is_spammed}
+{
+    #if {!&{spam[%1]}}
+    {
+        #variable {spam[%1]} {0}
+    };
+    #return ${spam[%1]}
+}
+
+
+
+#VARIABLE {spam} {}
+
