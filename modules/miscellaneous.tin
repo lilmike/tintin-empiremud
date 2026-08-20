@@ -1,4 +1,4 @@
-#ACTION {^[ Return to continue, (q)uit, (r)efresh, (b)ack, or page number (%d/%d) ]$}
+#ACTION {^[ Return to continue, (q)uit, (r)efresh, (b)ack, or page number (%d/%d) ]}
 {
 	#history {insert} {#cr}
 }
